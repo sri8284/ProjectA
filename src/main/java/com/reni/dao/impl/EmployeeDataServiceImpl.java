@@ -1,6 +1,10 @@
 package com.reni.dao.impl;
 
 import static com.reni.data.constants.RENIDataConstants.EMP_ID;
+import static com.reni.data.constants.RENIDataConstants.SESSION_ID;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,7 +24,6 @@ import com.reni.service.exception.RENIDataServiceException;
 public class EmployeeDataServiceImpl implements EmployeeDataService {
 
 	private static final String SELECT_BAISC_EMP_DETAILS = "SELECT EMP_ID, ROLE_TYPE,EMP_FIRST_NAME,EMP_LAST_NAME FROM EMPLOYEE WHERE EMP_ID=:EMP_ID";
-
 	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -35,5 +38,6 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
    	    return (Employee) namedParameterJdbcTemplate.queryForObject(SELECT_BAISC_EMP_DETAILS, namedParameters,  new EmployeeRowMapper());  
 
 	}
+
 
 }

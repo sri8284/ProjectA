@@ -1,0 +1,19 @@
+{
+	"pickupId": "123",
+	"vendorId": "1",
+	"orr": 3,
+	"pickupDate": "2016-07-16T19:20:30+01:00",
+	"comments": "NA",
+	"assignmentType": "P",
+	"itemTransactions": [{
+		"itemId": "MC",
+		"itemCurrentRate": 12.12,
+		"itemExpectedVol": 100,
+		"itemPaidRate": 10
+	}, {
+		"itemId": "PB",
+		"itemCurrentRate": 12.12,
+		"itemExpectedVol": 100,
+		"itemPaidRate": 10
+	}]
+}

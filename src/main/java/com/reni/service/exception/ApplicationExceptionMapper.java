@@ -10,17 +10,18 @@ import org.springframework.stereotype.Component;
 
 import com.reni.model.ErrorResponse;
 import static com.reni.service.constants.RENIErrorCodes.SERVER_ERROR_CODE;
-import static com.reni.service.constants.ReniServiceConstant.SERVER_ERROR;
+import static com.reni.service.constants.RENIServiceConstant.SERVER_ERROR;
 
 @Component
 @Provider
-public class ApplicationExceptionMapper implements ExceptionMapper<RuntimeException> {
+public class ApplicationExceptionMapper implements ExceptionMapper<Exception> {
 
 	Logger log = Logger.getLogger(ApplicationExceptionMapper.class);
 	@Override
-	public Response toResponse(RuntimeException arg0) {
+	public Response toResponse(Exception arg0) {
 		log.info(arg0.getMessage());
-		
+		arg0.getStackTrace();
+		arg0.printStackTrace();
 		final ErrorResponse errorResponse= new ErrorResponse();
 		errorResponse.setErrorCode(SERVER_ERROR_CODE.toString());
 		errorResponse.setErrorMessge(SERVER_ERROR);

@@ -1,5 +1,8 @@
 package com.reni.service.impl;
 
+import static com.reni.service.constants.RENIServiceConstant.DATA_FECTH_ERROR;
+import static com.reni.service.constants.RENIServiceConstant.INVALID_ACCESSS;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +12,21 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reni.dao.PickupDataService;
+import com.reni.dao.UserDataService;
 import com.reni.model.Pickup;
 import com.reni.service.PickupService;
+import com.reni.service.constants.RENIErrorCodes;
 import com.reni.service.exception.RENIDataServiceException;
 import com.reni.service.exception.RENIServiceException;
+import com.reni.service.exception.RENIValidationException;
 
 @Service
-@Transactional(propagation=Propagation.REQUIRED)
+@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Exception.class})
 public class PickupServiceImpl implements PickupService {
 
+	@Autowired
+	UserDataService userDataService;
+	
 	@Autowired
 	PickupDataService pickupServcie;
 	
@@ -49,11 +58,17 @@ public class PickupServiceImpl implements PickupService {
 	}
 
 	@Override
-	public void createPickup(Pickup pickupDetails) throws RENIServiceException {
+	public void createPickup(Integer userId,Pickup pickupDetails,String sessionId) throws RENIServiceException {
 		try {
-			pickupServcie.addPickup(pickupDetails);
+			if (!userDataService.isSessionValid(userId,sessionId)) {
+				throw new RENIValidationException(RENIErrorCodes.INVALID_ACCESSS, INVALID_ACCESSS);
+			}
+			pickupServcie.createPickup(userId, pickupDetails);
+			
 		} catch (RENIDataServiceException e) {
-			// TODO throws the serviceException
+			e.printStackTrace();
+			throw new RENIServiceException(RENIErrorCodes.DATA_FECTH_ERROR, DATA_FECTH_ERROR);
+
 		}
 		
 	}

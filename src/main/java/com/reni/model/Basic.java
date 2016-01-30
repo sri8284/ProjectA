@@ -1,9 +1,15 @@
 package com.reni.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public abstract class Basic {
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(value=Include.NON_NULL)
+public class Basic{
+
+	private static final long serialVersionUID = -6972059424736349946L;
 	private Date createdDt;
 	private String createdBy;
 	private Date updatedDt;

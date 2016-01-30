@@ -2,28 +2,28 @@ package com.reni.data.constants;
 
 public interface RENIDataConstants {
 
-	//pickup table - column names
-	String PICKUP_ID="Pickup_id";
-	String CREATED_DT="Created_dt";
-	String CREATED_BY="Created_by";
-	String UPDATED_DT="Updated_dt";
-	String UPDATED_BY="Updated_by";
-	String DATE_OF_PICKUP="Date_of_Pickup";
-	String TYPE_OF_ASSIGMENT="Type_of_assigment";
+	//PICKUP TABLE
+	String PICKUP_ID="PICKUP_ID";
+	String CREATED_DATE="CREATED_DATE";
+	String CREATED_BY="CREATED_BY";
+	String UPDATED_DATE="UPDATED_DATE";
+	String UPDATED_BY="UPDATED_BY";
+	String PICKUP_DATE="PICKUP_DATE";
+	String ASSIGNMENT_TYPE="ASSIGNMENT_TYPE";
 	String ORR="ORR";
 	String OTHER="OTHER";
-	String VENDOR_ID="Vendor_id";
-	String VEHICLE_NO_ASSIGNED="Vehicle_no_assigned";
-	String TOTAL_PAID="Total_paid";
-	String REMAINING_TO_BE_PAID="Remaining_to_be_paid";
-	String OPENING_METER="Opening_meter";
-	String CLOSING_METER="Closing_meter";
-	String COMPLETE_FLAG="Complete_Flag";
-	String NO_OF_KILOMETERS="No_of_kilometers";
-	String WEIGH_BRIDGE="Weigh_bridge";
-	String ATTACHMENT="Attachment";
-	String PCKP_OPEN_TIME="Pckp_open_time";
-	String PCKP_CLOSE_TIME="Pckp_close_time";
+	String VEHICLE_NO_ASSIGNED="VEHICLE_NO_ASSIGNED";
+	String TOTAL_PAID="TOTAL_PAID";
+	String REMAINING_TO_BE_PAID="REMAINING_TO_BE_PAID";
+	String OPENING_METER="OPENING_METER";
+	String CLOSING_METER="CLOSING_METER";
+	String COMPLETE_FLAG="COMPLETE_FLAG";
+	String NO_OF_KILOMETERS="NO_OF_KILOMETERS";
+	String WEIGH_BRIDGE="WEIGH_BRIDGE";
+	String ATTACHMENT="ATTACHMENT";
+	String PICKUP_OPEN_TIME="PICKUP_OPEN_TIME";
+	String PICKUP_CLOSE_TIME="PICKUP_CLOSE_TIME";
+	String COMMENTS="COMMENTS";
 	
 	//EMPLOYEE TABLE
 	String EMP_ID="EMP_ID";
@@ -40,6 +40,44 @@ public interface RENIDataConstants {
 	String PASSWORD = "PASSWORD";
 	String USER_ID="USER_ID";
 	
+	//VENDOR TABLE
+	String VENDOR_ID ="VENDOR_ID";
+	String VND_LAST_NAME ="LAST_NAME";
+	String VND_AREA_CODE ="VND_AREA_CODE";
+	String VND_LINE1 ="VND_LINE1";
+	String VND_MOBILE ="VND_MOBILE";
+	String VND_CITY ="VND_CITY";
+	String VND_STATE ="VND_STATE";
+	String LANDMARK ="LANDMARK";
+	String PINCODE ="PINCODE";
+	String VND_FIRST_NAME="VND_FIRST_NAME";
+	
+	//ORR TABLE
+	String ORR_EMP_ID ="EMP_ID";
+	String ORR_EMP_TYPE ="EMP_TYPE";
+	String ACTIVE_STATE ="ACTIVE_STATE";
+	String PREV_DISPACT_ID ="PREV_DISPACT_ID";
+	String CURRENT_DISPACT_ID ="CURRENT_DISPACT_ID";
+	String PREV_PICKUP_ID ="PREV_PICKUP_ID";
+	String CURRENT_PICKUP_ID ="CURRENT_PICKUP_ID";
+	String ORR_EMP_NAME ="EMP_NAME";
+
+	//ITEM TABLE
+	String ITEM_ID ="ITEM_ID";
+	String ITEM_DESC ="ITEM_DESC";
+	String CURRENT_RATE ="CURRENT_RATE";
+	
+	//AREA TABLE
+	String AREA_CODE="AREA_CODE";
+	String AREA_NAME="AREA_NAME";
+
+	//ITEM_TRANSACTION TABLE
+	String ITEM_EXPECTED_VOL="ITEM_EXPECTED_VOL";
+	String ITEM_ACTUAL_VOL="ITEM_ACTUAL_VOL";
+	String ITEM_CURRENT_RATE="ITEM_CURRENT_RATE";
+	String ITEM_PAID_RATE="ITEM_PAID_RATE";
+	String AMT_NEED_TO_BE_PAID="AMT_NEED_TO_BE_PAID";
+	String PARTIAL_PAYMENT="PARTIAL_PAYMENT";
 	
 	//SESSION_TIME
 	int SESSION_TIME=10;

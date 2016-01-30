@@ -20,20 +20,21 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.reni.dao.LoginDataService;
+import com.reni.dao.UserDataService;
 import com.reni.rowmapper.StringRowMapper;
 import com.reni.service.exception.RENIDataServiceException;
 
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
-public class LoginDataServiceImpl implements LoginDataService {
+public class UserDataServiceImpl implements UserDataService {
 
 	private static final String SELECT_SESSION_BY_USERID = "SELECT SESSION_ID FROM SESSION WHERE USER_ID=:USER_ID";
 	private static final String INSERT_SESSION = "INSERT INTO SESSION (USER_ID,SESSION_ID, START_TIME, END_TIME) "
 			+ "VALUES (:USER_ID,:SESSION_ID,:START_TIME,:END_TIME)";
 	private static final String CHECK_SESSION_EXPIRE = "SELECT COUNT(*) FROM SESSION WHERE USER_ID=:USER_ID AND SESSION_ID=:SESSION_ID AND END_TIME >=:END_TIME";
-	private static final String DELETE_SESSION = "DELETE FROM SESSION WHERE USER_ID=:USER_ID AND SESSION_ID=:SESSION_ID";
+	private static final String DELETE_SESSION = "DELETE FROM SESSION WHERE USER_ID=:USER_ID ";
 	private static final String CHECK_USER_VALID = "SELECT COUNT(*) FROM USER WHERE USER_ID=:USER_ID AND PASSWORD=:PASSWORD";
+	private static final String SELECT_SESSION_ID = "SELECT SESSION_ID FROM SESSION WHERE USER_ID=:USER_ID AND SESSION_ID=:SESSION_ID";
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -60,12 +61,12 @@ public class LoginDataServiceImpl implements LoginDataService {
 		if (sessionId == null) {
 			return false;
 		}
+		//if user session exist, and if it is expires throw true (yes)
 		if(isSessionExpired(userId,sessionId)){
-			return true;
-		}else{
-			deleteSession(userId,sessionId);
+			deleteSession(userId);
 			return false;
 		}
+		return true;
 	}
 
 	private String getSessionByUserId(Integer userId) {
@@ -82,15 +83,15 @@ public class LoginDataServiceImpl implements LoginDataService {
 		final int value = namedParameterJdbcTemplate.queryForObject(CHECK_SESSION_EXPIRE, namedParameters,
 				Integer.class);
 		if(value==0){
-			return false;
-		}else
 			return true;
+		}else
+			return false;
 	}
 	
-	private void deleteSession(Integer userId, String sessionId) {
+	@Override
+	public void deleteSession(Integer userId) {
 		Map<String,Object> namedParameters = new HashMap<String,Object>();
 		namedParameters.put(USER_ID, userId);
-		namedParameters.put(SESSION_ID, sessionId);
 		namedParameterJdbcTemplate.update(DELETE_SESSION, namedParameters);
 	}
 
@@ -106,5 +107,25 @@ public class LoginDataServiceImpl implements LoginDataService {
 		}else{
 			return true;
 		}
+	}
+	
+	@Override
+	public boolean isSessionValid(Integer userId, String sessionId){
+		if(getSessionId(userId,sessionId)==null){
+			return false;
+		}
+		if(isSessionExpired(userId,sessionId)){
+			deleteSession(userId);
+			return false;
+		}
+		return true;
+	}
+
+	private Object getSessionId(Integer userId, String sessionId) {
+		Map<String,Object> namedParameters = new HashMap<String,Object>();
+		namedParameters.put(USER_ID, userId);
+		namedParameters.put(SESSION_ID, sessionId);
+		return namedParameterJdbcTemplate.query(SELECT_SESSION_ID, namedParameters,
+				new StringRowMapper());
 	}
 }

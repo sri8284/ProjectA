@@ -9,5 +9,5 @@ public interface PickupService {
 
 	List<Pickup> getPickupDetails() throws RENIServiceException;
 	Pickup getPickupById(final String pickupId) throws RENIServiceException;
-	void createPickup(final Pickup pickupDetails) throws RENIServiceException;
+	void createPickup(final Integer userId,final Pickup pickupDetails,final String sessionId) throws RENIServiceException;
 }
