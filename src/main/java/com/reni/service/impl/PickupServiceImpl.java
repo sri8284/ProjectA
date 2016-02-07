@@ -1,6 +1,6 @@
 package com.reni.service.impl;
 
-import static com.reni.service.constants.RENIServiceConstant.DATA_FECTH_ERROR;
+import static com.reni.service.constants.RENIServiceConstant.*;
 import static com.reni.service.constants.RENIServiceConstant.INVALID_ACCESSS;
 
 import java.util.ArrayList;
@@ -63,6 +63,10 @@ public class PickupServiceImpl implements PickupService {
 			if (!userDataService.isSessionValid(userId,sessionId)) {
 				throw new RENIValidationException(RENIErrorCodes.INVALID_ACCESSS, INVALID_ACCESSS);
 			}
+			if(!userDataService.isAdmin(userId)){
+				throw new RENIValidationException(RENIErrorCodes.INVALID_RIGHTS, INVALID_RIGHTS);
+			}
+			//TODO - authorization chekc - Admin only can do insert
 			pickupServcie.createPickup(userId, pickupDetails);
 			
 		} catch (RENIDataServiceException e) {

@@ -128,4 +128,10 @@ public class UserDataServiceImpl implements UserDataService {
 		return namedParameterJdbcTemplate.query(SELECT_SESSION_ID, namedParameters,
 				new StringRowMapper());
 	}
+
+	@Override
+	public boolean isAdmin(Integer userId) throws RENIDataServiceException {
+		
+		return true;
+	}
 }

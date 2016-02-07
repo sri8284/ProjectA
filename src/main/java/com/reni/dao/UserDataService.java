@@ -9,5 +9,6 @@ public interface UserDataService {
 	boolean isValidUser(Integer userId, String password) throws RENIDataServiceException;
 	void deleteSession(Integer userId) throws RENIDataServiceException;
 	boolean isSessionValid(Integer userId, String sessionId) throws RENIDataServiceException;
+	boolean isAdmin(Integer userId) throws RENIDataServiceException;
 
 }

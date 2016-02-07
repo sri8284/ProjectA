@@ -20,5 +20,6 @@ public interface RENIServiceConstant {
 	String DATA_REMOVE_ERROR="Unexcepted error while removing the data";
 	String PICKUP_NOT_ALLOWED="Pickup creation error - Item is/are not found";
 	String ITEM_TRANSACTION_SAVE_FAILED="Item transaction failed while saving the data";
+	String INVALID_RIGHTS ="Transaction is not allowed for your role";
 
 }
