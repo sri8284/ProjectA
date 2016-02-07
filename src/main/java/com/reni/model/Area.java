@@ -2,9 +2,10 @@ package com.reni.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 @JsonInclude(value=Include.NON_NULL)
 public class Area extends Basic {
+	
+	private static final long serialVersionUID = -407455255035208080L;
 	private String areaCode;
 	private String areaName;
 	

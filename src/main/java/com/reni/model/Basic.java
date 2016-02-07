@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(value=Include.NON_NULL)
-public class Basic{
+public class Basic implements Serializable{
 
 	private static final long serialVersionUID = -6972059424736349946L;
 	private Date createdDt;
