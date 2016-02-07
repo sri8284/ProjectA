@@ -32,7 +32,7 @@ public interface RENIDataConstants {
 	String EMP_FIRST_NAME="EMP_FIRST_NAME";
 	
 	//SESSION TABLE
-	String SESSION_ID="SESSION_ID";
+	String ACCESS_KEY="Access_Key";
 	String START_TIME="START_TIME";
 	String END_TIME="END_TIME";
 	
@@ -42,15 +42,15 @@ public interface RENIDataConstants {
 	
 	//VENDOR TABLE
 	String VENDOR_ID ="VENDOR_ID";
-	String VND_LAST_NAME ="LAST_NAME";
-	String VND_AREA_CODE ="VND_AREA_CODE";
-	String VND_LINE1 ="VND_LINE1";
-	String VND_MOBILE ="VND_MOBILE";
-	String VND_CITY ="VND_CITY";
-	String VND_STATE ="VND_STATE";
+	String VND_FIRST_NAME="VND_FIRST_NAME";
+	String VND_LAST_NAME ="VND_LAST_NAME";
+	String VND_ADDRESS ="VND_ADDRESS";
+	String VND_CONTACT_NO ="VND_CONTACT_NO";
+	String CITY ="CITY";
+	String STATE ="STATE";
 	String LANDMARK ="LANDMARK";
 	String PINCODE ="PINCODE";
-	String VND_FIRST_NAME="VND_FIRST_NAME";
+	
 	
 	//ORR TABLE
 	String ORR_EMP_ID ="EMP_ID";
@@ -63,8 +63,8 @@ public interface RENIDataConstants {
 	String ORR_EMP_NAME ="EMP_NAME";
 
 	//ITEM TABLE
-	String ITEM_ID ="ITEM_ID";
-	String ITEM_DESC ="ITEM_DESC";
+	String ITEM_CODE ="ITEM_CODE";
+	String ITEM_NAME ="ITEM_NAME";
 	String CURRENT_RATE ="CURRENT_RATE";
 	
 	//AREA TABLE
@@ -79,7 +79,13 @@ public interface RENIDataConstants {
 	String AMT_NEED_TO_BE_PAID="AMT_NEED_TO_BE_PAID";
 	String PARTIAL_PAYMENT="PARTIAL_PAYMENT";
 	
+	//EXPENSE_TYPE TABLE
+	String EXP_TYPE="EXP_TYPE";
+	String EXP_SUBTYPE="EXP_SUBTYPE";
+	String EXP_TYPE_NAME="EXP_TYPE_NAME";
+	String EXP_SUBTYPE_NAME="EXP_SUBTYPE_NAME";
+	
 	//SESSION_TIME
-	int SESSION_TIME=10;
+	int SESSION_TIME=1000;
 
 }

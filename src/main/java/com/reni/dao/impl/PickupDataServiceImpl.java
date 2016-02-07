@@ -6,7 +6,7 @@ import static com.reni.data.constants.RENIDataConstants.COMMENTS;
 import static com.reni.data.constants.RENIDataConstants.CREATED_BY;
 import static com.reni.data.constants.RENIDataConstants.CREATED_DATE;
 import static com.reni.data.constants.RENIDataConstants.ITEM_EXPECTED_VOL;
-import static com.reni.data.constants.RENIDataConstants.ITEM_ID;
+import static com.reni.data.constants.RENIDataConstants.ITEM_CODE;
 import static com.reni.data.constants.RENIDataConstants.ITEM_PAID_RATE;
 import static com.reni.data.constants.RENIDataConstants.ORR;
 import static com.reni.data.constants.RENIDataConstants.PICKUP_DATE;
@@ -91,7 +91,7 @@ public class PickupDataServiceImpl implements PickupDataService {
 			throws RENIDataServiceException {
 		try {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
-			namedParameters.put(ITEM_ID, itemTransaction.getItemId());
+			namedParameters.put(ITEM_CODE, itemTransaction.getItemId());
 			namedParameters.put(PICKUP_ID, pickupId);
 			namedParameters.put(ITEM_PAID_RATE, itemTransaction.getItemPaidRate());
 			namedParameters.put(ITEM_EXPECTED_VOL, itemTransaction.getItemExpectedVol());

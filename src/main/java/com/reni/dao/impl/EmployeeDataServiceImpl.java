@@ -1,7 +1,7 @@
 package com.reni.dao.impl;
 
 import static com.reni.data.constants.RENIDataConstants.EMP_ID;
-import static com.reni.data.constants.RENIDataConstants.SESSION_ID;
+import static com.reni.data.constants.RENIDataConstants.ACCESS_KEY;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -2,12 +2,22 @@ package com.reni.service.constants;
 
 public interface RENIServiceConstant {
 
+	
+	//Maste data path
+	String MASTER_PATH="/master";
+	String AREAS_PATH="/areas";
+	String VENDORS_PATH="/vendors";
+	String ITEMS_PATH="/items";
+	String EXPENSE_TYPES_PATH="/expenseTypes";
+	
+	
 	String PICKUP_PATH = "/pickup";
 	String PICKUP_ID_PATH = "pickupId";
 	String REFERENCE_PATH="/reference";
 	String USER_PATH="/user";
 	String LOGIN_PATH="/login";
 	String LOGOUT_PATH="/logout";
+	
 	
 	//error message
 	String INVALID_REQUEST = "Invalid Request.";

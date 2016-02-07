@@ -6,18 +6,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
 public class Address  {
 
-	private String Line1;
+	private String address;
 	private String city;
 	private String state;
 	private String landmark;
-	private Integer pincode;
+	private Long pincode;
 	
-	public String getLine1() {
-		return Line1;
-	}
-	public void setLine1(String line1) {
-		Line1 = line1;
-	}
+	
 	public String getCity() {
 		return city;
 	}
@@ -36,11 +31,17 @@ public class Address  {
 	public void setLandmark(String landmark) {
 		this.landmark = landmark;
 	}
-	public Integer getPincode() {
+	public Long getPincode() {
 		return pincode;
 	}
-	public void setPincode(Integer pincode) {
+	public void setPincode(Long pincode) {
 		this.pincode = pincode;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	} 
 	
 	

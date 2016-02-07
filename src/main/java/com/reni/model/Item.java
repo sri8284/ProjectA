@@ -6,28 +6,29 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
 public class Item extends Basic {
 	
-	private static final long serialVersionUID = -47447587198171592L;
-	private String itemId;
-	private String itemDesc;
+	private String itemCode;
+	private String itemName;
 	private Float currentRate;
 	
-	public String getItemId() {
-		return itemId;
-	}
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
-	}
-	public String getItemDesc() {
-		return itemDesc;
-	}
-	public void setItemDesc(String itemDesc) {
-		this.itemDesc = itemDesc;
-	}
+	
+	
 	public Float getCurrentRate() {
 		return currentRate;
 	}
 	public void setCurrentRate(Float currentRate) {
 		this.currentRate = currentRate;
+	}
+	public String getItemCode() {
+		return itemCode;
+	}
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 	
 }

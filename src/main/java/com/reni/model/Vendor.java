@@ -6,12 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_DEFAULT)
 public class Vendor extends Basic {
 
-	private static final long serialVersionUID = 4071432097936105147L;
 	private String vendorId;
-	private String firstName;
-	private String lastName;
-	private String mobileNo;
-	private Address address;
+	private String vndfirstName;
+	private String vndlastName;
+	private String vndContactNo;
+	private Address vndAddress;
 	private String areaCode;
 	
 	public String getVendorId() {
@@ -20,36 +19,37 @@ public class Vendor extends Basic {
 	public void setVendorId(String vendorId) {
 		this.vendorId = vendorId;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getVndfirstName() {
+		return vndfirstName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setVndfirstName(String vndfirstName) {
+		this.vndfirstName = vndfirstName;
 	}
-	public String getLastName() {
-		return lastName;
+	public String getVndlastName() {
+		return vndlastName;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setVndlastName(String vndlastName) {
+		this.vndlastName = vndlastName;
 	}
-	public String getMobileNo() {
-		return mobileNo;
+	public String getVndContactNo() {
+		return vndContactNo;
 	}
-	public void setMobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
+	public void setVndContactNo(String vndContactNo) {
+		this.vndContactNo = vndContactNo;
 	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+	
 	public String getAreaCode() {
 		return areaCode;
 	}
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;
 	}
-
+	public Address getVndAddress() {
+		return vndAddress;
+	}
+	public void setVndAddress(Address vndAddress) {
+		this.vndAddress = vndAddress;
+	}
+	
 	
 }

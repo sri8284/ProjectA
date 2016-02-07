@@ -1,10 +1,7 @@
 package com.reni.controller;
 
-import static com.reni.data.constants.RENIDataConstants.SESSION_ID;
-import static com.reni.data.constants.RENIDataConstants.USER_ID;
-import static com.reni.service.constants.RENIServiceConstant.INVALID_REQUEST;
-import static com.reni.service.constants.RENIServiceConstant.PICKUP_PATH;
-import static com.reni.service.constants.RENIServiceConstant.REFERENCE_PATH;
+import static com.reni.data.constants.RENIDataConstants.*;
+import static com.reni.service.constants.RENIServiceConstant.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,27 +14,56 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.reni.service.MasterReferenceSerice;
+import com.reni.service.MasterDataSerice;
 import com.reni.service.constants.RENIErrorCodes;
 import com.reni.service.exception.RENIServiceException;
 import com.reni.service.exception.RENIValidationException;
 
-@Path(REFERENCE_PATH)
+@Path(MASTER_PATH)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 @Component
 public class MasterDataController {
 
 	@Autowired
-	MasterReferenceSerice referenceService;
+	MasterDataSerice masterDataService;
 	
 	@GET
-	@Path(PICKUP_PATH)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response validateUser(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(SESSION_ID) final String sessionId) throws RENIServiceException{
+	@Path(AREAS_PATH)
+	public Response fetchAreaDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
 		
-		if(sessionId==null||userId==null){
-			throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST,INVALID_REQUEST);
-		}
-		return Response.ok(referenceService.getPickupReferenceDetails(userId,sessionId)).build();
+		validateInput(userId,accessKey);
+		return Response.ok(masterDataService.fetchAreaDetails()).build();
 	}
+	//fetch item details
+	@GET
+	@Path(ITEMS_PATH)
+	public Response fetchItemDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
+		
+		validateInput(userId,accessKey);
+		return Response.ok(masterDataService.fetchItemDetails()).build();
+	}
+	//fetch vendor details
+	@GET
+	@Path(VENDORS_PATH)
+	public Response fetchVendorDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
+		
+		validateInput(userId,accessKey);
+		return Response.ok(masterDataService.fetchVendorDetails()).build();
+	}
+	//fetch expenseType details
+	@GET
+	@Path(EXPENSE_TYPES_PATH)
+	public Response fetchExpenseTypeDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
+		
+		validateInput(userId,accessKey);
+		return Response.ok(masterDataService.fetchExpenseTypeDetails()).build();
+	}
+	
+	private void validateInput(Integer userId, String accessKey) throws RENIValidationException {
+		if(accessKey==null||userId==null){
+			throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST,INVALID_REQUEST);
+		}		
+	}
+	
 }

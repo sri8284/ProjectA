@@ -5,7 +5,7 @@ import static com.reni.common.util.CommonUtil.endTimeStamp;
 import static com.reni.common.util.CommonUtil.generateSessionId;
 import static com.reni.data.constants.RENIDataConstants.END_TIME;
 import static com.reni.data.constants.RENIDataConstants.PASSWORD;
-import static com.reni.data.constants.RENIDataConstants.SESSION_ID;
+import static com.reni.data.constants.RENIDataConstants.ACCESS_KEY;
 import static com.reni.data.constants.RENIDataConstants.START_TIME;
 import static com.reni.data.constants.RENIDataConstants.USER_ID;
 
@@ -48,7 +48,7 @@ public class UserDataServiceImpl implements UserDataService {
 		Map<String,Object> namedParameters = new HashMap<String,Object>();
 		final String sessionId = generateSessionId();
 		namedParameters.put(USER_ID, userId);
-		namedParameters.put(SESSION_ID, sessionId);
+		namedParameters.put(ACCESS_KEY, sessionId);
 		namedParameters.put(START_TIME, currentTimeStamp());
 		namedParameters.put(END_TIME, endTimeStamp());
 		namedParameterJdbcTemplate.update(INSERT_SESSION, namedParameters);
@@ -78,7 +78,7 @@ public class UserDataServiceImpl implements UserDataService {
 	private boolean isSessionExpired(Integer userId, String sessionId) {
 		Map<String,Object> namedParameters = new HashMap<String,Object>();
 		namedParameters.put(USER_ID, userId);
-		namedParameters.put(SESSION_ID, sessionId);
+		namedParameters.put(ACCESS_KEY, sessionId);
 		namedParameters.put(END_TIME,  currentTimeStamp());
 		final int value = namedParameterJdbcTemplate.queryForObject(CHECK_SESSION_EXPIRE, namedParameters,
 				Integer.class);
@@ -124,7 +124,7 @@ public class UserDataServiceImpl implements UserDataService {
 	private Object getSessionId(Integer userId, String sessionId) {
 		Map<String,Object> namedParameters = new HashMap<String,Object>();
 		namedParameters.put(USER_ID, userId);
-		namedParameters.put(SESSION_ID, sessionId);
+		namedParameters.put(ACCESS_KEY, sessionId);
 		return namedParameterJdbcTemplate.query(SELECT_SESSION_ID, namedParameters,
 				new StringRowMapper());
 	}

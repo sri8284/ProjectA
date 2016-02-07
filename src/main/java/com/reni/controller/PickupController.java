@@ -49,7 +49,7 @@ public class PickupController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createPickup(final Pickup pickupDetails,@HeaderParam(SESSION_ID) final String sessionId,@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
+	public Response createPickup(final Pickup pickupDetails,@HeaderParam(ACCESS_KEY) final String sessionId,@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
 		if(pickupDetails==null || sessionId==null || userId==null){
 			throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST,INVALID_REQUEST);
 		}
