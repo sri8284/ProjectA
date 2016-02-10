@@ -35,8 +35,7 @@
 		<spring.version>4.2.4.RELEASE</spring.version>
 		<resteasy.version>3.0.13.Final</resteasy.version>
 		<hibernate.version>4.2.15.Final</hibernate.version>
-		<spring-security.version>4.0.3.RELEASE</spring-security.version>
-		<spring-security-oauth.version>2.0.7.RELEASE</spring-security-oauth.version>
+		<spring-security.version>3.2.5.RELEASE</spring-security.version>
 		<mysql.version>5.1.32</mysql.version>
 		<resteasy.scope>compile</resteasy.scope>
 		<jackson-version>2.4.1</jackson-version>
@@ -168,14 +167,6 @@
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring-security.version}</version>
 		</dependency>
-		<!-- spring security oauth2 -->
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>${spring-security-oauth.version}</version>
-		</dependency>
-
-
 		<!-- Hibernate Core 4.2.x -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

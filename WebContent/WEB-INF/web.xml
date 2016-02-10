@@ -29,6 +29,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 		WEB-INF/spring-servlet.xml
+		WEB-INF/spring-security-oauth2.xml
 		</param-value>
 	</context-param>
 
@@ -40,7 +41,7 @@
 	</context-param>
 	
 	 <!-- security -->
-	<!--
+	
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -50,4 +51,4 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
- --></web-app>
+ </web-app>

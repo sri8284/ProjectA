@@ -30,38 +30,38 @@ public class MasterDataController {
 	
 	@GET
 	@Path(AREAS_PATH)
-	public Response fetchAreaDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
+	public Response fetchAreaDetails(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
 		
-		validateInput(userId,accessKey);
+		validateInput(userId);
 		return Response.ok(masterDataService.fetchAreaDetails()).build();
 	}
 	//fetch item details
 	@GET
 	@Path(ITEMS_PATH)
-	public Response fetchItemDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
+	public Response fetchItemDetails(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
 		
-		validateInput(userId,accessKey);
+		validateInput(userId);
 		return Response.ok(masterDataService.fetchItemDetails()).build();
 	}
 	//fetch vendor details
 	@GET
 	@Path(VENDORS_PATH)
-	public Response fetchVendorDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
+	public Response fetchVendorDetails(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
 		
-		validateInput(userId,accessKey);
+		validateInput(userId);
 		return Response.ok(masterDataService.fetchVendorDetails()).build();
 	}
 	//fetch expenseType details
 	@GET
 	@Path(EXPENSE_TYPES_PATH)
-	public Response fetchExpenseTypeDetails(@HeaderParam(USER_ID) final Integer userId, @HeaderParam(ACCESS_KEY) final String accessKey) throws RENIServiceException{
+	public Response fetchExpenseTypeDetails(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
 		
-		validateInput(userId,accessKey);
+		validateInput(userId);
 		return Response.ok(masterDataService.fetchExpenseTypeDetails()).build();
 	}
 	
-	private void validateInput(Integer userId, String accessKey) throws RENIValidationException {
-		if(accessKey==null||userId==null){
+	private void validateInput(Integer userId) throws RENIValidationException {
+		if(userId==null){
 			throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST,INVALID_REQUEST);
 		}		
 	}

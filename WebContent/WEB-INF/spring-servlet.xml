@@ -15,19 +15,30 @@
 
 	<!-- to activate annotations in beans already registered in the ApplicationContext -->
 	<context:annotation-config />
+    <context:component-scan base-package="com.resteasy.series.spring.security" />
 
 	<!-- scans packages to find and register beans within the application context -->
 	<context:component-scan base-package="com.reni" />
 
 		<!-- dataSource configuration -->
 	<!-- TODO properties configuration should be move to properties file -->
+	<!-- local
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/reni" />
 		<property name="username" value="root" />
 		<property name="password" value="Sahas$23" />
-	</bean>
+	</bean> -->
+	
+	<!-- server -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://mysqldb2.alphacloud.in:3306/femadb" />
+		<property name="username" value="femaDB_samba" />
+		<property name="password" value="2D9F4D16" />
+	</bean> 
 
 	<bean class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate"
 		id="namedParameterJdbcTemplate">
