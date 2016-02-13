@@ -2,12 +2,14 @@ package com.reni.data.constants;
 
 public interface RENIDataConstants {
 
-	//PICKUP TABLE
-	String PICKUP_ID="PICKUP_ID";
+	//common columns
 	String CREATED_DATE="CREATED_DATE";
 	String CREATED_BY="CREATED_BY";
 	String UPDATED_DATE="UPDATED_DATE";
 	String UPDATED_BY="UPDATED_BY";
+	
+	//PICKUP TABLE
+	String PICKUP_ID="PICKUP_ID";
 	String PICKUP_DATE="PICKUP_DATE";
 	String ASSIGNMENT_TYPE="ASSIGNMENT_TYPE";
 	String ORR="ORR";
@@ -53,14 +55,16 @@ public interface RENIDataConstants {
 	
 	
 	//ORR TABLE
-	String ORR_EMP_ID ="EMP_ID";
-	String ORR_EMP_TYPE ="EMP_TYPE";
+	String ORR_ID ="ORR_ID";
+	String ORR_NAME ="ORR_NAME";
 	String ACTIVE_STATE ="ACTIVE_STATE";
-	String PREV_DISPACT_ID ="PREV_DISPACT_ID";
+	String VEHICLE_NO ="VEHICLE_NO";
+	String DRIVING_LIC_NO ="DRIVING_LIC_NO";
+	String CONCAT_NO ="CONCAT_NO";
 	String CURRENT_DISPACT_ID ="CURRENT_DISPACT_ID";
 	String PREV_PICKUP_ID ="PREV_PICKUP_ID";
 	String CURRENT_PICKUP_ID ="CURRENT_PICKUP_ID";
-	String ORR_EMP_NAME ="EMP_NAME";
+	
 
 	//ITEM TABLE
 	String ITEM_CODE ="ITEM_CODE";

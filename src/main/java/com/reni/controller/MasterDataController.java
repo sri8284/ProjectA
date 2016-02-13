@@ -1,7 +1,11 @@
 package com.reni.controller;
 
-import static com.reni.data.constants.RENIDataConstants.*;
-import static com.reni.service.constants.RENIServiceConstant.*;
+import static com.reni.data.constants.RENIDataConstants.USER_ID;
+import static com.reni.service.constants.RENIServiceConstant.AREAS_PATH;
+import static com.reni.service.constants.RENIServiceConstant.EXPENSE_TYPES_PATH;
+import static com.reni.service.constants.RENIServiceConstant.ITEMS_PATH;
+import static com.reni.service.constants.RENIServiceConstant.MASTER_PATH;
+import static com.reni.service.constants.RENIServiceConstant.VENDORS_PATH;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,15 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.reni.service.MasterDataSerice;
-import com.reni.service.constants.RENIErrorCodes;
 import com.reni.service.exception.RENIServiceException;
-import com.reni.service.exception.RENIValidationException;
 
 @Path(MASTER_PATH)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
-public class MasterDataController {
+public class MasterDataController extends CoreController{
 
 	@Autowired
 	MasterDataSerice masterDataService;
@@ -35,6 +37,8 @@ public class MasterDataController {
 		validateInput(userId);
 		return Response.ok(masterDataService.fetchAreaDetails()).build();
 	}
+	
+	
 	//fetch item details
 	@GET
 	@Path(ITEMS_PATH)
@@ -43,6 +47,8 @@ public class MasterDataController {
 		validateInput(userId);
 		return Response.ok(masterDataService.fetchItemDetails()).build();
 	}
+	
+	
 	//fetch vendor details
 	@GET
 	@Path(VENDORS_PATH)
@@ -51,6 +57,8 @@ public class MasterDataController {
 		validateInput(userId);
 		return Response.ok(masterDataService.fetchVendorDetails()).build();
 	}
+	
+	
 	//fetch expenseType details
 	@GET
 	@Path(EXPENSE_TYPES_PATH)
@@ -60,10 +68,5 @@ public class MasterDataController {
 		return Response.ok(masterDataService.fetchExpenseTypeDetails()).build();
 	}
 	
-	private void validateInput(Integer userId) throws RENIValidationException {
-		if(userId==null){
-			throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST,INVALID_REQUEST);
-		}		
-	}
 	
 }

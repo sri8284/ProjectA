@@ -12,12 +12,17 @@ public interface RENIServiceConstant {
 	
 	
 	String PICKUP_PATH = "/pickup";
-	String PICKUP_ID_PATH = "pickupId";
+	String PICKUP_ID_PATH = "/pickupId";
 	String REFERENCE_PATH="/reference";
 	String USER_PATH="/user";
 	String LOGIN_PATH="/login";
 	String LOGOUT_PATH="/logout";
 	
+	//ORR
+	String ORR_PATH="/orr";
+	String ONHIRE_PATH="/onHire";
+	String ACTIVE_PATH="/active";
+
 	
 	//error message
 	String INVALID_REQUEST = "Invalid Request.";
