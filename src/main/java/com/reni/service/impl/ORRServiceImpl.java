@@ -2,7 +2,8 @@ package com.reni.service.impl;
 
 import static com.reni.service.constants.RENIServiceConstant.DATA_FECTH_ERROR;
 import static com.reni.service.constants.RENIServiceConstant.DATA_SAVE_ERROR;
-
+import static com.reni.service.constants.RENIServiceConstant.ONHIRE_ORR_MANADATORY;
+import static com.reni.common.util.CommonUtil.isNullOrEmpty;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,14 +85,18 @@ public class ORRServiceImpl implements ORRService {
 	}
 
 	@Override
-	public void createOnHireORR(OnRoadResource onRoadResource) throws RENIServiceException {
+	public void createOnHireORR(String userId,OnRoadResource onRoadResource) throws RENIServiceException {
 		try {
 			//TODO - validations
-
-			orrDataService.createOnHireORR(onRoadResource);
+			if(isNullOrEmpty(onRoadResource.getConcatNo(),onRoadResource.getDrivingLicNo(),onRoadResource.getOrrName(),onRoadResource.getVehicleNo())){
+				throw new RENIServiceException(RENIErrorCodes.ONHIRE_ORR_MANADATORY, ONHIRE_ORR_MANADATORY);
+			}
+			String orrId = String.valueOf(System.currentTimeMillis());
+			onRoadResource.setOrrId(orrId);
+			orrDataService.createOnHireORR(userId,onRoadResource);
 
 		} catch (RENIDataServiceException e) {
-			throw new RENIServiceException(RENIErrorCodes.DATA_SAVE_ERROR, DATA_SAVE_ERROR);
+			throw new RENIServiceException(RENIErrorCodes.DATA_SAVE_ERROR, DATA_SAVE_ERROR, e);
 		}
 
 	}

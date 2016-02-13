@@ -17,7 +17,7 @@ public interface ORRService {
 
 	List<OnRoadResource> fetchOnHireORRDetails()  throws RENIServiceException;
 
-	void createOnHireORR(OnRoadResource onRoadResource)  throws RENIServiceException;
+	void createOnHireORR(String userId,OnRoadResource onRoadResource)  throws RENIServiceException;
 
 	List<OnRoadResource> fetchActiveOnHireORRDetails()  throws RENIServiceException;
 

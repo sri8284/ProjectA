@@ -3,9 +3,11 @@ package com.reni.controller;
 import static com.reni.service.constants.RENIServiceConstant.ACTIVE_PATH;
 import static com.reni.service.constants.RENIServiceConstant.ONHIRE_PATH;
 import static com.reni.service.constants.RENIServiceConstant.ORR_PATH;
+import static com.reni.data.constants.RENIDataConstants.USER_ID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -89,13 +91,13 @@ public class ORRController extends CoreController {
 	@Path(ONHIRE_PATH)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createOnHireORR(OnRoadResource onRoadResource) throws RENIServiceException{
-
+	public Response createOnHireORR(@HeaderParam(USER_ID) String userId,OnRoadResource onRoadResource) throws RENIServiceException{
 		validateInput(onRoadResource);
 		
-		service.createOnHireORR(onRoadResource);
+		service.createOnHireORR(userId,onRoadResource);
 		
 		return Response.ok().build();
+		
 	}
 	
 	@PUT

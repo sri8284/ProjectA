@@ -36,5 +36,6 @@ public interface RENIServiceConstant {
 	String PICKUP_NOT_ALLOWED="Pickup creation error - Item is/are not found";
 	String ITEM_TRANSACTION_SAVE_FAILED="Item transaction failed while saving the data";
 	String INVALID_RIGHTS ="Transaction is not allowed for your role";
+	String ONHIRE_ORR_MANADATORY="OnHire ORR : contactNo, drivingLicNo, orrName and VehicleNo is mandatory";
 
 }

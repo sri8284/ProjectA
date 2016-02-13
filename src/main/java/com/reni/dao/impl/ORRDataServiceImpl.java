@@ -1,17 +1,7 @@
 package com.reni.dao.impl;
 
 import static com.reni.common.util.CommonUtil.currentTimeStamp;
-import static com.reni.data.constants.RENIDataConstants.ASSIGNMENT_TYPE;
-import static com.reni.data.constants.RENIDataConstants.COMMENTS;
-import static com.reni.data.constants.RENIDataConstants.CREATED_BY;
-import static com.reni.data.constants.RENIDataConstants.CREATED_DATE;
-import static com.reni.data.constants.RENIDataConstants.ITEM_EXPECTED_VOL;
-import static com.reni.data.constants.RENIDataConstants.ITEM_CODE;
-import static com.reni.data.constants.RENIDataConstants.ITEM_PAID_RATE;
-import static com.reni.data.constants.RENIDataConstants.ORR;
-import static com.reni.data.constants.RENIDataConstants.PICKUP_DATE;
-import static com.reni.data.constants.RENIDataConstants.PICKUP_ID;
-import static com.reni.data.constants.RENIDataConstants.VENDOR_ID;
+import static com.reni.data.constants.RENIDataConstants.*;
 import static com.reni.service.constants.RENIServiceConstant.DATA_SAVE_ERROR;
 import static com.reni.service.constants.RENIServiceConstant.ITEM_TRANSACTION_SAVE_FAILED;
 import static com.reni.service.constants.RENIServiceConstant.PICKUP_NOT_ALLOWED;
@@ -50,8 +40,8 @@ public class ORRDataServiceImpl implements ORRDataService {
 	private static final String SELECT_ONHIRE_ORR_DETAILS = "SELECT * FROM onhireorr";
 	private static final String SELECT_ACTIVE_ONHIRE_ORR_DETAILS = "SELECT * FROM onhireorr where ACTIVE_STATE='Y' and (ASSIGNMENT_TYPE !='P' or ASSIGNMENT_TYPE is null) ";
 
-	private static final String INSERT_PICKUP = "INSERT INTO PICKUP (PICKUP_ID,CREATED_DATE,CREATED_BY,PICKUP_DATE,ASSIGNMENT_TYPE,ORR,VENDOR_ID,COMMENTS)"
-			+ "VALUES (:PICKUP_ID,:CREATED_DATE,:CREATED_BY,:PICKUP_DATE,:ASSIGNMENT_TYPE,:ORR,:VENDOR_ID,:COMMENTS)";
+	private static final String INSERT_ONHIRE_ORR = "INSERT INTO ONHIREORR (ORR_ID,ORR_NAME,ACTIVE_STATE,VEHICLE_NO,DRIVING_LIC_NO,CONCAT_NO,ASSIGNMENT_TYPE,CREATED_DATE,CREATED_BY)"
+			+ "VALUES (:ORR_ID,:ORR_NAME,:ACTIVE_STATE,:VEHICLE_NO,:DRIVING_LIC_NO,:CONCAT_NO,:ASSIGNMENT_TYPE,:CREATED_DATE,:CREATED_BY) ";
 	private static final String INSERT_ITEM_TRANSACTION = "INSERT INTO ITEM_TRANSACTION (PICKUP_ID,ITEM_ID,CREATED_DATE,CREATED_BY,ITEM_PAID_RATE,ITEM_EXPECTED_VOL)"
 			+ "VALUES (:PICKUP_ID,:ITEM_ID,:CREATED_DATE,:CREATED_BY,:ITEM_PAID_RATE,:ITEM_EXPECTED_VOL)";;
 
@@ -109,8 +99,30 @@ public class ORRDataServiceImpl implements ORRDataService {
 	}
 
 	@Override
-	public void createOnHireORR(OnRoadResource onRoadResource) throws RENIDataServiceException {
-		// TODO Auto-generated method stub
+	public void createOnHireORR(String userId, OnRoadResource onRoadResource) throws RENIDataServiceException {
+		//validate manadatory fields.
+		try {
+			Map<String, Object> namedParameters = new HashMap<String, Object>();
+			
+			namedParameters.put(ACTIVE_STATE, onRoadResource.getActiveFlag());
+			namedParameters.put(ASSIGNMENT_TYPE, "F");
+			namedParameters.put(CONCAT_NO, onRoadResource.getConcatNo());
+			namedParameters.put(DRIVING_LIC_NO, onRoadResource.getDrivingLicNo());
+			namedParameters.put(ORR_ID, onRoadResource.getOrrId());
+			namedParameters.put(ORR_NAME, onRoadResource.getOrrName());
+			namedParameters.put(VEHICLE_NO, onRoadResource.getVehicleNo());
+			namedParameters.put(CREATED_BY, userId);
+			namedParameters.put(CREATED_DATE, currentTimeStamp());
+		
+			namedParameterJdbcTemplate.update(INSERT_ONHIRE_ORR, namedParameters);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RENIDataServiceException(RENIErrorCodes.DATA_SAVE_ERROR, DATA_SAVE_ERROR);
+		}
+	
+		
+		
 		
 	}
 
