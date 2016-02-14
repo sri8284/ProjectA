@@ -1,8 +1,6 @@
 package com.reni.controller;
 
-import static com.reni.service.constants.RENIServiceConstant.ACTIVE_PATH;
-import static com.reni.service.constants.RENIServiceConstant.ONHIRE_PATH;
-import static com.reni.service.constants.RENIServiceConstant.ORR_PATH;
+import static com.reni.service.constants.RENIServiceConstant.*;
 import static com.reni.data.constants.RENIDataConstants.USER_ID;
 
 import javax.ws.rs.Consumes;
@@ -23,6 +21,8 @@ import com.reni.service.ORRService;
 import com.reni.service.exception.RENIServiceException;
 
 @Path(ORR_PATH)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 @Component
 public class ORRController extends CoreController {
 
@@ -31,36 +31,28 @@ public class ORRController extends CoreController {
 
 	
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response fetchORRDetails() throws RENIServiceException{
 		return Response.ok(service.fetchORRDetails()).build();
 	}
 	
 	@GET
-	@Path(ACTIVE_PATH)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path(AVALIABLE)
 	public Response fetchActiveORRDetails() throws RENIServiceException{
 		return Response.ok(service.fetchActiveORRDetails()).build();
 	}
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response createORR(OnRoadResource onRoadResource) throws RENIServiceException{
 
 		validateInput(onRoadResource);
 		
-		service.updateORR(onRoadResource);
+		service.createORR(onRoadResource);
 		
 		return Response.ok().build();
 	}
 	
 	
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateORR(OnRoadResource onRoadResource) throws RENIServiceException{
 
 		validateInput(onRoadResource);
@@ -73,24 +65,18 @@ public class ORRController extends CoreController {
 	
 	@GET
 	@Path(ONHIRE_PATH)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response fetchOnHireORRDetails() throws RENIServiceException{
 		return Response.ok(service.fetchOnHireORRDetails()).build();
 	}
 	
 	@GET
-	@Path(ONHIRE_PATH+ACTIVE_PATH)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path(ONHIRE_PATH+AVALIABLE)
 	public Response fetchActiveOnHireORRDetails() throws RENIServiceException{
 		return Response.ok(service.fetchActiveOnHireORRDetails()).build();
 	}
 	
 	@POST
 	@Path(ONHIRE_PATH)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response createOnHireORR(@HeaderParam(USER_ID) String userId,OnRoadResource onRoadResource) throws RENIServiceException{
 		validateInput(onRoadResource);
 		
@@ -102,8 +88,6 @@ public class ORRController extends CoreController {
 	
 	@PUT
 	@Path(ONHIRE_PATH)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateOnHireORR(OnRoadResource onRoadResource) throws RENIServiceException{
 		
 		validateInput(onRoadResource);
@@ -113,5 +97,22 @@ public class ORRController extends CoreController {
 		return Response.ok().build();
 	}
 	
+	@GET
+	@Path(REPORT)
+	public Response fetchORRReportDetails(String orrId, String reqDate) throws RENIServiceException{
+		
+		validateInput(orrId,reqDate);
+		
+		return Response.ok(service.fetchORRReportDetails(orrId,reqDate)).build();
+	}
+	
+	@GET
+	@Path(ONHIRE_PATH+REPORT)
+	public Response fetchOnHireORRReportDetails(String orrId, String reqDate) throws RENIServiceException{
+		
+		validateInput(orrId,reqDate);
+		
+		return Response.ok(service.fetchOnHireORRReportDetails(orrId,reqDate)).build();
+	}
 	
 }

@@ -9,6 +9,8 @@ public interface RENIServiceConstant {
 	String VENDORS_PATH="/vendors";
 	String ITEMS_PATH="/items";
 	String EXPENSE_TYPES_PATH="/expenseTypes";
+	String PAYMENT_MODES_PATH="/paymentModes";
+	String EXPENSE="/expense";
 	
 	
 	String PICKUP_PATH = "/pickup";
@@ -21,7 +23,8 @@ public interface RENIServiceConstant {
 	//ORR
 	String ORR_PATH="/orr";
 	String ONHIRE_PATH="/onHire";
-	String ACTIVE_PATH="/active";
+	String AVALIABLE="/avaliable";
+	String REPORT ="/report";
 
 	
 	//error message
@@ -37,5 +40,9 @@ public interface RENIServiceConstant {
 	String ITEM_TRANSACTION_SAVE_FAILED="Item transaction failed while saving the data";
 	String INVALID_RIGHTS ="Transaction is not allowed for your role";
 	String ONHIRE_ORR_MANADATORY="OnHire ORR : contactNo, drivingLicNo, orrName and VehicleNo is mandatory";
+	String DUPLICATE_ONHIRE_ORR="OnHire ORR already existed.";
+	String BILLNO_MANDATORY="Expense BillNo is mandatory.";
+	String EXP_TYPE_PAYMENT_CODE_MANDATORY="ExpenseType/SubType and PaymentMode is Mandatoy.";
+	String EXPENSE_DATE_MANDATORY="Expense Date is mandatory.";
 
 }

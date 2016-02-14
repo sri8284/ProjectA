@@ -37,7 +37,7 @@ public class ORRDataServiceImpl implements ORRDataService {
 	private static final String SELECT_ACTIVE_ORR_DETAILS = " SELECT CONCAT(emp.EMP_FIRST_NAME,' ',emp.EMP_LAST_NAME) as ORR_NAME, orr.* from orr orr "
 			+ "	join employee emp on emp.EMP_ID = orr.ORR_ID where ACTIVE_STATE='Y' and (ASSIGNMENT_TYPE !='P' or ASSIGNMENT_TYPE is null)  ";
 
-	private static final String SELECT_ONHIRE_ORR_DETAILS = "SELECT * FROM onhireorr";
+	private static final String SELECT_ONHIRE_ORR_DETAILS = "SELECT * FROM onhireorr where ACTIVE_STATE='Y' ";
 	private static final String SELECT_ACTIVE_ONHIRE_ORR_DETAILS = "SELECT * FROM onhireorr where ACTIVE_STATE='Y' and (ASSIGNMENT_TYPE !='P' or ASSIGNMENT_TYPE is null) ";
 
 	private static final String INSERT_ONHIRE_ORR = "INSERT INTO ONHIREORR (ORR_ID,ORR_NAME,ACTIVE_STATE,VEHICLE_NO,DRIVING_LIC_NO,CONCAT_NO,ASSIGNMENT_TYPE,CREATED_DATE,CREATED_BY)"
@@ -45,6 +45,9 @@ public class ORRDataServiceImpl implements ORRDataService {
 	private static final String INSERT_ITEM_TRANSACTION = "INSERT INTO ITEM_TRANSACTION (PICKUP_ID,ITEM_ID,CREATED_DATE,CREATED_BY,ITEM_PAID_RATE,ITEM_EXPECTED_VOL)"
 			+ "VALUES (:PICKUP_ID,:ITEM_ID,:CREATED_DATE,:CREATED_BY,:ITEM_PAID_RATE,:ITEM_EXPECTED_VOL)";;
 
+	private static final String CHECK_ONHIRE_ORR_NY_DRVLICNO = "SELECT COUNT(*) FROM onhireorr where DRIVING_LIC_NO=:DRIVING_LIC_NO ";
+
+			
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -130,6 +133,20 @@ public class ORRDataServiceImpl implements ORRDataService {
 	public void updateOnHireORR(OnRoadResource onRoadResource) throws RENIDataServiceException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isDuplicateOnHireORR(String drivingLicNo) throws RENIDataServiceException {
+		final Map<String,Object> namedParameters = new HashMap<String,Object>();
+		namedParameters.put(DRIVING_LIC_NO, drivingLicNo);
+		
+		final int value = namedParameterJdbcTemplate.queryForObject(CHECK_ONHIRE_ORR_NY_DRVLICNO, namedParameters,
+				Integer.class);
+		if(value==1){
+			return true;
+		}
+		
+		return false;
 	}
 
 	

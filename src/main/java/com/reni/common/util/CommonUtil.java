@@ -23,6 +23,7 @@ public class CommonUtil {
 		return false;
 	}
 	
+	
 	public static String generateSessionId(){
 		return  UUID.randomUUID().toString();
 	}

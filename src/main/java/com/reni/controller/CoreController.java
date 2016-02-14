@@ -7,9 +7,14 @@ import com.reni.service.exception.RENIValidationException;
 
 abstract class CoreController {
 
-	public <T> void validateInput(T value) throws RENIValidationException {
-		if(value==null){
-			throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST,INVALID_REQUEST);
-		}		
+	@SuppressWarnings("unchecked")
+	public <T> void validateInput(T... values) throws RENIValidationException {
+
+		if (values != null) {
+			for (T value : values) {
+				if (value == null)
+					throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST, INVALID_REQUEST);
+			}
+		}
 	}
 }

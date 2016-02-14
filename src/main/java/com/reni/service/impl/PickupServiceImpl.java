@@ -60,13 +60,7 @@ public class PickupServiceImpl implements PickupService {
 	@Override
 	public void createPickup(Integer userId,Pickup pickupDetails,String sessionId) throws RENIServiceException {
 		try {
-			if (!userDataService.isSessionValid(userId,sessionId)) {
-				throw new RENIValidationException(RENIErrorCodes.INVALID_ACCESSS, INVALID_ACCESSS);
-			}
-			if(!userDataService.isAdmin(userId)){
-				throw new RENIValidationException(RENIErrorCodes.INVALID_RIGHTS, INVALID_RIGHTS);
-			}
-			//TODO - authorization chekc - Admin only can do insert
+		
 			pickupServcie.createPickup(userId, pickupDetails);
 			
 		} catch (RENIDataServiceException e) {

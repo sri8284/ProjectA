@@ -13,6 +13,7 @@ import com.reni.dao.MasterDataRepository;
 import com.reni.model.Area;
 import com.reni.model.ExpenseType;
 import com.reni.model.Item;
+import com.reni.model.PaymentMode;
 import com.reni.model.Vendor;
 import com.reni.service.MasterDataSerice;
 import com.reni.service.constants.RENIErrorCodes;
@@ -63,6 +64,17 @@ public class MasterDataSericeImpl implements MasterDataSerice {
 	public List<ExpenseType> fetchExpenseTypeDetails() throws RENIServiceException {
 		try{
 			return repository.fetchExpenseTypeDetails();
+			
+		}catch(RENIDataServiceException e){
+			e.printStackTrace();
+			throw new RENIServiceException(RENIErrorCodes.DATA_FECTH_ERROR, DATA_FECTH_ERROR);
+		}
+	}
+
+	@Override
+	public List<PaymentMode> fetchPaymentModes() throws RENIServiceException {
+		try{
+			return repository.fetchPaymentModes();
 			
 		}catch(RENIDataServiceException e){
 			e.printStackTrace();

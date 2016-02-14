@@ -1,8 +1,6 @@
 package com.reni.service.impl;
 
-import static com.reni.service.constants.RENIServiceConstant.DATA_FECTH_ERROR;
-import static com.reni.service.constants.RENIServiceConstant.DATA_SAVE_ERROR;
-import static com.reni.service.constants.RENIServiceConstant.ONHIRE_ORR_MANADATORY;
+import static com.reni.service.constants.RENIServiceConstant.*;
 import static com.reni.common.util.CommonUtil.isNullOrEmpty;
 import java.util.List;
 
@@ -91,8 +89,18 @@ public class ORRServiceImpl implements ORRService {
 			if(isNullOrEmpty(onRoadResource.getConcatNo(),onRoadResource.getDrivingLicNo(),onRoadResource.getOrrName(),onRoadResource.getVehicleNo())){
 				throw new RENIServiceException(RENIErrorCodes.ONHIRE_ORR_MANADATORY, ONHIRE_ORR_MANADATORY);
 			}
+			
+			// TODO - validate that driving lic no is already existed or not.
+			
+			if(orrDataService.isDuplicateOnHireORR(onRoadResource.getDrivingLicNo())){
+				throw new RENIServiceException(RENIErrorCodes.DUPLICATE_ONHIRE_ORR, DUPLICATE_ONHIRE_ORR);
+
+			}
+			
 			String orrId = String.valueOf(System.currentTimeMillis());
+			
 			onRoadResource.setOrrId(orrId);
+			
 			orrDataService.createOnHireORR(userId,onRoadResource);
 
 		} catch (RENIDataServiceException e) {
@@ -123,6 +131,21 @@ public class ORRServiceImpl implements ORRService {
 			throw new RENIServiceException(RENIErrorCodes.DATA_SAVE_ERROR, DATA_SAVE_ERROR);
 		}
 
+	}
+
+	@Override
+	public Object fetchORRReportDetails(String orrId, String reqDate) {
+		//TODO - validate the orrID is valid or not - should be active
+		//TODO - convert the String to Date.
+		//TODO - fetch the his total pickups on requested date in pickup table. join with orr table that is not allocated to any pickup.
+		return null;
+	}
+
+	@Override
+	public Object fetchOnHireORRReportDetails(String orrId, String reqDate) {
+		//TODO - validate the orrID is valid or not - should be active
+		
+		return null;
 	}
 
 }

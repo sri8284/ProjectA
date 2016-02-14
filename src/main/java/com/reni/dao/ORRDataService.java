@@ -21,6 +21,8 @@ public interface ORRDataService {
 
 	void createOnHireORR(String userId,OnRoadResource onRoadResource) throws RENIDataServiceException;;
 
-	void updateOnHireORR(OnRoadResource onRoadResource) throws RENIDataServiceException;;
+	void updateOnHireORR(OnRoadResource onRoadResource) throws RENIDataServiceException;
+
+	boolean isDuplicateOnHireORR(String drivingLicNo) throws RENIDataServiceException;
 
 }

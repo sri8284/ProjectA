@@ -12,10 +12,12 @@ import com.reni.dao.MasterDataRepository;
 import com.reni.model.Area;
 import com.reni.model.ExpenseType;
 import com.reni.model.Item;
+import com.reni.model.PaymentMode;
 import com.reni.model.Vendor;
 import com.reni.rowmapper.AreaRowMapper;
 import com.reni.rowmapper.ExpenseTypeRowMapper;
 import com.reni.rowmapper.ItemRowMapper;
+import com.reni.rowmapper.PaymentModeRowMapper;
 import com.reni.rowmapper.VendorRowMapper;
 import com.reni.service.exception.RENIDataServiceException;
 
@@ -27,6 +29,8 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 	private static final String SELECT_ITEM = "SELECT * FROM ITEM";
 	private static final String SELECT_EXPESNSE_TYPE = "SELECT * FROM EXPENSE_TYPE";
 	private static final String SELECT_VENDOR = "SELECT * FROM VENDOR";
+	private static final String SELECT_PAYMENT_MODES = "SELECT * FROM PAYMENT_MODE";
+	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -52,6 +56,12 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 	@Override
 	public List<Vendor> fetchVendorDetails() throws RENIDataServiceException {
 		return (List<Vendor>) namedParameterJdbcTemplate.query(SELECT_VENDOR, new VendorRowMapper());
+	}
+
+	@Override
+	public List<PaymentMode> fetchPaymentModes() throws RENIDataServiceException {
+		return (List<PaymentMode>) namedParameterJdbcTemplate.query(SELECT_PAYMENT_MODES, new PaymentModeRowMapper());
+
 	}
 
 }

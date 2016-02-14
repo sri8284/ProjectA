@@ -1,11 +1,7 @@
 package com.reni.controller;
 
 import static com.reni.data.constants.RENIDataConstants.USER_ID;
-import static com.reni.service.constants.RENIServiceConstant.AREAS_PATH;
-import static com.reni.service.constants.RENIServiceConstant.EXPENSE_TYPES_PATH;
-import static com.reni.service.constants.RENIServiceConstant.ITEMS_PATH;
-import static com.reni.service.constants.RENIServiceConstant.MASTER_PATH;
-import static com.reni.service.constants.RENIServiceConstant.VENDORS_PATH;
+import static com.reni.service.constants.RENIServiceConstant.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -68,5 +64,13 @@ public class MasterDataController extends CoreController{
 		return Response.ok(masterDataService.fetchExpenseTypeDetails()).build();
 	}
 	
+	//fetch payment modes details
+	@GET
+	@Path(PAYMENT_MODES_PATH)
+	public Response fetchPaymentModes(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
+		
+		validateInput(userId);
+		return Response.ok(masterDataService.fetchPaymentModes()).build();
+	}
 	
 }

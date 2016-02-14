@@ -23,4 +23,8 @@ public interface ORRService {
 
 	void updateOnHireORR(OnRoadResource onRoadResource) throws RENIServiceException;
 
+	Object fetchORRReportDetails(String orrId, String reqDate);
+
+	Object fetchOnHireORRReportDetails(String orrId, String reqDate);
+
 }
