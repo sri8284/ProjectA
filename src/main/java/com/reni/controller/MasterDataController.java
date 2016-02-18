@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jboss.resteasy.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +24,15 @@ import com.reni.service.exception.RENIServiceException;
 @Component
 public class MasterDataController extends CoreController{
 
+	static final Logger logger = Logger.getLogger(MasterDataController.class); // register class with logger  
+
 	@Autowired
 	MasterDataSerice masterDataService;
 	
 	@GET
 	@Path(AREAS_PATH)
 	public Response fetchAreaDetails(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
-		
+		logger.info("inside Area Controller ");
 		validateInput(userId);
 		return Response.ok(masterDataService.fetchAreaDetails()).build();
 	}

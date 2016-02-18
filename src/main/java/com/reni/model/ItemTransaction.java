@@ -6,18 +6,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value = Include.NON_NULL)
 public class ItemTransaction extends Basic {
 
-	// TODO - why this pickupId since this id presented in pickup model.
+	private static final long serialVersionUID = 6696013968199929145L;
 	private String pickupId;
 	private String itemId;
-	// TODO filedname should be readable.
 	private Float itemExpectedVol;
-	// TODO filedname should be readable.
 	private Float itemActualVol;
 	private Float itemCurrentRate;
 	private Float itemPaidRate;
-	// TODO filedname should be readable.
-	private Float amtNeedTobePaid;
-	private Float partialPayment;
+	private Float totalAmount;
 
 	public String getPickupId() {
 		return pickupId;
@@ -67,20 +63,12 @@ public class ItemTransaction extends Basic {
 		this.itemPaidRate = itemPaidRate;
 	}
 
-	public Float getAmtNeedTobePaid() {
-		return amtNeedTobePaid;
+	public Float getTotalAmount() {
+		return totalAmount;
 	}
 
-	public void setAmtNeedTobePaid(Float amtNeedTobePaid) {
-		this.amtNeedTobePaid = amtNeedTobePaid;
-	}
-
-	public Float getPartialPayment() {
-		return partialPayment;
-	}
-
-	public void setPartialPayment(Float partialPayment) {
-		this.partialPayment = partialPayment;
+	public void setTotalAmount(Float totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 }

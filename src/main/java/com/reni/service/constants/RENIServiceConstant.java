@@ -19,6 +19,8 @@ public interface RENIServiceConstant {
 	String USER_PATH="/user";
 	String LOGIN_PATH="/login";
 	String LOGOUT_PATH="/logout";
+	String DATE="date";
+	String STATUS="/status";
 	
 	//ORR
 	String ORR_PATH="/orr";

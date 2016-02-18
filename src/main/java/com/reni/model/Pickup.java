@@ -1,6 +1,8 @@
 package com.reni.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,25 +13,22 @@ public class Pickup extends Basic {
 
 	private static final long serialVersionUID = 3856330394507432661L;
 	private String pickupId;
-	private Date pickupDate;
-	private String assignmentType;
-	// TODO understand the variable name and rename accordingly
-	private Long orr;
-	// TODO understand the variable name and rename accordingly
-	private String others;
+	private LocalDate pickupDate;
+	private LocalTime pickupTime;
 	private String vendorId;
+	private String  orrId;
+	private String assignmentType;
 	private String vehicleNo;
-	private Float totalPaidAmount;
-	private Float remainPayAmount;
-	// TODO understand the variable name and rename accordingly
-	private Integer openMeter;
-	// TODO understand the variable name and rename accordingly
-	private Integer colseMeter;
+	private Float totalPayment;
+	private Float paritalPayment;
+	private Float balancePayment;
 	private String complete;
+	private Integer vehicaleOpenMeter;
+	private Integer vehicaleColseMeter;
+	private LocalDateTime pickupOpenTime;
+	private LocalDateTime pickupCloseTime;
 	private String comments;
 	private List<ItemTransaction> itemTransactions;
-	
-	
 	
 	public String getPickupId() {
 		return pickupId;
@@ -37,29 +36,17 @@ public class Pickup extends Basic {
 	public void setPickupId(String pickupId) {
 		this.pickupId = pickupId;
 	}
-	public Date getPickupDate() {
+	public LocalDate getPickupDate() {
 		return pickupDate;
 	}
-	public void setPickupDate(Date pickupDate) {
+	public void setPickupDate(LocalDate pickupDate) {
 		this.pickupDate = pickupDate;
 	}
-	public String getAssignmentType() {
-		return assignmentType;
+	public LocalTime getPickupTime() {
+		return pickupTime;
 	}
-	public void setAssignmentType(String assignmentType) {
-		this.assignmentType = assignmentType;
-	}
-	public Long getOrr() {
-		return orr;
-	}
-	public void setOrr(Long orr) {
-		this.orr = orr;
-	}
-	public String getOthers() {
-		return others;
-	}
-	public void setOthers(String others) {
-		this.others = others;
+	public void setPickupTime(LocalTime pickupTime) {
+		this.pickupTime = pickupTime;
 	}
 	public String getVendorId() {
 		return vendorId;
@@ -67,35 +54,41 @@ public class Pickup extends Basic {
 	public void setVendorId(String vendorId) {
 		this.vendorId = vendorId;
 	}
+	public String getOrrId() {
+		return orrId;
+	}
+	public void setOrrId(String orrId) {
+		this.orrId = orrId;
+	}
+	public String getAssignmentType() {
+		return assignmentType;
+	}
+	public void setAssignmentType(String assignmentType) {
+		this.assignmentType = assignmentType;
+	}
 	public String getVehicleNo() {
 		return vehicleNo;
 	}
 	public void setVehicleNo(String vehicleNo) {
 		this.vehicleNo = vehicleNo;
 	}
-	public Float getTotalPaidAmount() {
-		return totalPaidAmount;
+	public Float getTotalPayment() {
+		return totalPayment;
 	}
-	public void setTotalPaidAmount(Float totalPaidAmount) {
-		this.totalPaidAmount = totalPaidAmount;
+	public void setTotalPayment(Float totalPayment) {
+		this.totalPayment = totalPayment;
 	}
-	public Float getRemainPayAmount() {
-		return remainPayAmount;
+	public Float getParitalPayment() {
+		return paritalPayment;
 	}
-	public void setRemainPayAmount(Float remainPayAmount) {
-		this.remainPayAmount = remainPayAmount;
+	public void setParitalPayment(Float paritalPayment) {
+		this.paritalPayment = paritalPayment;
 	}
-	public Integer getOpenMeter() {
-		return openMeter;
+	public Float getBalancePayment() {
+		return balancePayment;
 	}
-	public void setOpenMeter(Integer openMeter) {
-		this.openMeter = openMeter;
-	}
-	public Integer getColseMeter() {
-		return colseMeter;
-	}
-	public void setColseMeter(Integer colseMeter) {
-		this.colseMeter = colseMeter;
+	public void setBalancePayment(Float balancePayment) {
+		this.balancePayment = balancePayment;
 	}
 	public String getComplete() {
 		return complete;
@@ -103,11 +96,29 @@ public class Pickup extends Basic {
 	public void setComplete(String complete) {
 		this.complete = complete;
 	}
-	public List<ItemTransaction> getItemTransactions() {
-		return itemTransactions;
+	public Integer getVehicaleOpenMeter() {
+		return vehicaleOpenMeter;
 	}
-	public void setItemTransactions(List<ItemTransaction> itemTransactions) {
-		this.itemTransactions = itemTransactions;
+	public void setVehicaleOpenMeter(Integer vehicaleOpenMeter) {
+		this.vehicaleOpenMeter = vehicaleOpenMeter;
+	}
+	public Integer getVehicaleColseMeter() {
+		return vehicaleColseMeter;
+	}
+	public void setVehicaleColseMeter(Integer vehicaleColseMeter) {
+		this.vehicaleColseMeter = vehicaleColseMeter;
+	}
+	public LocalDateTime getPickupOpenTime() {
+		return pickupOpenTime;
+	}
+	public void setPickupOpenTime(LocalDateTime pickupOpenTime) {
+		this.pickupOpenTime = pickupOpenTime;
+	}
+	public LocalDateTime getPickupCloseTime() {
+		return pickupCloseTime;
+	}
+	public void setPickupCloseTime(LocalDateTime pickupCloseTime) {
+		this.pickupCloseTime = pickupCloseTime;
 	}
 	public String getComments() {
 		return comments;
@@ -115,6 +126,12 @@ public class Pickup extends Basic {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-
+	public List<ItemTransaction> getItemTransactions() {
+		return itemTransactions;
+	}
+	public void setItemTransactions(List<ItemTransaction> itemTransactions) {
+		this.itemTransactions = itemTransactions;
+	}
+	
 	
 }

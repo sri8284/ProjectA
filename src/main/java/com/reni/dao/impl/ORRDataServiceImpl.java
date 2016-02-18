@@ -1,30 +1,30 @@
 package com.reni.dao.impl;
 
 import static com.reni.common.util.CommonUtil.currentTimeStamp;
-import static com.reni.data.constants.RENIDataConstants.*;
+import static com.reni.data.constants.RENIDataConstants.ACTIVE_STATE;
+import static com.reni.data.constants.RENIDataConstants.ASSIGNMENT_TYPE;
+import static com.reni.data.constants.RENIDataConstants.CONCAT_NO;
+import static com.reni.data.constants.RENIDataConstants.CREATED_BY;
+import static com.reni.data.constants.RENIDataConstants.CREATED_DATE;
+import static com.reni.data.constants.RENIDataConstants.DRIVING_LIC_NO;
+import static com.reni.data.constants.RENIDataConstants.ORR_ID;
+import static com.reni.data.constants.RENIDataConstants.ORR_NAME;
+import static com.reni.data.constants.RENIDataConstants.VEHICLE_NO;
 import static com.reni.service.constants.RENIServiceConstant.DATA_SAVE_ERROR;
-import static com.reni.service.constants.RENIServiceConstant.ITEM_TRANSACTION_SAVE_FAILED;
-import static com.reni.service.constants.RENIServiceConstant.PICKUP_NOT_ALLOWED;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reni.dao.ORRDataService;
-import com.reni.dao.PickupDataService;
-import com.reni.model.ItemTransaction;
 import com.reni.model.OnRoadResource;
-import com.reni.model.Pickup;
 import com.reni.rowmapper.ORRRowMapper;
-import com.reni.rowmapper.PickupRowMapper;
 import com.reni.service.constants.RENIErrorCodes;
 import com.reni.service.exception.RENIDataServiceException;
 
@@ -42,9 +42,7 @@ public class ORRDataServiceImpl implements ORRDataService {
 
 	private static final String INSERT_ONHIRE_ORR = "INSERT INTO ONHIREORR (ORR_ID,ORR_NAME,ACTIVE_STATE,VEHICLE_NO,DRIVING_LIC_NO,CONCAT_NO,ASSIGNMENT_TYPE,CREATED_DATE,CREATED_BY)"
 			+ "VALUES (:ORR_ID,:ORR_NAME,:ACTIVE_STATE,:VEHICLE_NO,:DRIVING_LIC_NO,:CONCAT_NO,:ASSIGNMENT_TYPE,:CREATED_DATE,:CREATED_BY) ";
-	private static final String INSERT_ITEM_TRANSACTION = "INSERT INTO ITEM_TRANSACTION (PICKUP_ID,ITEM_ID,CREATED_DATE,CREATED_BY,ITEM_PAID_RATE,ITEM_EXPECTED_VOL)"
-			+ "VALUES (:PICKUP_ID,:ITEM_ID,:CREATED_DATE,:CREATED_BY,:ITEM_PAID_RATE,:ITEM_EXPECTED_VOL)";;
-
+	
 	private static final String CHECK_ONHIRE_ORR_NY_DRVLICNO = "SELECT COUNT(*) FROM onhireorr where DRIVING_LIC_NO=:DRIVING_LIC_NO ";
 
 			

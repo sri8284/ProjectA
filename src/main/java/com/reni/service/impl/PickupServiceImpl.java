@@ -3,8 +3,10 @@ package com.reni.service.impl;
 import static com.reni.service.constants.RENIServiceConstant.*;
 import static com.reni.service.constants.RENIServiceConstant.INVALID_ACCESSS;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,21 +33,7 @@ public class PickupServiceImpl implements PickupService {
 	PickupDataService pickupServcie;
 	
 	@Override
-	public List<Pickup> getPickupDetails() throws RENIServiceException {
-		
-		List<Pickup> pickupRespDetails = new ArrayList<Pickup>();
-		try {
-			return pickupServcie.listOfPickups();
-		} catch (RENIDataServiceException e) {
-			e.printStackTrace();
-			//TODO - thow the exception
-		}
-		
-		return pickupRespDetails;
-	}
-
-	@Override
-	public Pickup getPickupById(String pickupId) throws RENIServiceException {
+	public Pickup fetchPickupDetailsById(String pickupId) throws RENIServiceException {
 		Pickup pickupResp = new Pickup();
 		try {
 			return pickupServcie.getPickup(pickupId);
@@ -58,7 +46,7 @@ public class PickupServiceImpl implements PickupService {
 	}
 
 	@Override
-	public void createPickup(Integer userId,Pickup pickupDetails,String sessionId) throws RENIServiceException {
+	public void createPickup(Integer userId,Pickup pickupDetails) throws RENIServiceException {
 		try {
 		
 			pickupServcie.createPickup(userId, pickupDetails);
@@ -69,6 +57,24 @@ public class PickupServiceImpl implements PickupService {
 
 		}
 		
+	}
+
+	@Override
+	public Map<String, Object> fetchCompletePickupsStatusDetails() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Integer> fetchPickupsStatus(LocalDate pickupDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> fetchPickupReportByDate(LocalDate pickupDate) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 import static com.reni.data.constants.RENIDataConstants.*;
 import static com.reni.service.constants.RENIServiceConstant.INVALID_REQUEST;
 import static com.reni.service.constants.RENIServiceConstant.PICKUP_ID_PATH;
+
+import java.time.LocalDate;
+
 import static com.reni.service.constants.RENIServiceConstant.*;
 
 import com.reni.model.Pickup;
@@ -31,29 +34,50 @@ public class PickupController {
 	@Autowired
 	PickupService service;
 	
+	
+	
+	@GET
+	@Path("/{"+DATE+"}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response  fetchPickupReportByDate(@PathParam(DATE) final LocalDate pickupDate) throws RENIServiceException{
+		return Response.ok(service.fetchPickupReportByDate(pickupDate)).build();
+	}
+	
+	
+	@GET
+	@Path(STATUS+"/{"+DATE+"}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response fetchPickupsStatus(@PathParam(DATE) final LocalDate pickupDate) throws RENIServiceException{
+		return Response.ok(service.fetchPickupsStatus(pickupDate)).build();
+	}
+	
+	@GET
+	@Path(STATUS)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response fetchCompletePickupsStatusDetails() throws RENIServiceException{
+		//Which should have pickupId, date, areaCode, areaName should sent.
+		return Response.ok(service.fetchCompletePickupsStatusDetails()).build();
+	}
+	
 	@GET
 	@Path("/{"+PICKUP_ID_PATH+"}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPickupById(@PathParam(PICKUP_ID_PATH) final String pickupId) throws RENIServiceException{
-		return Response.ok(service.getPickupById(pickupId)).build();
+	public Response fetchPickupDetailsById(@PathParam(PICKUP_ID_PATH) final String pickupId) throws RENIServiceException{
+		return Response.ok(service.fetchPickupDetailsById(pickupId)).build();
 	}
 	
-	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listOfPickups() throws RENIServiceException{
-		return Response.ok(service.getPickupDetails()).build();
-	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createPickup(final Pickup pickupDetails,@HeaderParam(ACCESS_KEY) final String sessionId,@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
-		if(pickupDetails==null || sessionId==null || userId==null){
-			throw new RENIValidationException(RENIErrorCodes.INVALID_REQUEST,INVALID_REQUEST);
-		}
-		service.createPickup(userId, pickupDetails,sessionId);
+	public Response createPickup(@HeaderParam(USER_ID) final Integer userId, final Pickup pickupInput) throws RENIServiceException{
+		
+		service.createPickup(userId, pickupInput);
+		
 		return Response.ok().build();
 	}
 	

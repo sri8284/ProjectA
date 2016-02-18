@@ -8,7 +8,7 @@ import static com.reni.data.constants.RENIDataConstants.CREATED_DATE;
 import static com.reni.data.constants.RENIDataConstants.ITEM_EXPECTED_VOL;
 import static com.reni.data.constants.RENIDataConstants.ITEM_CODE;
 import static com.reni.data.constants.RENIDataConstants.ITEM_PAID_RATE;
-import static com.reni.data.constants.RENIDataConstants.ORR;
+import static com.reni.data.constants.RENIDataConstants.ORR_ID;
 import static com.reni.data.constants.RENIDataConstants.PICKUP_DATE;
 import static com.reni.data.constants.RENIDataConstants.PICKUP_ID;
 import static com.reni.data.constants.RENIDataConstants.VENDOR_ID;
@@ -68,7 +68,7 @@ public class PickupDataServiceImpl implements PickupDataService {
 			namedParameters.put(PICKUP_ID, pickup.getPickupId());
 			namedParameters.put(VENDOR_ID, pickup.getVendorId());
 			namedParameters.put(ASSIGNMENT_TYPE, pickup.getAssignmentType());
-			namedParameters.put(ORR, pickup.getOrr());
+			namedParameters.put(ORR_ID, pickup.getOrrId());
 			namedParameters.put(PICKUP_DATE, pickup.getPickupDate());
 			namedParameters.put(CREATED_BY, userId);
 			namedParameters.put(CREATED_DATE, currentTimeStamp());
