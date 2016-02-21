@@ -1,6 +1,5 @@
 package com.reni.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,8 @@ public interface PickupService {
 
 	Pickup fetchPickupDetailsById(final String pickupId) throws RENIServiceException;
 	void createPickup(final Integer userId,final Pickup pickupDetails) throws RENIServiceException;
-	Map<String,Object> fetchCompletePickupsStatusDetails();
-	Map<String, Integer> fetchPickupsStatus(LocalDate pickupDate);
-	Map<String,Object> fetchPickupReportByDate(LocalDate pickupDate);
+	List<Map<String, Object>> fetchPickupsReport(String pickupDateInput) throws RENIServiceException;
+	List<Map<String, Object>> fetchPickupsAssignmentStatus(String pickupDate) throws RENIServiceException;
+	List<Map<String, Object>> fetchPickupStatus(String pickupDate) throws RENIServiceException;
+	void closePickup(Integer userId, String pickupId, Pickup pickupInput) throws RENIServiceException;
 }

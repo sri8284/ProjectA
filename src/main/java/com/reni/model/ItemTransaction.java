@@ -8,10 +8,9 @@ public class ItemTransaction extends Basic {
 
 	private static final long serialVersionUID = 6696013968199929145L;
 	private String pickupId;
-	private String itemId;
+	private String itemCode;
 	private Float itemExpectedVol;
 	private Float itemActualVol;
-	private Float itemCurrentRate;
 	private Float itemPaidRate;
 	private Float totalAmount;
 
@@ -23,12 +22,12 @@ public class ItemTransaction extends Basic {
 		this.pickupId = pickupId;
 	}
 
-	public String getItemId() {
-		return itemId;
+	public String getItemCode() {
+		return itemCode;
 	}
 
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
 	}
 
 	public Float getItemExpectedVol() {
@@ -45,14 +44,6 @@ public class ItemTransaction extends Basic {
 
 	public void setItemActualVol(Float itemActualVol) {
 		this.itemActualVol = itemActualVol;
-	}
-
-	public Float getItemCurrentRate() {
-		return itemCurrentRate;
-	}
-
-	public void setItemCurrentRate(Float itemCurrentRate) {
-		this.itemCurrentRate = itemCurrentRate;
 	}
 
 	public Float getItemPaidRate() {

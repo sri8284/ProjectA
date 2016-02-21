@@ -18,6 +18,11 @@ public class CoreException extends Exception{
 		errorResponse.setStatus(Boolean.FALSE);
 	}
 	
+	public CoreException(final String errorMessage){
+		errorResponse.setErrorMessge(errorMessage);
+		errorResponse.setStatus(Boolean.FALSE);
+	}
+	
 	public ErrorResponse getErrorResponse(){
 		return errorResponse;
 	}

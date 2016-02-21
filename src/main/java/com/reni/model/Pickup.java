@@ -1,8 +1,10 @@
 package com.reni.model;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,12 +15,11 @@ public class Pickup extends Basic {
 
 	private static final long serialVersionUID = 3856330394507432661L;
 	private String pickupId;
-	private LocalDate pickupDate;
-	private LocalTime pickupTime;
+	private Date pickupDate;
+	private Time pickupTime;
 	private String vendorId;
 	private String  orrId;
 	private String assignmentType;
-	private String vehicleNo;
 	private Float totalPayment;
 	private Float paritalPayment;
 	private Float balancePayment;
@@ -28,6 +29,7 @@ public class Pickup extends Basic {
 	private LocalDateTime pickupOpenTime;
 	private LocalDateTime pickupCloseTime;
 	private String comments;
+	private String areaCode;
 	private List<ItemTransaction> itemTransactions;
 	
 	public String getPickupId() {
@@ -36,16 +38,16 @@ public class Pickup extends Basic {
 	public void setPickupId(String pickupId) {
 		this.pickupId = pickupId;
 	}
-	public LocalDate getPickupDate() {
+	public Date getPickupDate() {
 		return pickupDate;
 	}
-	public void setPickupDate(LocalDate pickupDate) {
+	public void setPickupDate(Date pickupDate) {
 		this.pickupDate = pickupDate;
 	}
-	public LocalTime getPickupTime() {
+	public Time getPickupTime() {
 		return pickupTime;
 	}
-	public void setPickupTime(LocalTime pickupTime) {
+	public void setPickupTime(Time pickupTime) {
 		this.pickupTime = pickupTime;
 	}
 	public String getVendorId() {
@@ -65,12 +67,6 @@ public class Pickup extends Basic {
 	}
 	public void setAssignmentType(String assignmentType) {
 		this.assignmentType = assignmentType;
-	}
-	public String getVehicleNo() {
-		return vehicleNo;
-	}
-	public void setVehicleNo(String vehicleNo) {
-		this.vehicleNo = vehicleNo;
 	}
 	public Float getTotalPayment() {
 		return totalPayment;
@@ -131,6 +127,12 @@ public class Pickup extends Basic {
 	}
 	public void setItemTransactions(List<ItemTransaction> itemTransactions) {
 		this.itemTransactions = itemTransactions;
+	}
+	public String getAreaCode() {
+		return areaCode;
+	}
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
 	}
 	
 	

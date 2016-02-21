@@ -11,16 +11,19 @@ public interface RENIServiceConstant {
 	String EXPENSE_TYPES_PATH="/expenseTypes";
 	String PAYMENT_MODES_PATH="/paymentModes";
 	String EXPENSE="/expense";
-	
+	String NOTES_PATH="/notes";
+	String CREATE ="/create";
 	
 	String PICKUP_PATH = "/pickup";
-	String PICKUP_ID_PATH = "/pickupId";
+	String PICKUP_ID_PATH = "pickupId";
 	String REFERENCE_PATH="/reference";
 	String USER_PATH="/user";
 	String LOGIN_PATH="/login";
 	String LOGOUT_PATH="/logout";
 	String DATE="date";
 	String STATUS="/status";
+	String ASSIGNMENT_STATUS="assignmentStatus";
+	String CLOSE="close";
 	
 	//ORR
 	String ORR_PATH="/orr";
@@ -46,5 +49,12 @@ public interface RENIServiceConstant {
 	String BILLNO_MANDATORY="Expense BillNo is mandatory.";
 	String EXP_TYPE_PAYMENT_CODE_MANDATORY="ExpenseType/SubType and PaymentMode is Mandatoy.";
 	String EXPENSE_DATE_MANDATORY="Expense Date is mandatory.";
+	
+	String NEW_PICKUP="P";
+	String PENDING_FOR_SETTLEMENT="S";
+	String CLOSE_PICKUP="C";
+	
+	String NON_COMPLETE = "N";
+	String COMPLETED="C";
 
 }

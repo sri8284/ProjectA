@@ -14,4 +14,8 @@ public class RENIServiceException extends CoreException {
 		
 	}
 	
+	public RENIServiceException(final String errorMessage) {
+		super(errorMessage);
+		
+	}
 }

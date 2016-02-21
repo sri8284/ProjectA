@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,8 +17,6 @@ import org.springframework.stereotype.Component;
 import static com.reni.data.constants.RENIDataConstants.*;
 import static com.reni.service.constants.RENIServiceConstant.INVALID_REQUEST;
 import static com.reni.service.constants.RENIServiceConstant.PICKUP_ID_PATH;
-
-import java.time.LocalDate;
 
 import static com.reni.service.constants.RENIServiceConstant.*;
 
@@ -33,52 +32,67 @@ public class PickupController {
 
 	@Autowired
 	PickupService service;
-	
-	
-	
+
+	// it will fetch pickups status
 	@GET
-	@Path("/{"+DATE+"}")
+	@Path(STATUS + "/{" + DATE + "}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response  fetchPickupReportByDate(@PathParam(DATE) final LocalDate pickupDate) throws RENIServiceException{
-		return Response.ok(service.fetchPickupReportByDate(pickupDate)).build();
+	public Response fetchPickupStatus(@PathParam(DATE) final String pickupDate) throws RENIServiceException {
+		return Response.ok(service.fetchPickupStatus(pickupDate)).build();
 	}
-	
-	
+
+	// It will fetch pickup reports by date.
 	@GET
-	@Path(STATUS+"/{"+DATE+"}")
+	@Path(REPORT + "/{" + DATE + "}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response fetchPickupsStatus(@PathParam(DATE) final LocalDate pickupDate) throws RENIServiceException{
-		return Response.ok(service.fetchPickupsStatus(pickupDate)).build();
+	public Response fetchPickupsReport(@PathParam(DATE) final String pickupDate) throws RENIServiceException {
+		return Response.ok(service.fetchPickupsReport(pickupDate)).build();
 	}
-	
+
+	// it will fetch pickup details.
 	@GET
-	@Path(STATUS)
+	@Path("/{" + PICKUP_ID_PATH + "}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response fetchCompletePickupsStatusDetails() throws RENIServiceException{
-		//Which should have pickupId, date, areaCode, areaName should sent.
-		return Response.ok(service.fetchCompletePickupsStatusDetails()).build();
-	}
-	
-	@GET
-	@Path("/{"+PICKUP_ID_PATH+"}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response fetchPickupDetailsById(@PathParam(PICKUP_ID_PATH) final String pickupId) throws RENIServiceException{
+	public Response fetchPickupDetailsById(@PathParam(PICKUP_ID_PATH) final String pickupId)
+			throws RENIServiceException {
 		return Response.ok(service.fetchPickupDetailsById(pickupId)).build();
 	}
-	
-	
+
+	// it will fetch report details of pickup id and assignment status of the
+	// pickup.
+	@GET
+	@Path(ASSIGNMENT_STATUS + "/{" + DATE + "}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response fetchPickupsAssignmentStatus(@PathParam(DATE) final String pickupDate) throws RENIServiceException {
+		return Response.ok(service.fetchPickupsAssignmentStatus(pickupDate)).build();
+	}
+
+	// it will create the pickup
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createPickup(@HeaderParam(USER_ID) final Integer userId, final Pickup pickupInput) throws RENIServiceException{
-		
+	public Response createPickup(@HeaderParam(USER_ID) final Integer userId, final Pickup pickupInput)
+			throws RENIServiceException {
+
 		service.createPickup(userId, pickupInput);
-		
+
 		return Response.ok().build();
 	}
-	
+
+	// it will create the pickup
+	@PUT
+	@Path(CLOSE+ "/{" + PICKUP_ID_PATH + "}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response closePickup(@HeaderParam(USER_ID) final Integer userId, @PathParam(PICKUP_ID_PATH) final String pickupId, final Pickup pickupInput)
+			throws RENIServiceException {
+
+		service.closePickup(userId, pickupId, pickupInput);
+
+		return Response.ok().build();
+	}
 }

@@ -11,6 +11,7 @@ public interface RENIDataConstants {
 	//PICKUP TABLE
 	String PICKUP_ID="PICKUP_ID";
 	String PICKUP_DATE="PICKUP_DATE";
+	String PICKUP_TIME="PICKUP_TIME";
 	String ASSIGNMENT_TYPE="ASSIGNMENT_TYPE";
 	String OTHER="OTHER";
 	String TOTAL_PAYMENT="TOTAL_PAYMENT";
@@ -85,6 +86,7 @@ public interface RENIDataConstants {
 	String ITEM_PAID_RATE="ITEM_PAID_RATE";
 	String AMT_NEED_TO_BE_PAID="AMT_NEED_TO_BE_PAID";
 	String PARTIAL_PAYMENT="PARTIAL_PAYMENT";
+	String TOTAL_AMOUNT="TOTAL_AMOUNT";
 	
 	//EXPENSE_TYPE TABLE
 	String EXP_TYPE="EXP_TYPE";
@@ -103,5 +105,11 @@ public interface RENIDataConstants {
 	String BILLNO="BILLNO";
 	String LOCATION="LOCATION";
 	
+	//NOTES
+	String FROM_DATE="FROM_DATE";
+	String TO_DATE="TO_DATE";
+	String NOTE_DATE ="NOTE_DATE";
+	String NOTE_COMMENTS = "COMMENTS";
+	String NOTE_ID ="NOTE_ID";
 	
 }

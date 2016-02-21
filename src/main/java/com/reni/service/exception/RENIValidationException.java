@@ -7,4 +7,9 @@ public class RENIValidationException extends RENIServiceException{
 	public RENIValidationException(Enum errorCode, String errorMessage) {
 		super(errorCode, errorMessage);
 	}
+	
+	public RENIValidationException(String errorMessage) {
+		super(errorMessage);
+	}
+	
 }
