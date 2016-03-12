@@ -57,8 +57,8 @@ public interface RENIServiceConstant {
 	String EXP_TYPE_PAYMENT_CODE_MANDATORY="ExpenseType/SubType and PaymentMode is Mandatoy.";
 	String EXPENSE_DATE_MANDATORY="Expense Date is mandatory.";
 	
-	String NEW_PICKUP="P";
-	String PENDING_FOR_SETTLEMENT="S";
+	String NEW_PICKUP="N";
+	String PENDING_FOR_SETTLEMENT="P";
 	String CLOSE_PICKUP="C";
 	
 	String NON_COMPLETE = "N";

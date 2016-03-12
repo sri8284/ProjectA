@@ -6,7 +6,7 @@ import com.rnei.service.exception.RENIServiceException;
 
 public interface UserService {
 
-	Employee getBasicEmployeeInfo(Login loginDetails) throws RENIServiceException;
+	Employee getBasicEmployeeInfo(Integer userId) throws RENIServiceException;
 
 	void deleteSession(Integer userId) throws RENIServiceException;
 

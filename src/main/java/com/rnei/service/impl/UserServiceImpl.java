@@ -29,25 +29,9 @@ public class UserServiceImpl implements UserService {
 	UserDataService userDataService;
 
 	@Override
-	public Employee getBasicEmployeeInfo(Login loginDetails) throws RENIServiceException {
+	public Employee getBasicEmployeeInfo(Integer userId) throws RENIServiceException {
+		Employee employee = employeeDataService.getBasicEmployeeInfo(userId);
 
-		if (loginDetails.getUserId() == 0) {
-			throw new RENIValidationException(INVALID_REQUEST);
-		}
-		if (isNullOrEmpty(loginDetails.getiMEINumber(), loginDetails.getPassword())) {
-			throw new RENIValidationException(INVALID_REQUEST);
-		}
-		if (!userDataService.isValidUser(loginDetails.getUserId(), loginDetails.getPassword())) {
-			throw new RENIValidationException(INVALID_USER);
-		}
-		if (userDataService.isUserSessionExist(loginDetails.getUserId())) {
-			throw new RENIValidationException(DUPLICATE_SESSION);
-		}
-
-		Employee employee = employeeDataService.getBasicEmployeeInfo(loginDetails.getUserId());
-		final String sessionId = userDataService.createSession(loginDetails.getUserId());
-		employee.setSessionId(sessionId);
-		employee.setSessionExpire(SESSION_TIME);
 		return employee;
 	}
 

@@ -1,5 +1,6 @@
 package com.rnei.controller;
 
+import static com.rnei.service.constants.RENIDataConstants.USER_ID;
 import static com.rnei.service.constants.RENIServiceConstant.INVALID_REQUEST;
 import static com.rnei.service.constants.RENIServiceConstant.LOGIN_PATH;
 import static com.rnei.service.constants.RENIServiceConstant.LOGOUT_PATH;
@@ -7,6 +8,8 @@ import static com.rnei.service.constants.RENIServiceConstant.USER_PATH;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -30,31 +33,17 @@ public class UserController {
 	@Autowired
 	UserService loginService;
 	
-	@POST
+	@GET
 	@Path(LOGIN_PATH)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response validateUser(final Login loginDetails) throws RENIServiceException{
+	public Response validateUser(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
 		
-		if(loginDetails==null){
-			throw new RENIValidationException(INVALID_REQUEST);
-		}
-		Employee employee = loginService.getBasicEmployeeInfo(loginDetails);
-		
-		return Response.ok(employee).build();
-	}
-	
-	@DELETE
-	@Path(LOGOUT_PATH)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response validateUser(final Integer userId) throws RENIServiceException{
 		if(userId==null){
 			throw new RENIValidationException(INVALID_REQUEST);
 		}
-		loginService.deleteSession(userId);
-		return Response.ok(Status.OK).build();
+		Employee employee = loginService.getBasicEmployeeInfo(userId);
+		
+		return Response.ok(employee).build();
 	}
-	
-	
 }

@@ -1,10 +1,6 @@
 package com.rnei.dao.impl;
 
-import static com.rnei.service.constants.RENIDataConstants.ACCESS_KEY;
 import static com.rnei.service.constants.RENIDataConstants.EMP_ID;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
