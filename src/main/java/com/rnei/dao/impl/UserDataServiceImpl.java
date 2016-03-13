@@ -9,10 +9,15 @@ import static com.rnei.service.constants.RENIDataConstants.PASSWORD;
 import static com.rnei.service.constants.RENIDataConstants.START_TIME;
 import static com.rnei.service.constants.RENIDataConstants.USER_ID;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -21,6 +26,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rnei.dao.UserDataService;
+import com.rnei.model.Pickup;
+import com.rnei.model.Role;
+import com.rnei.model.User;
+import com.rnei.rowmapper.PickupRowMapper;
 import com.rnei.rowmapper.StringRowMapper;
 import com.rnei.service.exception.RENIDataServiceException;
 
@@ -28,14 +37,8 @@ import com.rnei.service.exception.RENIDataServiceException;
 @Transactional(propagation = Propagation.MANDATORY)
 public class UserDataServiceImpl implements UserDataService {
 
-	private static final String SELECT_SESSION_BY_USERID = "SELECT SESSION_ID FROM SESSION WHERE USER_ID=:USER_ID";
-	private static final String INSERT_SESSION = "INSERT INTO SESSION (USER_ID,SESSION_ID, START_TIME, END_TIME) "
-			+ "VALUES (:USER_ID,:SESSION_ID,:START_TIME,:END_TIME)";
-	private static final String CHECK_SESSION_EXPIRE = "SELECT COUNT(*) FROM SESSION WHERE USER_ID=:USER_ID AND SESSION_ID=:SESSION_ID AND END_TIME >=:END_TIME";
-	private static final String DELETE_SESSION = "DELETE FROM SESSION WHERE USER_ID=:USER_ID ";
-	private static final String CHECK_USER_VALID = "SELECT COUNT(*) FROM USER WHERE USER_ID=:USER_ID AND PASSWORD=:PASSWORD";
-	private static final String SELECT_SESSION_ID = "SELECT SESSION_ID FROM SESSION WHERE USER_ID=:USER_ID AND SESSION_ID=:SESSION_ID";
-
+	private static final String SELECT_USER_BY_USERID = "SELECT USER_ID, PASSWORD FROM USER WHERE USER_ID=:USER_ID ";
+	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -44,94 +47,27 @@ public class UserDataServiceImpl implements UserDataService {
 	}
 
 	@Override
-	public String createSession(Integer userId) throws RENIDataServiceException {
-		Map<String,Object> namedParameters = new HashMap<String,Object>();
-		final String sessionId = generateSessionId();
-		namedParameters.put(USER_ID, userId);
-		namedParameters.put(ACCESS_KEY, sessionId);
-		namedParameters.put(START_TIME, currentTimeStamp());
-		namedParameters.put(END_TIME, endTimeStamp());
-		namedParameterJdbcTemplate.update(INSERT_SESSION, namedParameters);
-		return sessionId;
-	}
-
-	@Override
-	public boolean isUserSessionExist(Integer userId) throws RENIDataServiceException {
-		String sessionId = getSessionByUserId(userId);
-		if (sessionId == null) {
-			return false;
-		}
-		//if user session exist, and if it is expires throw true (yes)
-		if(isSessionExpired(userId,sessionId)){
-			deleteSession(userId);
-			return false;
-		}
-		return true;
-	}
-
-	private String getSessionByUserId(Integer userId) {
-		SqlParameterSource namedParameters = new MapSqlParameterSource(USER_ID, userId);
-		return namedParameterJdbcTemplate.query(SELECT_SESSION_BY_USERID, namedParameters,
-				new StringRowMapper());
-	}
-	
-	private boolean isSessionExpired(Integer userId, String sessionId) {
-		Map<String,Object> namedParameters = new HashMap<String,Object>();
-		namedParameters.put(USER_ID, userId);
-		namedParameters.put(ACCESS_KEY, sessionId);
-		namedParameters.put(END_TIME,  currentTimeStamp());
-		final int value = namedParameterJdbcTemplate.queryForObject(CHECK_SESSION_EXPIRE, namedParameters,
-				Integer.class);
-		if(value==0){
-			return true;
-		}else
-			return false;
-	}
-	
-	@Override
-	public void deleteSession(Integer userId) {
-		Map<String,Object> namedParameters = new HashMap<String,Object>();
-		namedParameters.put(USER_ID, userId);
-		namedParameterJdbcTemplate.update(DELETE_SESSION, namedParameters);
-	}
-
-	@Override
-	public boolean isValidUser(Integer userId, String password) throws RENIDataServiceException {
-		Map<String,Object> namedParameters = new HashMap<String,Object>();
-		namedParameters.put(USER_ID, userId);
-		namedParameters.put(PASSWORD, password);
-		final int value = namedParameterJdbcTemplate.queryForObject(CHECK_USER_VALID, namedParameters,
-				Integer.class);
-		if(value==0){
-			return false;
-		}else{
-			return true;
-		}
-	}
-	
-	@Override
-	public boolean isSessionValid(Integer userId, String sessionId){
-		if(getSessionId(userId,sessionId)==null){
-			return false;
-		}
-		if(isSessionExpired(userId,sessionId)){
-			deleteSession(userId);
-			return false;
-		}
-		return true;
-	}
-
-	private Object getSessionId(Integer userId, String sessionId) {
-		Map<String,Object> namedParameters = new HashMap<String,Object>();
-		namedParameters.put(USER_ID, userId);
-		namedParameters.put(ACCESS_KEY, sessionId);
-		return namedParameterJdbcTemplate.query(SELECT_SESSION_ID, namedParameters,
-				new StringRowMapper());
-	}
-
-	@Override
-	public boolean isAdmin(Integer userId) throws RENIDataServiceException {
+	public User loadUserByUsername(String userId) {
 		
-		return true;
+		Map<String,Object> namedParameters = new HashMap<String,Object>();
+		namedParameters.put(USER_ID, userId);
+		
+		return (User) namedParameterJdbcTemplate.query(SELECT_USER_BY_USERID, namedParameters,
+				new RowMapper<User>() {
+					@Override
+					public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+						User user = new User(); 
+						user.setUsername(rs.getString(USER_ID));
+						 user.setPassword(rs.getString(PASSWORD));
+						 Role r = new Role();
+					        r.setName("ROLE_USER");
+					        List<Role> roles = new ArrayList<Role>();
+					        roles.add(r);
+					        user.setAuthorities(roles);
+					       
+						return user;
+					}
+				});
+		//"$2a$10$Bf20bKg5uGZro6F1rg0uduoPg.YTYDhW4hAtuEGxgy.yaQQzxJ2li")
 	}
 }

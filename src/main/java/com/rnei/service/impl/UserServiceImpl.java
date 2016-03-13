@@ -15,6 +15,7 @@ import com.rnei.dao.EmployeeDataService;
 import com.rnei.dao.UserDataService;
 import com.rnei.model.Employee;
 import com.rnei.model.Login;
+import com.rnei.model.User;
 import com.rnei.service.UserService;
 import com.rnei.service.exception.RENIServiceException;
 import com.rnei.service.exception.RENIValidationException;
@@ -36,8 +37,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteSession(Integer userId) throws RENIServiceException {
-		userDataService.deleteSession(userId);
+	public User loadUserByUsername(String userId) {
+		return userDataService.loadUserByUsername(userId);
 	}
 
 }

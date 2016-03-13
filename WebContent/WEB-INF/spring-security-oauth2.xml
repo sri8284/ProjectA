@@ -11,31 +11,19 @@
         http://www.springframework.org/schema/security/spring-security.xsd">
 	
 	<!-- Stateless RESTful services use BASIC authentication -->
-   <security:http create-session="stateless" pattern="/**">
-        <security:intercept-url pattern="/**" access="ROLE_REST"/>
-        <security:http-basic/>
-    </security:http> 
+   <http auto-config='true'>
+      <intercept-url pattern="/*" access="ROLE_USER" />
+    </http>
+       
+    <authentication-manager>
+      <authentication-provider ref="customAuthenticationProvider">
+      </authentication-provider>
+    </authentication-manager> 
     
-    <!-- <security:http auto-config="true">
-		<security:intercept-url pattern="/api/**" access="ROLE_ADMIN" />
-	</security:http>
-    
-    <security:authentication-manager>
-		<security:authentication-provider>
-			<security:password-encoder ref="bcryptPasswordEncoder" />
-			<security:jdbc-user-service
-				data-source-ref="dataSource"
-				users-by-username-query="select USER_ID, PASSWORD, STATUS from users where USER_ID=?"
-				authorities-by-username-query="select USER_ID, AUTHORITY from authorities where USER_ID=?  " />
-		</security:authentication-provider>
-	</security:authentication-manager> -->
+<beans:bean id="customAuthenticationProvider" class="com.rnei.authentication.provider.CustomAuthenticationProvider" >
 
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="sri" password="sri" authorities="ROLE_REST"/>
-            </security:user-service>
-        </security:authentication-provider>
-    </security:authentication-manager>
+</beans:bean>
+<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
  
+
 </beans:beans>

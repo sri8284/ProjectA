@@ -1,14 +1,15 @@
 package com.rnei.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.rnei.model.Employee;
 import com.rnei.model.Login;
+import com.rnei.model.User;
 import com.rnei.service.exception.RENIServiceException;
 
-public interface UserService {
+public interface UserService extends UserDetailsService{
 
 	Employee getBasicEmployeeInfo(Integer userId) throws RENIServiceException;
+	User loadUserByUsername(String userId);
 
-	void deleteSession(Integer userId) throws RENIServiceException;
-
-	
 }

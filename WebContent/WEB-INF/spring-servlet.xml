@@ -9,6 +9,9 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
         http://www.springframework.org/schema/tx 
         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<!-- <import resource="classpath:spring-security-oauth2.xml" />  -->
+	
 	<bean
 		class="org.jboss.resteasy.plugins.spring.SpringBeanProcessorServletAware" />
 
@@ -23,25 +26,25 @@
 		<!-- dataSource configuration -->
 	<!-- TODO properties configuration should be move to properties file -->
 
- 	 <bean id="dataSource"
+ 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/reni" />
 		<property name="username" value="root" />
 		<property name="password" value="Sahas$23" />
-	</bean> 
+	</bean>
 
-	<!--  <bean id="dataSource"
+	 <!-- <bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://mysqldb2.alphacloud.in:3306/femadb" />
 		<property name="username" value="femaDB_samba" />
 		<property name="password" value="2D9F4D16" />
-	</bean>  --> 
+	</bean>  -->
 
 	<bean class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate"
 		id="namedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" /> 
 	</bean>
-	
+
 </beans>

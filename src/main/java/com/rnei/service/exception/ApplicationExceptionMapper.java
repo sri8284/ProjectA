@@ -17,6 +17,7 @@ public class ApplicationExceptionMapper implements ExceptionMapper<Exception> {
 
 	@Override
 	public Response toResponse(Exception arg0) {
+		arg0.printStackTrace();
 		final ErrorResponse errorResponse= new ErrorResponse();
 		
 		errorResponse.setErrorMessge(SERVER_ERROR);
