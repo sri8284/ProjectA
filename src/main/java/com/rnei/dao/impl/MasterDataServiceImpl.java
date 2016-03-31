@@ -31,6 +31,19 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 	private static final String SELECT_VENDOR = "SELECT * FROM VENDOR";
 	private static final String SELECT_PAYMENT_MODES = "SELECT * FROM PAYMENT_MODE";
 	
+	private static final String CREATE_AREA ="INTERT * FROM AREA" ;
+	private static final String CREATE_ITEM = "SELECT * FROM ITEM";
+	private static final String CREATE_EXPESNSE_TYPE = "SELECT * FROM EXPENSE_TYPE";
+	private static final String CREATE_VENDOR = "INSERT INTO VENDOR (`VENDOR_ID`, `AREA_CODE`,`VND_FIRST_NAME`,`VND_LAST_NAME`,`VND_ADDRESS`,`VND_CONTACT_NO`,`CITY`,`STATE`,`LANDMARK`,`PINCODE`,`CREATED_DATE`,`CREATED_BY`,`UPDATE_DATE`,`UPDATE_BY`)"
+			+ " VALUES (:VENDOR_ID,:AREA_CODE,:VND_FIRST_NAME,:VND_LAST_NAME,:VND_ADDRESS,:VND_CONTACT_NO,:CITY,:STATE,:LANDMARK,:PINCODE,:CREATED_DATE,:CREATED_BY,:UPDATE_DATE,:UPDATE_BY) ";
+	private static final String CREATE_PAYMENT_MODES = "SELECT * FROM PAYMENT_MODE";
+	
+	private static final String UPDATE_AREA ="SELECT * FROM AREA" ;
+	private static final String UPDATE_ITEM = "SELECT * FROM ITEM";
+	private static final String UPDATE_EXPESNSE_TYPE = "SELECT * FROM EXPENSE_TYPE";
+	private static final String UPDATE_VENDOR = "SELECT * FROM VENDOR";
+	private static final String UPDATE_PAYMENT_MODES = "SELECT * FROM PAYMENT_MODE";
+	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -62,6 +75,66 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 	public List<PaymentMode> fetchPaymentModes() throws RENIDataServiceException {
 		return (List<PaymentMode>) namedParameterJdbcTemplate.query(SELECT_PAYMENT_MODES, new PaymentModeRowMapper());
 
+	}
+
+	@Override
+	public void createPaymentMode(PaymentMode paymentMode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateArea(Area area) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateVendor(Vendor vendor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateItem(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateExpenseType(ExpenseType expenseType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updatePaymentMode(PaymentMode paymentMode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createArea(Area area) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createItem(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createVendor(Vendor vendor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createExpenseType(ExpenseType expenseType) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -48,7 +48,53 @@ public class MasterDataSericeImpl implements MasterDataSerice {
 			return repository.fetchPaymentModes();
 	}
 
-	
+	@Override
+	public void createPaymentMode(PaymentMode paymentMode) throws RENIServiceException {
+		repository.createPaymentMode(paymentMode);
+	}
 
+	@Override
+	public void updateArea(Area area) throws RENIServiceException {
+		repository.updateArea(area);		
+	}
 
+	@Override
+	public void updateVendor(Vendor vendor) throws RENIServiceException {
+		repository.updateVendor(vendor);		
+	}
+
+	@Override
+	public void updateItem(Item item) throws RENIServiceException {
+		repository.updateItem(item);		
+	}
+
+	@Override
+	public void updateExpenseType(ExpenseType expenseType) throws RENIServiceException {
+		repository.updateExpenseType(expenseType);		
+	}
+
+	@Override
+	public void updatePaymentMode(PaymentMode paymentMode) throws RENIServiceException {
+		repository.updatePaymentMode(paymentMode);		
+	}
+
+	@Override
+	public void createArea(Area area) throws RENIServiceException {
+		repository.createArea(area);		
+	}
+
+	@Override
+	public void createItem(Item item) throws RENIServiceException {
+		repository.createItem(item);		
+	}
+
+	@Override
+	public void createVendor(Vendor vendor) throws RENIServiceException {
+		repository.createVendor(vendor);		
+	}
+
+	@Override
+	public void createExpenseType(ExpenseType expenseType) throws RENIServiceException {
+		repository.createExpenseType(expenseType);		
+	}
 }

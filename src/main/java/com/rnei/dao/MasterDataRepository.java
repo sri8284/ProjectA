@@ -21,4 +21,24 @@ public interface MasterDataRepository {
 
 	List<PaymentMode> fetchPaymentModes() throws RENIDataServiceException;
 
+	void createPaymentMode(PaymentMode paymentMode);
+
+	void updateArea(Area area);
+
+	void updateVendor(Vendor vendor);
+
+	void updateItem(Item item);
+
+	void updateExpenseType(ExpenseType expenseType);
+
+	void updatePaymentMode(PaymentMode paymentMode);
+
+	void createArea(Area area);
+
+	void createItem(Item item);
+
+	void createVendor(Vendor vendor);
+
+	void createExpenseType(ExpenseType expenseType);
+
 }
