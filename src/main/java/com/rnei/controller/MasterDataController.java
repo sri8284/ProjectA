@@ -76,7 +76,7 @@ public class MasterDataController extends CoreController{
 	//fetch payment modes details
 	@GET
 	@Path(PAYMENT_MODES_PATH)
-	public Response fetchPaymentModes(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
+	public Response fetchPaymentModes(@HeaderParam(USER_ID)  final Integer userId) throws RENIServiceException{
 		
 		validateInput(userId);
 		return Response.ok(masterDataService.fetchPaymentModes()).build();
@@ -85,8 +85,9 @@ public class MasterDataController extends CoreController{
 	// Update
 	@PUT
 	@Path(AREAS_PATH)
-	public Response updateAreaDetails(@HeaderParam(USER_ID) final Area area) throws RENIServiceException{
+	public Response updateAreaDetails(@HeaderParam(USER_ID) final String userId, final Area area) throws RENIServiceException{
 		validateInput(area);
+		area.setUpdatedBy(userId);
 		masterDataService.updateArea(area);
 		
 		return Response.ok().build();
@@ -96,9 +97,10 @@ public class MasterDataController extends CoreController{
 	//update item details
 	@PUT
 	@Path(ITEMS_PATH)
-	public Response updateItemDetails(@HeaderParam(USER_ID) final Item item) throws RENIServiceException{
+	public Response updateItemDetails(@HeaderParam(USER_ID) final String userId, final Item item) throws RENIServiceException{
 		
 		validateInput(item);
+		item.setUpdatedBy(userId);
 		masterDataService.updateItem(item);
 		return Response.ok().build();
 	}
@@ -107,9 +109,10 @@ public class MasterDataController extends CoreController{
 	//update vendor details
 	@PUT
 	@Path(VENDORS_PATH)
-	public Response updateVendorDetails(@HeaderParam(USER_ID) final Vendor vendor) throws RENIServiceException{
+	public Response updateVendorDetails(@HeaderParam(USER_ID) final String userId, final Vendor vendor) throws RENIServiceException{
 		
 		validateInput(vendor);
+		vendor.setUpdatedBy(userId);
 		masterDataService.updateVendor(vendor);
 		return Response.ok().build();
 	}
@@ -118,9 +121,10 @@ public class MasterDataController extends CoreController{
 	//update expenseType details
 	@PUT
 	@Path(EXPENSE_TYPES_PATH)
-	public Response updateExpenseTypeDetails(@HeaderParam(USER_ID) final ExpenseType expenseType) throws RENIServiceException{
+	public Response updateExpenseTypeDetails(@HeaderParam(USER_ID)final String userId, final ExpenseType expenseType) throws RENIServiceException{
 		
 		validateInput(expenseType);
+		expenseType.setUpdatedBy(userId);
 		masterDataService.updateExpenseType(expenseType);
 		return Response.ok().build();
 	}
@@ -128,9 +132,10 @@ public class MasterDataController extends CoreController{
 	//update payment modes details
 	@PUT
 	@Path(PAYMENT_MODES_PATH)
-	public Response updatePaymentModes(@HeaderParam(USER_ID) final PaymentMode paymentMode) throws RENIServiceException{
+	public Response updatePaymentModes(@HeaderParam(USER_ID) final String userId, final PaymentMode paymentMode) throws RENIServiceException{
 		
 		validateInput(paymentMode);
+		paymentMode.setUpdatedBy(userId);
 		masterDataService.updatePaymentMode(paymentMode);
 		return Response.ok().build();
 	}
@@ -139,8 +144,9 @@ public class MasterDataController extends CoreController{
 	
 	@POST
 	@Path(AREAS_PATH)
-	public Response createAreaDetails(@HeaderParam(USER_ID) final Area area) throws RENIServiceException{
+	public Response createAreaDetails(@HeaderParam(USER_ID) final String userId, final Area area) throws RENIServiceException{
 		validateInput(area);
+		area.setCreatedBy(userId);
 		masterDataService.createArea(area);
 		
 		return Response.ok().build();
@@ -150,9 +156,10 @@ public class MasterDataController extends CoreController{
 	//create item details
 	@POST
 	@Path(ITEMS_PATH)
-	public Response createItemDetails(@HeaderParam(USER_ID) final Item item) throws RENIServiceException{
+	public Response createItemDetails(@HeaderParam(USER_ID) final String userId, final Item item) throws RENIServiceException{
 		
 		validateInput(item);
+		item.setCreatedBy(userId);
 		masterDataService.createItem(item);
 		
 		return Response.ok().build();
@@ -162,9 +169,10 @@ public class MasterDataController extends CoreController{
 	//create vendor details
 	@POST
 	@Path(VENDORS_PATH)
-	public Response createVendorDetails(@HeaderParam(USER_ID) final Vendor vendor) throws RENIServiceException{
+	public Response createVendorDetails(@HeaderParam(USER_ID) final String userId, final Vendor vendor) throws RENIServiceException{
 		
 		validateInput(vendor);
+		vendor.setCreatedBy(userId);
 		masterDataService.createVendor(vendor);
 		
 		return Response.ok().build();
@@ -174,9 +182,10 @@ public class MasterDataController extends CoreController{
 	//create expenseType details
 	@POST
 	@Path(EXPENSE_TYPES_PATH)
-	public Response createExpenseTypeDetails(@HeaderParam(USER_ID) final ExpenseType expenseType) throws RENIServiceException{
+	public Response createExpenseTypeDetails(@HeaderParam(USER_ID) final String userId, final ExpenseType expenseType) throws RENIServiceException{
 		
 		validateInput(expenseType);
+		expenseType.setCreatedBy(userId);
 		masterDataService.createExpenseType(expenseType);
 		
 		return Response.ok().build();
@@ -185,9 +194,10 @@ public class MasterDataController extends CoreController{
 	//create payment modes details
 	@POST
 	@Path(PAYMENT_MODES_PATH)
-	public Response createPaymentMode(@HeaderParam(USER_ID) final PaymentMode paymentMode) throws RENIServiceException{
+	public Response createPaymentMode(@HeaderParam(USER_ID) final String userId, final PaymentMode paymentMode) throws RENIServiceException{
 		
 		validateInput(paymentMode);
+		paymentMode.setCreatedBy(userId);
 		masterDataService.createPaymentMode(paymentMode);
 		return Response.ok().build();
 	}

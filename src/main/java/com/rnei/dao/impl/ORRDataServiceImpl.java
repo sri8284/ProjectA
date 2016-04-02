@@ -1,22 +1,19 @@
 package com.rnei.dao.impl;
 
 import static com.rnei.common.util.CommonUtil.currentTimeStamp;
-import static com.rnei.service.constants.RENIDataConstants.ACTIVE_STATE;
-import static com.rnei.service.constants.RENIDataConstants.ASSIGNMENT_TYPE;
-import static com.rnei.service.constants.RENIDataConstants.CONCAT_NO;
-import static com.rnei.service.constants.RENIDataConstants.CREATED_BY;
-import static com.rnei.service.constants.RENIDataConstants.CREATED_DATE;
-import static com.rnei.service.constants.RENIDataConstants.DRIVING_LIC_NO;
-import static com.rnei.service.constants.RENIDataConstants.ORR_ID;
-import static com.rnei.service.constants.RENIDataConstants.ORR_NAME;
-import static com.rnei.service.constants.RENIDataConstants.VEHICLE_NO;
+import static com.rnei.service.constants.RENIDataConstants.*;
 import static com.rnei.service.constants.RENIServiceConstant.DATA_SAVE_ERROR;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,7 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rnei.dao.ORRDataService;
 import com.rnei.model.OnRoadResource;
+import com.rnei.model.OnRoadResourcePickup;
+import com.rnei.model.Pickup;
 import com.rnei.rowmapper.ORRRowMapper;
+import com.rnei.rowmapper.PickupRowMapper;
 import com.rnei.service.exception.RENIDataServiceException;
 
 @Repository
@@ -44,6 +44,8 @@ public class ORRDataServiceImpl implements ORRDataService {
 	
 	private static final String CHECK_ONHIRE_ORR_NY_DRVLICNO = "SELECT COUNT(*) FROM onhireorr where DRIVING_LIC_NO=:DRIVING_LIC_NO ";
 
+	private static final String SELECT_ORR_PICKUP_DETAILS ="SELECT * FROM PICKUP WHERE ORR_ID=:ORR_ID AND ASSIGNMENT_TYPE=:ASSIGNMENT_TYPE "
+			+ " AND (PICKUP_DATE <=:FROM_DATE AND PICKUP_DATE >=TO_DATE )";
 			
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -104,11 +106,13 @@ public class ORRDataServiceImpl implements ORRDataService {
 		try {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
 			
+			String orrId = "C"+ORRSequence()+"HYD"; 
+			
 			namedParameters.put(ACTIVE_STATE, onRoadResource.getActiveFlag());
 			namedParameters.put(ASSIGNMENT_TYPE, "F");
 			namedParameters.put(CONCAT_NO, onRoadResource.getConcatNo());
 			namedParameters.put(DRIVING_LIC_NO, onRoadResource.getDrivingLicNo());
-			namedParameters.put(ORR_ID, onRoadResource.getOrrId());
+			namedParameters.put(ORR_ID, orrId);
 			namedParameters.put(ORR_NAME, onRoadResource.getOrrName());
 			namedParameters.put(VEHICLE_NO, onRoadResource.getVehicleNo());
 			namedParameters.put(CREATED_BY, userId);
@@ -146,5 +150,23 @@ public class ORRDataServiceImpl implements ORRDataService {
 		return false;
 	}
 
-	
+	@Override
+	public List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) {
+		Map<String, Object> namedParameters = new HashMap<String, Object>();
+
+		namedParameters.put(ORR_ID, orrPickupInput.getOrrId());
+		namedParameters.put(ASSIGNMENT_TYPE, orrPickupInput.getAssignmentType());
+		namedParameters.put(FROM_DATE, orrPickupInput.getFromDate());
+		namedParameters.put(TO_DATE, orrPickupInput.getToDate());
+		
+		return (List<Pickup>) namedParameterJdbcTemplate.query(SELECT_ORR_PICKUP_DETAILS, namedParameters, new PickupRowMapper());
+	}
+
+	private Integer ORRSequence(){
+		return namedParameterJdbcTemplate.query("select seq('orr')", new ResultSetExtractor<Integer>() {
+			@Override
+			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+				return rs.getInt(0);
+		}});
+	}
 }

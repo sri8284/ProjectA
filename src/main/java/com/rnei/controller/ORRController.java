@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.rnei.model.OnRoadResource;
+import com.rnei.model.OnRoadResourcePickup;
 import com.rnei.service.ORRService;
 import com.rnei.service.exception.RENIServiceException;
 
@@ -53,7 +54,7 @@ public class ORRController extends CoreController {
 	
 	
 	@PUT
-	public Response updateORR(OnRoadResource onRoadResource) throws RENIServiceException{
+	public Response updateORR(@HeaderParam(USER_ID) String userId, OnRoadResource onRoadResource) throws RENIServiceException{
 
 		validateInput(onRoadResource);
 
@@ -88,7 +89,7 @@ public class ORRController extends CoreController {
 	
 	@PUT
 	@Path(ONHIRE_PATH)
-	public Response updateOnHireORR(OnRoadResource onRoadResource) throws RENIServiceException{
+	public Response updateOnHireORR(@HeaderParam(USER_ID) String userId, OnRoadResource onRoadResource) throws RENIServiceException{
 		
 		validateInput(onRoadResource);
 		
@@ -113,6 +114,12 @@ public class ORRController extends CoreController {
 		validateInput(orrId,reqDate);
 		
 		return Response.ok(service.fetchOnHireORRReportDetails(orrId,reqDate)).build();
+	}
+	
+	@POST
+	@Path("pickupDetails")
+	public Response fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) throws RENIServiceException{
+		return Response.ok(service.fetchORRPickupDetails(orrPickupInput)).build();
 	}
 	
 }

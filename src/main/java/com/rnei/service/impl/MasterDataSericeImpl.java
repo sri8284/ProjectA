@@ -15,6 +15,7 @@ import com.rnei.model.PaymentMode;
 import com.rnei.model.Vendor;
 import com.rnei.service.MasterDataSerice;
 import com.rnei.service.exception.RENIServiceException;
+import com.rnei.service.exception.RENIValidationException;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -85,11 +86,39 @@ public class MasterDataSericeImpl implements MasterDataSerice {
 
 	@Override
 	public void createItem(Item item) throws RENIServiceException {
+		if(item.getItemCode()==null){
+			throw new RENIValidationException("Item Code is mandatory");
+		}
+		if(item.getItemName()==null){
+			throw new RENIValidationException("Item Name is mandatory");
+		}
+		if(item.getCurrentRate()==null){
+			throw new RENIValidationException("Item Current Rate is mandatory");
+		}
 		repository.createItem(item);		
 	}
 
 	@Override
 	public void createVendor(Vendor vendor) throws RENIServiceException {
+		
+		if(vendor.getAreaCode()==null){
+			throw new RENIValidationException("Area Code is mandatory");
+		}
+		
+		if(vendor.getVndfirstName()==null){
+			throw new RENIValidationException("Vendor First Name is mandatory");
+		}
+		
+		if(vendor.getVndlastName()==null){
+			throw  new RENIValidationException("Vendor Last Name is mandatory");
+		}
+		
+		if(vendor.getVndContactNo()==null){
+			throw new RENIValidationException("Vendor Contact Numner is mandatory");
+		}
+		
+		vendor.setVendorId("HYD"+vendor.getAreaCode()+vendor.getVndfirstName()+vendor.getVndlastName());
+		
 		repository.createVendor(vendor);		
 	}
 

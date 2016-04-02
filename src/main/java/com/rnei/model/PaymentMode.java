@@ -1,7 +1,8 @@
 package com.rnei.model;
 
-public class PaymentMode {
+public class PaymentMode extends Basic{
 
+	private static final long serialVersionUID = 1L;
 	private String paymentCode;
 	private String paymentName;
 	
