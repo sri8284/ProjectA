@@ -7,7 +7,7 @@ import static com.rnei.service.constants.RENIDataConstants.ACCESS_KEY;
 import static com.rnei.service.constants.RENIDataConstants.END_TIME;
 import static com.rnei.service.constants.RENIDataConstants.PASSWORD;
 import static com.rnei.service.constants.RENIDataConstants.START_TIME;
-import static com.rnei.service.constants.RENIDataConstants.USER_ID;
+import static com.rnei.service.constants.RENIDataConstants.DB_USER_ID;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -50,24 +52,28 @@ public class UserDataServiceImpl implements UserDataService {
 	public User loadUserByUsername(String userId) {
 		
 		Map<String,Object> namedParameters = new HashMap<String,Object>();
-		namedParameters.put(USER_ID, userId);
+		namedParameters.put(DB_USER_ID, userId);
 		
 		return (User) namedParameterJdbcTemplate.query(SELECT_USER_BY_USERID, namedParameters,
-				new RowMapper<User>() {
+				new ResultSetExtractor<User>() {
 					@Override
-					public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-						User user = new User(); 
-						user.setUsername(rs.getString(USER_ID));
-						 user.setPassword(rs.getString(PASSWORD));
-						 Role r = new Role();
-					        r.setName("ROLE_USER");
-					        List<Role> roles = new ArrayList<Role>();
-					        roles.add(r);
-					        user.setAuthorities(roles);
-					       
-						return user;
+					public User extractData(ResultSet rs) throws SQLException, DataAccessException {
+						if(rs.next()){
+							User user = new User(); 
+							user.setUsername(rs.getString(DB_USER_ID));
+							 user.setPassword(rs.getString(PASSWORD));
+							 Role r = new Role();
+						        r.setName("ROLE_USER");
+						        List<Role> roles = new ArrayList<Role>();
+						        roles.add(r);
+						        user.setAuthorities(roles);
+						       
+							return user;
+						}
+						return null;
 					}
-				});
+				
+		});
 		//"$2a$10$Bf20bKg5uGZro6F1rg0uduoPg.YTYDhW4hAtuEGxgy.yaQQzxJ2li")
 	}
 }

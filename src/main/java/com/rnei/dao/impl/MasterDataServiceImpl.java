@@ -38,19 +38,19 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 	private static final String SELECT_PAYMENT_MODES = "SELECT * FROM PAYMENT_MODE";
 	
 	private static final String CREATE_AREA ="INSERT INTO AREA (AREA_CODE,AREA_NAME,CREATED_BY,CREATED_DATE) VALUES (:AREA_CODE,:AREA_NAME,:CREATED_BY,:CREATED_DATE)" ;
-	private static final String CREATE_ITEM = "INSERT INTO ITEM (ITEM_CODE,ITEM_NAME,CURRENT_RATE,CREATED_DATE,CREATED_BY,UPDATED_DATE,UPDTED_BY) VALUES (:ITEM_CODE,:ITEM_NAME,:CURRENT_RATE, "
-			+ ":CREATED_DATE, :CREATED_BY,:UPDATED_DATE,:UPDTED_BY)";
-	private static final String CREATE_EXPESNSE_TYPE = "INSERT INTO EXPENSE_TYPE (EXP_TYPE,EXP_SUBTYPE,EXP_TYPE_NAME,EXP_SUBTYPE_NAME) VALUES (:EXP_TYPE,:EXP_SUBTYPE,:EXP_TYPE_NAME,:EXP_SUBTYPE_NAME)";
-	private static final String CREATE_VENDOR = "INSERT INTO VENDOR (VENDOR_ID, AREA_CODE,VND_FIRST_NAME,VND_LAST_NAME,VND_ADDRESS,VND_CONTACT_NO,CITY,STATE,LANDMARK,PINCODE,CREATED_DATE,CREATED_BY,UPDATE_DATE,UPDATE_BY)"
-			+ " VALUES (:VENDOR_ID,:AREA_CODE,:VND_FIRST_NAME,:VND_LAST_NAME,:VND_ADDRESS,:VND_CONTACT_NO,:CITY,:STATE,:LANDMARK,:PINCODE,:CREATED_DATE,:CREATED_BY,:UPDATE_DATE,:UPDATE_BY) ";
-	private static final String CREATE_PAYMENT_MODES = "INSERT INTO PAYMENT_MODE (PAYMENT_CODE,PAYMENT_NAME) VALUES (:PAYMENT_CODE,:PAYMENT_NAME)";
+	private static final String CREATE_ITEM = "INSERT INTO ITEM (ITEM_CODE,ITEM_NAME,CURRENT_RATE,CREATED_DATE,CREATED_BY) VALUES (:ITEM_CODE,:ITEM_NAME,:CURRENT_RATE, "
+			+ ":CREATED_DATE, :CREATED_BY)";
+	private static final String CREATE_EXPESNSE_TYPE = "INSERT INTO EXPENSE_TYPE (EXP_TYPE,EXP_SUBTYPE,EXP_TYPE_NAME,EXP_SUBTYPE_NAME,CREATED_BY,CREATED_DATE) VALUES (:EXP_TYPE,:EXP_SUBTYPE,:EXP_TYPE_NAME,:EXP_SUBTYPE_NAME,:CREATED_BY, :CREATED_DATE)";
+	private static final String CREATE_VENDOR = "INSERT INTO VENDOR (VENDOR_ID, AREA_CODE,VND_FIRST_NAME,VND_LAST_NAME,VND_ADDRESS,VND_CONTACT_NO,CITY,STATE,LANDMARK,PINCODE,CREATED_DATE,CREATED_BY)"
+			+ " VALUES (:VENDOR_ID,:AREA_CODE,:VND_FIRST_NAME,:VND_LAST_NAME,:VND_ADDRESS,:VND_CONTACT_NO,:CITY,:STATE,:LANDMARK,:PINCODE,:CREATED_DATE,:CREATED_BY) ";
+	private static final String CREATE_PAYMENT_MODES = "INSERT INTO PAYMENT_MODE (PAYMENT_CODE,PAYMENT_NAME,CREATED_BY,CREATED_DATE) VALUES (:PAYMENT_CODE,:PAYMENT_NAME,:CREATED_BY,:CREATED_DATE)";
 	
-	private static final String UPDATE_AREA ="UPDATE AREA SET AREA_CODE = :AREA_CODE,AREA_NAME = :AREA_NAME,CREATED_BY = :CREATED_BY,CREATED_DATE = :CREATED_DATE WHERE AREA_CODE = :AREA_CODE" ;
-	private static final String UPDATE_ITEM = "UPDATE ITEM SET ITEM_CODE = :ITEM_CODE, ITEM_NAME = :ITEM_NAME,CURRENT_RATE = :CURRENT_RATE,CREATED_DATE = :CREATED_DATE,CREATED_BY = :CREATED_BY, UPDATED_DATE = :UPDATED_DATE, UPDTED_BY = :UPDTED_BY WHERE ITEM_CODE = :ITEM_CODE";
-	private static final String UPDATE_EXPESNSE_TYPE = "UPDATE EXPENSE_TYPE SET EXP_TYPE = :EXP_TYPE, EXP_SUBTYPE = :EXP_SUBTYPE, EXP_TYPE_NAME = :EXP_TYPE_NAME, EXP_SUBTYPE_NAME = :EXP_SUBTYPE_NAME WHERE EXP_TYPE = :EXP_TYPE AND EXP_SUBTYPE = :EXP_SUBTYPE ";
+	private static final String UPDATE_AREA ="UPDATE AREA SET AREA_CODE = :AREA_CODE,AREA_NAME = :AREA_NAME,UPDATED_BY = :UPDATED_BY,UPDATED_DATE = :UPDATED_DATE WHERE AREA_CODE = :AREA_CODE" ;
+	private static final String UPDATE_ITEM = "UPDATE ITEM SET ITEM_CODE = :ITEM_CODE, ITEM_NAME = :ITEM_NAME,CURRENT_RATE = :CURRENT_RATE, UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ITEM_CODE = :ITEM_CODE";
+	private static final String UPDATE_EXPESNSE_TYPE = "UPDATE EXPENSE_TYPE SET EXP_TYPE = :EXP_TYPE, EXP_SUBTYPE = :EXP_SUBTYPE, EXP_TYPE_NAME = :EXP_TYPE_NAME, EXP_SUBTYPE_NAME = :EXP_SUBTYPE_NAME ,UPDATED_BY = :UPDATED_BY,UPDATED_DATE = :UPDATED_DATE WHERE EXP_TYPE = :EXP_TYPE AND EXP_SUBTYPE = :EXP_SUBTYPE ";
 	private static final String UPDATE_VENDOR = "UPDATE VENDOR SET VENDOR_ID = :VENDOR_ID, AREA_CODE = :AREA_CODE, VND_FIRST_NAME = :VND_FIRST_NAME, VND_LAST_NAME = :VND_LAST_NAME, VND_ADDRESS = :VND_ADDRESS, VND_CONTACT_NO = :VND_CONTACT_NO, CITY = :CITY, STATE = :STATE, LANDMARK = :LANDMARK, "
-			+ "PINCODE = :PINCODE, CREATED_DATE = :CREATED_DATE, CREATED_BY = :CREATED_BY, UPDATE_DATE = :UPDATE_DATE, UPDATE_BY = :UPDATE_BY WHERE VENDOR_ID = :VENDOR_ID AND AREA_CODE = :AREA_CODE ";
-	private static final String UPDATE_PAYMENT_MODES = "UPDATE PAYMENT_MODE SET PAYMENT_CODE = :PAYMENT_CODE,PAYMENT_NAME = :PAYMENT_NAME WHERE PAYMENT_CODE = :PAYMENT_CODE";
+			+ "PINCODE = :PINCODE,  UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE VENDOR_ID = :VENDOR_ID AND AREA_CODE = :AREA_CODE ";
+	private static final String UPDATE_PAYMENT_MODES = "UPDATE PAYMENT_MODE SET PAYMENT_CODE = :PAYMENT_CODE,PAYMENT_NAME = :PAYMENT_NAME ,  UPDATED_BY = :UPDATED_BY,UPDATED_DATE = :UPDATED_DATE WHERE PAYMENT_CODE = :PAYMENT_CODE";
 	
 	/*private static final String DELETE_AREA ="DELETE FROM AREA WHERE AREA_CODE =:AREA_CODE" ;
 	private static final String DELETE_ITEM = "DELETE FROM ITEM WHERE ITEM_CODE =:ITEM_CODE ";
@@ -115,7 +115,11 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
 			namedParameters.put(VENDOR_ID, vendor.getVendorId());
 			namedParameters.put(AREA_CODE, vendor.getAreaCode());
-			namedParameters.put(VND_ADDRESS, vendor.getVndAddress());
+			namedParameters.put(VND_ADDRESS, vendor.getVndAddress().getAddress());
+			namedParameters.put(CITY, vendor.getVndAddress().getCity());
+			namedParameters.put(LANDMARK, vendor.getVndAddress().getLandmark());
+			namedParameters.put(PINCODE, vendor.getVndAddress().getPincode());
+			namedParameters.put(STATE, vendor.getVndAddress().getState());
 			namedParameters.put(VND_CONTACT_NO, vendor.getVndContactNo());
 			namedParameters.put(VND_FIRST_NAME, vendor.getVndfirstName());
 			namedParameters.put(VND_LAST_NAME, vendor.getVndlastName());
@@ -135,7 +139,7 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
 			namedParameters.put(ITEM_CODE, item.getItemCode());
 			namedParameters.put(ITEM_NAME, item.getItemName());
-			namedParameters.put(ITEM_CURRENT_RATE, item.getCurrentRate());
+			namedParameters.put(CURRENT_RATE, item.getCurrentRate());
 			namedParameters.put(UPDATED_BY, item.getUpdatedBy());
 			namedParameters.put(UPDATED_DATE, currentTimeStamp());
 		
@@ -170,7 +174,7 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
 			namedParameters.put(PAYMENT_CODE, paymentMode.getPaymentCode());
 			namedParameters.put(PAYMENT_NAME, paymentMode.getPaymentName());
-			namedParameters.put(UPDATED_BY, paymentMode.getCreatedBy());
+			namedParameters.put(UPDATED_BY, paymentMode.getUpdatedBy());
 			namedParameters.put(UPDATED_DATE, currentTimeStamp());
 		
 			namedParameterJdbcTemplate.update(UPDATE_PAYMENT_MODES, namedParameters);
@@ -202,7 +206,7 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
 			namedParameters.put(ITEM_CODE, item.getItemCode());
 			namedParameters.put(ITEM_NAME, item.getItemName());
-			namedParameters.put(ITEM_CURRENT_RATE, item.getCurrentRate());
+			namedParameters.put(CURRENT_RATE, item.getCurrentRate());
 			namedParameters.put(CREATED_BY, item.getCreatedBy());
 			namedParameters.put(CREATED_DATE, currentTimeStamp());
 		
@@ -219,7 +223,11 @@ public class MasterDataServiceImpl implements MasterDataRepository {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
 			namedParameters.put(VENDOR_ID, vendor.getVendorId());
 			namedParameters.put(AREA_CODE, vendor.getAreaCode());
-			namedParameters.put(VND_ADDRESS, vendor.getVndAddress());
+			namedParameters.put(VND_ADDRESS, vendor.getVndAddress().getAddress());
+			namedParameters.put(CITY, vendor.getVndAddress().getCity());
+			namedParameters.put(LANDMARK, vendor.getVndAddress().getLandmark());
+			namedParameters.put(PINCODE, vendor.getVndAddress().getPincode());
+			namedParameters.put(STATE, vendor.getVndAddress().getState());
 			namedParameters.put(VND_CONTACT_NO, vendor.getVndContactNo());
 			namedParameters.put(VND_FIRST_NAME, vendor.getVndfirstName());
 			namedParameters.put(VND_LAST_NAME, vendor.getVndlastName());

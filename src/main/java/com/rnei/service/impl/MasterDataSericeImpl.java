@@ -117,7 +117,11 @@ public class MasterDataSericeImpl implements MasterDataSerice {
 			throw new RENIValidationException("Vendor Contact Numner is mandatory");
 		}
 		
-		vendor.setVendorId("HYD"+vendor.getAreaCode()+vendor.getVndfirstName()+vendor.getVndlastName());
+		if(vendor.getVndAddress()==null){
+			throw new RENIValidationException("Vendor Address is mandatory");
+		}
+		
+		vendor.setVendorId("HYD"+vendor.getAreaCode()+vendor.getVndfirstName());
 		
 		repository.createVendor(vendor);		
 	}

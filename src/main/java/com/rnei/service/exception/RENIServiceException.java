@@ -16,7 +16,7 @@ public abstract class RENIServiceException extends Exception{
 	
 	public RENIServiceException(final String errorMessage, Exception cause) {
 		super(errorMessage, cause);
-		
+		cause.printStackTrace();
 		errorResponse.setErrorMessge(errorMessage);
 		errorResponse.setStatus(Boolean.FALSE);
 	}

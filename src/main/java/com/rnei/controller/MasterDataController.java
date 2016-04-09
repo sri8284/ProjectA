@@ -84,7 +84,7 @@ public class MasterDataController extends CoreController{
 	
 	// Update
 	@PUT
-	@Path(AREAS_PATH)
+	@Path(AREA_PATH)
 	public Response updateAreaDetails(@HeaderParam(USER_ID) final String userId, final Area area) throws RENIServiceException{
 		validateInput(area);
 		area.setUpdatedBy(userId);
@@ -96,7 +96,7 @@ public class MasterDataController extends CoreController{
 	
 	//update item details
 	@PUT
-	@Path(ITEMS_PATH)
+	@Path(ITEM_PATH)
 	public Response updateItemDetails(@HeaderParam(USER_ID) final String userId, final Item item) throws RENIServiceException{
 		
 		validateInput(item);
@@ -108,7 +108,7 @@ public class MasterDataController extends CoreController{
 	
 	//update vendor details
 	@PUT
-	@Path(VENDORS_PATH)
+	@Path(VENDOR_PATH)
 	public Response updateVendorDetails(@HeaderParam(USER_ID) final String userId, final Vendor vendor) throws RENIServiceException{
 		
 		validateInput(vendor);
@@ -120,7 +120,7 @@ public class MasterDataController extends CoreController{
 	
 	//update expenseType details
 	@PUT
-	@Path(EXPENSE_TYPES_PATH)
+	@Path(EXPENSE_TYPE_PATH)
 	public Response updateExpenseTypeDetails(@HeaderParam(USER_ID)final String userId, final ExpenseType expenseType) throws RENIServiceException{
 		
 		validateInput(expenseType);
@@ -131,7 +131,7 @@ public class MasterDataController extends CoreController{
 	
 	//update payment modes details
 	@PUT
-	@Path(PAYMENT_MODES_PATH)
+	@Path(PAYMENT_MODE_PATH)
 	public Response updatePaymentModes(@HeaderParam(USER_ID) final String userId, final PaymentMode paymentMode) throws RENIServiceException{
 		
 		validateInput(paymentMode);
@@ -143,7 +143,7 @@ public class MasterDataController extends CoreController{
 	//Create
 	
 	@POST
-	@Path(AREAS_PATH)
+	@Path(AREA_PATH)
 	public Response createAreaDetails(@HeaderParam(USER_ID) final String userId, final Area area) throws RENIServiceException{
 		validateInput(area);
 		area.setCreatedBy(userId);
@@ -155,7 +155,7 @@ public class MasterDataController extends CoreController{
 	
 	//create item details
 	@POST
-	@Path(ITEMS_PATH)
+	@Path(ITEM_PATH)
 	public Response createItemDetails(@HeaderParam(USER_ID) final String userId, final Item item) throws RENIServiceException{
 		
 		validateInput(item);
@@ -168,7 +168,7 @@ public class MasterDataController extends CoreController{
 	
 	//create vendor details
 	@POST
-	@Path(VENDORS_PATH)
+	@Path(VENDOR_PATH)
 	public Response createVendorDetails(@HeaderParam(USER_ID) final String userId, final Vendor vendor) throws RENIServiceException{
 		
 		validateInput(vendor);
@@ -181,7 +181,7 @@ public class MasterDataController extends CoreController{
 	
 	//create expenseType details
 	@POST
-	@Path(EXPENSE_TYPES_PATH)
+	@Path(EXPENSE_TYPE_PATH)
 	public Response createExpenseTypeDetails(@HeaderParam(USER_ID) final String userId, final ExpenseType expenseType) throws RENIServiceException{
 		
 		validateInput(expenseType);
@@ -193,7 +193,7 @@ public class MasterDataController extends CoreController{
 	
 	//create payment modes details
 	@POST
-	@Path(PAYMENT_MODES_PATH)
+	@Path(PAYMENT_MODE_PATH)
 	public Response createPaymentMode(@HeaderParam(USER_ID) final String userId, final PaymentMode paymentMode) throws RENIServiceException{
 		
 		validateInput(paymentMode);

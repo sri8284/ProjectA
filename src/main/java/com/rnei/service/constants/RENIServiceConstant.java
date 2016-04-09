@@ -12,6 +12,13 @@ public interface RENIServiceConstant {
 	String EXPENSE_TYPES_PATH="/expenseTypes";
 	String PAYMENT_MODES_PATH="/paymentModes";
 	
+	String AREA_PATH="/area";
+	String VENDOR_PATH="/vendor";
+	String ITEM_PATH="/item";
+	String EXPENSE_TYPE_PATH="/expenseType";
+	String PAYMENT_MODE_PATH="/paymentMode";
+	
+	
 	//ORR Service path
 	String ORR_PATH="/orr";
 	

@@ -39,8 +39,9 @@ public interface RENIDataConstants {
 	String END_TIME="END_TIME";
 	
 	//USER TABLE
-	String PASSWORD = "password";
+	String PASSWORD = "PASSWORD";
 	String USER_ID="userId";
+	String DB_USER_ID = "USER_ID";
 	
 	//VENDOR TABLE
 	String VENDOR_ID ="VENDOR_ID";
