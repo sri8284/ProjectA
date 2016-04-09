@@ -73,9 +73,6 @@ public class PickupDataServiceImpl implements PickupDataService {
 			+ "WHERE PICKUP_ID=:PICKUP_ID AND ITEM_CODE=:ITEM_CODE ";
 
 
-
-
-
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

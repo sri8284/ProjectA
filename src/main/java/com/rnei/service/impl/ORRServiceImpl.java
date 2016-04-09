@@ -4,15 +4,19 @@ import static com.rnei.common.util.CommonUtil.isNullOrEmpty;
 import static com.rnei.service.constants.RENIServiceConstant.DUPLICATE_ONHIRE_ORR;
 import static com.rnei.service.constants.RENIServiceConstant.ONHIRE_ORR_MANADATORY;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rnei.dao.ORRDataService;
 import com.rnei.model.OnRoadResource;
+import com.rnei.model.OnRoadResourcePickup;
+import com.rnei.model.Pickup;
 import com.rnei.service.ORRService;
 import com.rnei.service.exception.RENIServiceException;
 import com.rnei.service.exception.RENIValidationException;
@@ -55,13 +59,9 @@ public class ORRServiceImpl implements ORRService {
 				throw new RENIValidationException(ONHIRE_ORR_MANADATORY);
 			}
 			
-			// TODO - validate that driving lic no is already existed or not.
 			if(orrDataService.isDuplicateOnHireORR(onRoadResource.getDrivingLicNo())){
 				throw new RENIValidationException(DUPLICATE_ONHIRE_ORR);
 			}
-			
-			String orrId = String.valueOf(System.currentTimeMillis());
-			onRoadResource.setOrrId(orrId);
 			
 			orrDataService.createOnHireORR(userId,onRoadResource);
 	}
@@ -89,6 +89,24 @@ public class ORRServiceImpl implements ORRService {
 		//TODO - validate the orrID is valid or not - should be active
 		
 		return null;
+	}
+
+	@Override
+	public List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) throws RENIValidationException {
+		if(orrPickupInput.getAssignmentType()==null){
+			throw new RENIValidationException("Assignment Type is mandatory");
+		}
+		if(orrPickupInput.getOrrId() ==null){
+			throw new RENIValidationException("ORR ID is mandatory");
+		}
+		if(orrPickupInput.getFromDate()==null){
+			throw new RENIValidationException("Date is mandatory");
+		}
+		if(orrPickupInput.getToDate() ==null){
+			orrPickupInput.setToDate(orrPickupInput.getFromDate());
+		}
+		
+		return orrDataService.fetchORRPickupDetails(orrPickupInput);
 	}
 
 }

@@ -21,4 +21,23 @@ public interface MasterDataSerice {
 
 	List<PaymentMode> fetchPaymentModes() throws RENIServiceException;
 
+	void createPaymentMode(PaymentMode paymentMode) throws RENIServiceException;
+
+	void updateArea(Area area) throws RENIServiceException;
+	
+	void updateVendor(Vendor vendor) throws RENIServiceException;
+
+	void updateItem(Item item)throws RENIServiceException;
+
+	void updateExpenseType(ExpenseType expenseType)throws RENIServiceException;
+
+	void updatePaymentMode(PaymentMode paymentMode)throws RENIServiceException;
+
+	void createArea(Area area)throws RENIServiceException;
+
+	void createItem(Item item)throws RENIServiceException;
+
+	void createVendor(Vendor vendor)throws RENIServiceException;
+
+	void createExpenseType(ExpenseType expenseType)throws RENIServiceException;
 }

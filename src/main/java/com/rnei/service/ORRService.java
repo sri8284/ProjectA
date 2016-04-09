@@ -3,7 +3,10 @@ package com.rnei.service;
 import java.util.List;
 
 import com.rnei.model.OnRoadResource;
+import com.rnei.model.OnRoadResourcePickup;
+import com.rnei.model.Pickup;
 import com.rnei.service.exception.RENIServiceException;
+import com.rnei.service.exception.RENIValidationException;
 
 public interface ORRService {
 
@@ -26,5 +29,7 @@ public interface ORRService {
 	Object fetchORRReportDetails(String orrId, String reqDate);
 
 	Object fetchOnHireORRReportDetails(String orrId, String reqDate);
+
+	List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) throws RENIValidationException;
 
 }
