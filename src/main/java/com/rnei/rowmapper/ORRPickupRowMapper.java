@@ -18,7 +18,7 @@ public class ORRPickupRowMapper implements RowMapper<Pickup> {
 	@Override
 	public Pickup mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Pickup pickup = new Pickup();
-		if(rs.next()){
+
 		pickup.setPickupId(rs.getString(PICKUP_ID));
 		pickup.setPickupStatus(rs.getString(STATUS));
 		pickup.setVehicaleColseMeter(rs.getInt(VEHICLE_CLOSING_METER));
@@ -36,7 +36,7 @@ public class ORRPickupRowMapper implements RowMapper<Pickup> {
 		pickup.setUpdatedDt(rs.getDate(UPDATED_DATE));
 		pickup.setVendorId(rs.getString(VENDOR_ID));
 		pickup.setBalancePayment(rs.getFloat(BALANCE_PAYMENT));
-		}
+
 		return pickup;
 	}
 

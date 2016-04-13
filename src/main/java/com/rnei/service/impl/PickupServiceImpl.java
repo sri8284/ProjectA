@@ -43,6 +43,11 @@ public class PickupServiceImpl implements PickupService {
 	public String createPickup(String userId, Pickup pickupDetails) throws RENIServiceException {
 		// TODO - mandatory field validations
 		validateCreatePickupMandatoryFields(pickupDetails, NEW_PICKUP);
+		
+		// TODO vendor is existed or not 
+		
+		// TODO ORRID is existed or not.
+		
 		String pickupId = String.valueOf(System.currentTimeMillis());
 		pickupDetails.setPickupId(pickupId);
 		pickupDataServcie.createPickup(userId, pickupDetails);
