@@ -11,7 +11,7 @@ import com.rnei.service.exception.RENIDataServiceException;
 
 public interface PickupDataService {
 
-	void createPickup(Integer userId,Pickup pickup) throws RENIDataServiceException;
+	void createPickup(String userId,Pickup pickup) throws RENIDataServiceException;
 
 	Pickup getPickup(String pckupId)throws RENIDataServiceException;
 	
@@ -21,6 +21,6 @@ public interface PickupDataService {
 
 	List<Map<String, Object>> fetchPickupsAssignmentStatus(LocalDate pickupDate) throws RENIDataServiceException;
 
-	void closePickup(Integer userId, Pickup pickupInput) throws RENIDataServiceException;
+	void closePickup(String userId, Pickup pickupInput) throws RENIDataServiceException;
 
 }

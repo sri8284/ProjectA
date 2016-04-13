@@ -20,11 +20,11 @@ public interface ORRService {
 
 	List<OnRoadResource> fetchOnHireORRDetails()  throws RENIServiceException;
 
-	void createOnHireORR(String userId,OnRoadResource onRoadResource)  throws RENIServiceException;
+	String createOnHireORR(String userId,OnRoadResource onRoadResource)  throws RENIServiceException;
 
 	List<OnRoadResource> fetchActiveOnHireORRDetails()  throws RENIServiceException;
 
-	void updateOnHireORR(OnRoadResource onRoadResource) throws RENIServiceException;
+	void updateOnHireORR(String userId, OnRoadResource onRoadResource) throws RENIServiceException;
 
 	Object fetchORRReportDetails(String orrId, String reqDate);
 

@@ -29,7 +29,7 @@ public class EmployeeDataServiceImpl implements EmployeeDataService {
 	}
 	
 	@Override
-	public Employee getBasicEmployeeInfo(Integer userId) throws RENIDataServiceException {
+	public Employee getBasicEmployeeInfo(String userId) throws RENIDataServiceException {
    	    SqlParameterSource namedParameters = new MapSqlParameterSource(EMP_ID, userId);
    	    return (Employee) namedParameterJdbcTemplate.queryForObject(SELECT_BAISC_EMP_DETAILS, namedParameters,  new EmployeeRowMapper());  
 

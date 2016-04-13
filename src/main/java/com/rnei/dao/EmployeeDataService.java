@@ -5,7 +5,7 @@ import com.rnei.service.exception.RENIDataServiceException;
 
 public interface EmployeeDataService {
 
-	Employee getBasicEmployeeInfo(Integer userId) throws RENIDataServiceException;
+	Employee getBasicEmployeeInfo(String userId) throws RENIDataServiceException;
 
 
 }

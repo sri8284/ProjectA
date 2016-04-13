@@ -3,6 +3,9 @@ package com.rnei.controller;
 import static com.rnei.service.constants.RENIDataConstants.USER_ID;
 import static com.rnei.service.constants.RENIServiceConstant.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -81,9 +84,11 @@ public class ORRController extends CoreController {
 	public Response createOnHireORR(@HeaderParam(USER_ID) String userId,OnRoadResource onRoadResource) throws RENIServiceException{
 		validateInput(onRoadResource);
 		
-		service.createOnHireORR(userId,onRoadResource);
+		String orrId = service.createOnHireORR(userId,onRoadResource);
 		
-		return Response.ok().build();
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("orrId", orrId);
+		return Response.ok(map).build();
 		
 	}
 	
@@ -91,9 +96,9 @@ public class ORRController extends CoreController {
 	@Path(ONHIRE_PATH)
 	public Response updateOnHireORR(@HeaderParam(USER_ID) String userId, OnRoadResource onRoadResource) throws RENIServiceException{
 		
-		validateInput(onRoadResource);
+		validateInput(userId, onRoadResource);
 		
-		service.updateOnHireORR(onRoadResource);
+		service.updateOnHireORR(userId, onRoadResource);
 		
 		return Response.ok().build();
 	}

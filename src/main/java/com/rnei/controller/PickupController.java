@@ -7,7 +7,10 @@ import static com.rnei.service.constants.RENIServiceConstant.DATE;
 import static com.rnei.service.constants.RENIServiceConstant.PICKUP_ID_PATH;
 import static com.rnei.service.constants.RENIServiceConstant.PICKUP_PATH;
 import static com.rnei.service.constants.RENIServiceConstant.REPORT;
-import static com.rnei.service.constants.RENIServiceConstant.STATUS;
+import static com.rnei.service.constants.RENIServiceConstant.STATUS_PATH;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -38,7 +41,7 @@ public class PickupController {
 
 	// it will fetch pickups status
 	@GET
-	@Path(STATUS + "/{" + DATE + "}")
+	@Path(STATUS_PATH + "/{" + DATE + "}")
 	public Response fetchPickupStatus(@PathParam(DATE) final String pickupDate) throws RENIServiceException {
 		return Response.ok(service.fetchPickupStatus(pickupDate)).build();
 	}
@@ -68,18 +71,20 @@ public class PickupController {
 
 	// it will create the pickup
 	@POST
-	public Response createPickup(@HeaderParam(USER_ID) final Integer userId, final Pickup pickupInput)
+	public Response createPickup(@HeaderParam(USER_ID) final String userId, final Pickup pickupInput)
 			throws RENIServiceException {
 
-		service.createPickup(userId, pickupInput);
+		String pickupId = service.createPickup(userId, pickupInput);
 
-		return Response.ok().build();
+		Map<String, String> map = new HashMap<>();
+		map.put("pickupId", pickupId);
+		return Response.ok(map).build();
 	}
 
 	// it will create the pickup
 	@PUT
 	@Path(CLOSE+ "/{" + PICKUP_ID_PATH + "}")
-	public Response closePickup(@HeaderParam(USER_ID) final Integer userId, @PathParam(PICKUP_ID_PATH) final String pickupId, final Pickup pickupInput)
+	public Response closePickup(@HeaderParam(USER_ID) final String userId, @PathParam(PICKUP_ID_PATH) final String pickupId, final Pickup pickupInput)
 			throws RENIServiceException {
 
 		service.closePickup(userId, pickupId, pickupInput);

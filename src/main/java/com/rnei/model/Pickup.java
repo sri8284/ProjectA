@@ -19,7 +19,7 @@ public class Pickup extends Basic {
 	private Time pickupTime;
 	private String vendorId;
 	private String  orrId;
-	private String assignmentType;
+	private String pickupStatus;
 	private Float totalPayment;
 	private Float paritalPayment;
 	private Float balancePayment;
@@ -62,11 +62,11 @@ public class Pickup extends Basic {
 	public void setOrrId(String orrId) {
 		this.orrId = orrId;
 	}
-	public String getAssignmentType() {
-		return assignmentType;
+	public String getPickupStatus() {
+		return pickupStatus;
 	}
-	public void setAssignmentType(String assignmentType) {
-		this.assignmentType = assignmentType;
+	public void setPickupStatus(String pickupStatus) {
+		this.pickupStatus = pickupStatus;
 	}
 	public Float getTotalPayment() {
 		return totalPayment;

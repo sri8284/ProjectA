@@ -37,7 +37,7 @@ public class UserController {
 	@Path(LOGIN_PATH)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response validateUser(@HeaderParam(USER_ID) final Integer userId) throws RENIServiceException{
+	public Response validateUser(@HeaderParam(USER_ID) final String userId) throws RENIServiceException{
 		
 		if(userId==null){
 			throw new RENIValidationException(INVALID_REQUEST);

@@ -21,9 +21,9 @@ public interface ORRDataService {
 
 	List<OnRoadResource> fetchActiveOnHireORRDetails() throws RENIDataServiceException;;
 
-	void createOnHireORR(String userId,OnRoadResource onRoadResource) throws RENIDataServiceException;;
+	String createOnHireORR(String userId,OnRoadResource onRoadResource) throws RENIDataServiceException;;
 
-	void updateOnHireORR(OnRoadResource onRoadResource) throws RENIDataServiceException;
+	void updateOnHireORR(String userId, OnRoadResource onRoadResource) throws RENIDataServiceException;
 
 	boolean isDuplicateOnHireORR(String drivingLicNo) throws RENIDataServiceException;
 

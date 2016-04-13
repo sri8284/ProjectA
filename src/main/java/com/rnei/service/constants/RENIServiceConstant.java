@@ -31,7 +31,7 @@ public interface RENIServiceConstant {
 	
 	String PICKUP_ID_PATH = "pickupId";
 	String ASSIGNMENT_STATUS="assignmentStatus";
-	String STATUS="/status";
+	String STATUS_PATH="/status";
 	String CLOSE="close";
 	
 	// Expense Service Path
@@ -70,5 +70,8 @@ public interface RENIServiceConstant {
 	
 	String NON_COMPLETE = "N";
 	String COMPLETED="C";
+	
+	String YES = "Y";
+	String NO = "N";
 
 }

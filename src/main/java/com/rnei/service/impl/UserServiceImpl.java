@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	UserDataService userDataService;
 
 	@Override
-	public Employee getBasicEmployeeInfo(Integer userId) throws RENIServiceException {
+	public Employee getBasicEmployeeInfo(String userId) throws RENIServiceException {
 		Employee employee = employeeDataService.getBasicEmployeeInfo(userId);
 
 		return employee;

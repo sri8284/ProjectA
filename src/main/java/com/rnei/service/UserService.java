@@ -9,7 +9,7 @@ import com.rnei.service.exception.RENIServiceException;
 
 public interface UserService extends UserDetailsService{
 
-	Employee getBasicEmployeeInfo(Integer userId) throws RENIServiceException;
+	Employee getBasicEmployeeInfo(String userId) throws RENIServiceException;
 	User loadUserByUsername(String userId);
 
 }

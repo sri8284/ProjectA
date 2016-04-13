@@ -1,33 +1,8 @@
 package com.rnei.dao.impl;
 
 import static com.rnei.common.util.CommonUtil.currentTimeStamp;
-import static com.rnei.service.constants.RENIDataConstants.AREA_CODE;
-import static com.rnei.service.constants.RENIDataConstants.ASSIGNMENT_TYPE;
-import static com.rnei.service.constants.RENIDataConstants.BALANCE_PAYMENT;
-import static com.rnei.service.constants.RENIDataConstants.COMMENTS;
-import static com.rnei.service.constants.RENIDataConstants.COMPLETE_FLAG;
-import static com.rnei.service.constants.RENIDataConstants.CREATED_BY;
-import static com.rnei.service.constants.RENIDataConstants.CREATED_DATE;
-import static com.rnei.service.constants.RENIDataConstants.ITEM_ACTUAL_VOL;
-import static com.rnei.service.constants.RENIDataConstants.ITEM_CODE;
-import static com.rnei.service.constants.RENIDataConstants.ITEM_EXPECTED_VOL;
-import static com.rnei.service.constants.RENIDataConstants.ITEM_PAID_RATE;
-import static com.rnei.service.constants.RENIDataConstants.ORR_ID;
-import static com.rnei.service.constants.RENIDataConstants.PARITAL_PAYMENT;
-import static com.rnei.service.constants.RENIDataConstants.PICKUP_DATE;
-import static com.rnei.service.constants.RENIDataConstants.PICKUP_ID;
-import static com.rnei.service.constants.RENIDataConstants.PICKUP_TIME;
-import static com.rnei.service.constants.RENIDataConstants.TOTAL_AMOUNT;
-import static com.rnei.service.constants.RENIDataConstants.TOTAL_PAYMENT;
-import static com.rnei.service.constants.RENIDataConstants.UPDATED_BY;
-import static com.rnei.service.constants.RENIDataConstants.UPDATED_DATE;
-import static com.rnei.service.constants.RENIDataConstants.VENDOR_ID;
-import static com.rnei.service.constants.RENIServiceConstant.DATA_SAVE_ERROR;
-import static com.rnei.service.constants.RENIServiceConstant.ITEM_TRANSACTION_SAVE_FAILED;
-import static com.rnei.service.constants.RENIServiceConstant.NEW_PICKUP;
-import static com.rnei.service.constants.RENIServiceConstant.NON_COMPLETE;
-import static com.rnei.service.constants.RENIServiceConstant.PICKUP_NOT_ALLOWED;
-
+import static com.rnei.service.constants.RENIDataConstants.*;
+import static com.rnei.service.constants.RENIServiceConstant.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -51,27 +26,31 @@ import com.rnei.service.exception.RENIDataServiceException;
 @Transactional(propagation = Propagation.MANDATORY)
 public class PickupDataServiceImpl implements PickupDataService {
 
-	private static final String SELECT_PICKUP_STATUS = "SELECT COMPLETE_FLAG as completeFlag, COUNT(COMPLETE_FLAG) AS count FROM PICKUP WHERE PICKUP_DATE =:PICKUP_DATE GROUP BY COMPLETE_FLAG";
+	private static final String SELECT_PICKUP_STATUS_COUNT = "SELECT COMPLETE as complete, COUNT(COMPLETE) AS count FROM PICKUP WHERE PICKUP_DATE =:PICKUP_DATE GROUP BY COMPLETE";
 
-	private static final String SELECT_PICKUP_REPORT = "SELECT COMPLETE_FLAG as completeFlag, COUNT(COMPLETE_FLAG) AS count, SUM(TOTAL_PAYMENT) AS totalPayment , SUM(PARITAL_PAYMENT) AS paritalPayment , "
+	private static final String SELECT_PICKUP_REPORT = "SELECT COMPLETE as complete, COUNT(COMPLETE) AS count, SUM(TOTAL_PAYMENT) AS totalPayment , SUM(PARITAL_PAYMENT) AS paritalPayment , "
 			+ "SUM(BALANCE_PAYMENT) AS balancePayment "
-			+ "	FROM PICKUP WHERE PICKUP_DATE =:PICKUP_DATE GROUP BY COMPLETE_FLAG ";
+			+ "	FROM PICKUP WHERE PICKUP_DATE =:PICKUP_DATE GROUP BY COMPLETE ";
 
-	private static final String SELECT_PICKUP_ASSIGNMENT_STATUS = "SELECT PICKUP_ID as pickupId, ASSIGNMENT_TYPE as assignmentType, PICKUP_DATE AS pickupDate, PICKUP_TIME AS pickupTime,"
+	private static final String SELECT_PICKUP_ASSIGNMENT_STATUS = "SELECT PICKUP_ID as pickupId, STATUS as pickupStatus, PICKUP_DATE AS pickupDate, PICKUP_TIME AS pickupTime,"
 			+ " P.AREA_CODE AS areaCode, A.AREA_NAME as areaName FROM PICKUP P JOIN AREA A ON A.AREA_CODE = P.AREA_CODE WHERE PICKUP_DATE= :PICKUP_DATE ";
 
 	private static final String SELECT_PICKUP_BY_ID = "SELECT * FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID  where P.PICKUP_ID=:PICKUP_ID";
 
-	private static final String INSERT_PICKUP = "INSERT INTO PICKUP (PICKUP_ID,CREATED_DATE,CREATED_BY,PICKUP_DATE,PICKUP_TIME,ASSIGNMENT_TYPE,ORR_ID,VENDOR_ID,COMMENTS,AREA_CODE)"
-			+ "VALUES (:PICKUP_ID,:CREATED_DATE,:CREATED_BY,:PICKUP_DATE,:PICKUP_TIME,:ASSIGNMENT_TYPE,:ORR_ID,:VENDOR_ID,:COMMENTS,:AREA_CODE)";
+	private static final String INSERT_PICKUP = "INSERT INTO PICKUP (PICKUP_ID,CREATED_DATE,CREATED_BY,PICKUP_DATE,PICKUP_TIME,STATUS,ORR_ID,VENDOR_ID,COMMENTS,AREA_CODE, COMPLETE)"
+			+ "VALUES (:PICKUP_ID,:CREATED_DATE,:CREATED_BY,:PICKUP_DATE,:PICKUP_TIME,:STATUS,:ORR_ID,:VENDOR_ID,:COMMENTS,:AREA_CODE, :COMPLETE)";
 	private static final String INSERT_ITEM_TRANSACTION = "INSERT INTO ITEM_TRANSACTION (PICKUP_ID,ITEM_CODE,CREATED_DATE,CREATED_BY,ITEM_PAID_RATE,ITEM_EXPECTED_VOL)"
 			+ "VALUES (:PICKUP_ID,:ITEM_CODE,:CREATED_DATE,:CREATED_BY,:ITEM_PAID_RATE,:ITEM_EXPECTED_VOL)";
 
-	private static final String PICKUP_CLOSE = "UPDATE PICKUP SET ASSIGNMENT_TYPE=:ASSIGNMENT_TYPE, COMPLETE_FLAG=:COMPLETE_FLAG, TOTAL_PAYMENT=:TOTAL_PAYMENT,PARITAL_PAYMENT=:PARITAL_PAYMENT, BALANCE_PAYMENT=:BALANCE_PAYMENT, UPDATED_DATE=:UPDATED_DATE, UPDATED_BY=:UPDATED_BY "
+	private static final String PICKUP_CLOSE = "UPDATE PICKUP SET STATUS=:STATUS, COMPLETE=:COMPLETE, TOTAL_PAYMENT=:TOTAL_PAYMENT,PARITAL_PAYMENT=:PARITAL_PAYMENT, BALANCE_PAYMENT=:BALANCE_PAYMENT, UPDATED_DATE=:UPDATED_DATE, UPDATED_BY=:UPDATED_BY "
 			+ "WHERE PICKUP_ID =:PICKUP_ID ";
 	private static final String ITEM_CLOSE_TRANSACTION ="UPDATE ITEM_TRANSACTION SET ITEM_ACTUAL_VOL=:ITEM_ACTUAL_VOL, TOTAL_AMOUNT=:TOTAL_AMOUNT, UPDATED_BY=:UPDATED_BY, UPDATED_DATE=:UPDATED_DATE "
 			+ "WHERE PICKUP_ID=:PICKUP_ID AND ITEM_CODE=:ITEM_CODE ";
 
+	private static final String UPDATE_ONHIRE_ORR = "UPDATE reni.onhireorr SET AVAILABLE = :AVAILABLE, CURRENT_PICKUP_ID = :CURRENT_PICKUP_ID, PREV_PICKUP_ID=:PREV_PICKUP_ID, UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID";
+
+	private static final String UPDATE_ORR = "UPDATE reni.orr SET AVAILABLE = :AVAILABLE, CURRENT_PICKUP_ID = :CURRENT_PICKUP_ID, PREV_PICKUP_ID=:PREV_PICKUP_ID, UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID;";
+	
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -81,16 +60,16 @@ public class PickupDataServiceImpl implements PickupDataService {
 	}
 
 	@Override
-	public void createPickup(Integer userId, Pickup pickup) throws RENIDataServiceException {
+	public void createPickup(String userId, Pickup pickup) throws RENIDataServiceException {
 		try {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
 			namedParameters.put(PICKUP_ID, pickup.getPickupId());
 			namedParameters.put(VENDOR_ID, pickup.getVendorId());
-			namedParameters.put(ASSIGNMENT_TYPE, NEW_PICKUP);
+			namedParameters.put(STATUS, NEW_PICKUP);
 			namedParameters.put(ORR_ID, pickup.getOrrId());
 			namedParameters.put(PICKUP_DATE, pickup.getPickupDate());
 			namedParameters.put(PICKUP_TIME, pickup.getPickupTime());
-			namedParameters.put(COMPLETE_FLAG, NON_COMPLETE);
+			namedParameters.put(COMPLETE, NON_COMPLETE);
 			namedParameters.put(AREA_CODE, pickup.getAreaCode());
 			namedParameters.put(CREATED_BY, userId);
 			namedParameters.put(CREATED_DATE, currentTimeStamp());
@@ -103,13 +82,42 @@ public class PickupDataServiceImpl implements PickupDataService {
 			} else {
 				throw new RENIDataServiceException(PICKUP_NOT_ALLOWED);
 			}
+			
+			changeORRAvaliablity(userId, pickup.getPickupId(), pickup.getOrrId(), NO);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RENIDataServiceException(DATA_SAVE_ERROR, e);
 		}
 	}
 
-	private void createItemTransaction(Integer userId, ItemTransaction itemTransaction, String pickupId)
+	private void changeORRAvaliablity(String userId, String pickupId, String orrId, String avaliable) throws RENIDataServiceException {
+			try {
+				Map<String, Object> namedParameters = new HashMap<String, Object>();
+				
+				namedParameters.put(AVAILABLE, avaliable);
+				namedParameters.put(ORR_ID, orrId);
+				if(YES.contentEquals(avaliable)){
+					namedParameters.put(PREV_PICKUP_ID, pickupId);
+					namedParameters.put(CURRENT_PICKUP_ID, null);
+				}else{
+					namedParameters.put(CURRENT_PICKUP_ID, pickupId);
+					namedParameters.put(PREV_PICKUP_ID, null);
+				}
+				namedParameters.put(UPDATED_BY, userId);
+				namedParameters.put(UPDATED_DATE, currentTimeStamp());
+				if(orrId.startsWith("C")){
+				namedParameterJdbcTemplate.update(UPDATE_ONHIRE_ORR, namedParameters);
+				}else{
+					namedParameterJdbcTemplate.update(UPDATE_ORR, namedParameters);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RENIDataServiceException(DATA_SAVE_ERROR, e);
+			}
+	}
+
+	private void createItemTransaction(String userId, ItemTransaction itemTransaction, String pickupId)
 			throws RENIDataServiceException {
 		try {
 			Map<String, Object> namedParameters = new HashMap<String, Object>();
@@ -142,7 +150,7 @@ public class PickupDataServiceImpl implements PickupDataService {
 
 		namedParameters.put(PICKUP_DATE, java.sql.Date.valueOf(pickupDate));
 
-		return namedParameterJdbcTemplate.queryForList(SELECT_PICKUP_STATUS, namedParameters);
+		return namedParameterJdbcTemplate.queryForList(SELECT_PICKUP_STATUS_COUNT, namedParameters);
 	}
 
 	@Override
@@ -164,13 +172,12 @@ public class PickupDataServiceImpl implements PickupDataService {
 	}
 
 	@Override
-	public void closePickup(Integer userId, Pickup pickupInput) throws RENIDataServiceException {
+	public void closePickup(String userId, Pickup pickupInput) throws RENIDataServiceException {
 		try{
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
 		namedParameters.put(PICKUP_ID, pickupInput.getPickupId());
-		
-		namedParameters.put(ASSIGNMENT_TYPE, pickupInput.getAssignmentType());
-		namedParameters.put(COMPLETE_FLAG, pickupInput.getComplete());
+		namedParameters.put(STATUS, pickupInput.getPickupStatus());
+		namedParameters.put(COMPLETE, pickupInput.getComplete());
 		namedParameters.put(PARITAL_PAYMENT, pickupInput.getParitalPayment());
 		namedParameters.put(BALANCE_PAYMENT, pickupInput.getBalancePayment());
 		namedParameters.put(TOTAL_PAYMENT, pickupInput.getTotalPayment());
@@ -183,12 +190,10 @@ public class PickupDataServiceImpl implements PickupDataService {
 				Map<String, Object> itemNamedParameter = new HashMap<String, Object>();
 				itemNamedParameter.put(ITEM_CODE, itemTransaction.getItemCode());
 				itemNamedParameter.put(PICKUP_ID, pickupInput.getPickupId());
-
 				itemNamedParameter.put(ITEM_ACTUAL_VOL, itemTransaction.getItemActualVol());
 				itemNamedParameter.put(UPDATED_BY, userId);
 				itemNamedParameter.put(UPDATED_DATE, currentTimeStamp());
 				itemNamedParameter.put(TOTAL_AMOUNT, itemTransaction.getItemPaidRate()*itemTransaction.getItemActualVol());
-
 				int itemStatus = namedParameterJdbcTemplate.update(ITEM_CLOSE_TRANSACTION, itemNamedParameter);
 				
 				if (itemStatus <= 0) {
@@ -197,7 +202,8 @@ public class PickupDataServiceImpl implements PickupDataService {
 				}
 			}
 		}
-		
+		changeORRAvaliablity(userId, pickupInput.getPickupId(), pickupInput.getOrrId(), YES);
+
 	} catch (Exception e) {
 		e.printStackTrace();
 		throw new RENIDataServiceException(DATA_SAVE_ERROR, e);

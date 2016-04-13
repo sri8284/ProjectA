@@ -40,12 +40,13 @@ public class PickupServiceImpl implements PickupService {
 	}
 
 	@Override
-	public void createPickup(Integer userId, Pickup pickupDetails) throws RENIServiceException {
+	public String createPickup(String userId, Pickup pickupDetails) throws RENIServiceException {
 		// TODO - mandatory field validations
 		validateCreatePickupMandatoryFields(pickupDetails, NEW_PICKUP);
-		pickupDetails.setPickupId(String.valueOf(System.currentTimeMillis()));
-
+		String pickupId = String.valueOf(System.currentTimeMillis());
+		pickupDetails.setPickupId(pickupId);
 		pickupDataServcie.createPickup(userId, pickupDetails);
+		return pickupId;
 	}
 
 	private void validateCreatePickupMandatoryFields(Pickup pickupDetails, String assignmentType)
@@ -86,7 +87,7 @@ public class PickupServiceImpl implements PickupService {
 	}
 
 	@Override
-	public void closePickup(Integer userId, String pickupId, Pickup pickupInput) throws RENIServiceException {
+	public void closePickup(String userId, String pickupId, Pickup pickupInput) throws RENIServiceException {
 		// TODO - mandatory field validations
 		if (pickupId == null) {
 			throw new RENIValidationException("Pickup ID is mandatory for close the pickup.");
@@ -97,10 +98,10 @@ public class PickupServiceImpl implements PickupService {
 		validatePayment(pickupInput);
 
 		if( pickupInput.getParitalPayment() !=null && pickupInput.getBalancePayment() !=null &&  pickupInput.getParitalPayment()!=0 && pickupInput.getBalancePayment() !=0){
-			pickupInput.setAssignmentType(PENDING_FOR_SETTLEMENT);
+			pickupInput.setPickupStatus(PENDING_FOR_SETTLEMENT);
 			pickupInput.setComplete(NON_COMPLETE);
 		}else{
-			pickupInput.setAssignmentType(CLOSE_PICKUP);
+			pickupInput.setPickupStatus(CLOSE_PICKUP);
 			pickupInput.setComplete(COMPLETED);
 		}
 		

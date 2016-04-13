@@ -54,7 +54,7 @@ public class ORRServiceImpl implements ORRService {
 	}
 
 	@Override
-	public void createOnHireORR(String userId,OnRoadResource onRoadResource) throws RENIServiceException {
+	public String createOnHireORR(String userId,OnRoadResource onRoadResource) throws RENIServiceException {
 			if(isNullOrEmpty(onRoadResource.getConcatNo(),onRoadResource.getDrivingLicNo(),onRoadResource.getOrrName(),onRoadResource.getVehicleNo())){
 				throw new RENIValidationException(ONHIRE_ORR_MANADATORY);
 			}
@@ -63,7 +63,7 @@ public class ORRServiceImpl implements ORRService {
 				throw new RENIValidationException(DUPLICATE_ONHIRE_ORR);
 			}
 			
-			orrDataService.createOnHireORR(userId,onRoadResource);
+			return orrDataService.createOnHireORR(userId,onRoadResource);
 	}
 
 	@Override
@@ -72,8 +72,8 @@ public class ORRServiceImpl implements ORRService {
 	}
 
 	@Override
-	public void updateOnHireORR(OnRoadResource onRoadResource) throws RENIServiceException {
-			 orrDataService.updateOnHireORR(onRoadResource);
+	public void updateOnHireORR(String userId, OnRoadResource onRoadResource) throws RENIServiceException {
+			 orrDataService.updateOnHireORR(userId, onRoadResource);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class ORRServiceImpl implements ORRService {
 
 	@Override
 	public List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) throws RENIValidationException {
-		if(orrPickupInput.getAssignmentType()==null){
+		if(orrPickupInput.getPickupStatus()==null){
 			throw new RENIValidationException("Assignment Type is mandatory");
 		}
 		if(orrPickupInput.getOrrId() ==null){

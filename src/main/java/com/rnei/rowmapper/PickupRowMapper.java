@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.rnei.model.ItemTransaction;
 import com.rnei.model.Pickup;
@@ -23,9 +24,9 @@ public class PickupRowMapper implements ResultSetExtractor<Pickup> {
 			if(pickup==null){
 				pickup = new Pickup();
 				pickup.setPickupId(rs.getString(PICKUP_ID));
-				pickup.setAssignmentType(rs.getString(ASSIGNMENT_TYPE));
+				pickup.setPickupStatus(rs.getString(STATUS));
 				pickup.setVehicaleColseMeter(rs.getInt(VEHICLE_CLOSING_METER));
-				pickup.setComplete(rs.getString(COMPLETE_FLAG));
+				pickup.setComplete(rs.getString(COMPLETE));
 				pickup.setCreatedBy(rs.getString(CREATED_BY));
 				pickup.setCreatedDt(rs.getDate(CREATED_DATE));
 				pickup.setVehicaleOpenMeter(rs.getInt(VEHICLE_OPENING_METER));
