@@ -40,7 +40,7 @@ public class CommonUtil {
 
 	public static void main(String[] args) {
 
-		String[] originalPassword = {"1001rnei"};
+		String[] originalPassword = {"orr"};
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		String hashedPassword = "";
 
