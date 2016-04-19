@@ -1,5 +1,6 @@
 package com.rnei.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.rnei.model.OnRoadResource;
@@ -30,6 +31,6 @@ public interface ORRService {
 
 	Object fetchOnHireORRReportDetails(String orrId, String reqDate);
 
-	List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) throws RENIValidationException;
+	List<Pickup> fetchORRPickupDetails(String orrId, LocalDate pickupDate) throws RENIValidationException;
 
 }

@@ -1,5 +1,6 @@
 package com.rnei.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.rnei.model.OnRoadResource;
@@ -27,6 +28,6 @@ public interface ORRDataService {
 
 	boolean isDuplicateOnHireORR(String drivingLicNo) throws RENIDataServiceException;
 
-	List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput);
+	List<Pickup> fetchORRPickupDetails(String orrId, LocalDate pickupDate);
 
 }

@@ -6,6 +6,7 @@ import static com.rnei.service.constants.RENIServiceConstant.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +47,8 @@ public class ORRDataServiceImpl implements ORRDataService {
 	
 	private static final String CHECK_ONHIRE_ORR_BY_DRVLICNO = "SELECT COUNT(*) FROM onhireorr where DRIVING_LIC_NO=:DRIVING_LIC_NO ";
 
-	private static final String SELECT_ORR_PICKUP_DETAILS ="SELECT * FROM PICKUP WHERE ORR_ID=:ORR_ID AND STATUS=:STATUS "
-			+ " AND (PICKUP_DATE >=:FROM_DATE AND PICKUP_DATE <=TO_DATE )";
+	private static final String SELECT_ORR_PICKUP_DETAILS ="SELECT * FROM PICKUP WHERE ORR_ID=:ORR_ID "
+			+ " AND PICKUP_DATE =:PICKUP_DATE";
 	private static final String UPDATE_ONHIRE_ORR = "UPDATE reni.onhireorr SET ORR_NAME = :ORR_NAME, VEHICLE_NO = :VEHICLE_NO, DRIVING_LIC_NO = :DRIVING_LIC_NO, CONCAT_NO = :CONCAT_NO,   UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID";
 			
 	@Autowired
@@ -177,13 +178,11 @@ public class ORRDataServiceImpl implements ORRDataService {
 	}
 
 	@Override
-	public List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) {
+	public List<Pickup> fetchORRPickupDetails(String orrId, LocalDate pickupDate) {
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
 
-		namedParameters.put(ORR_ID, orrPickupInput.getOrrId());
-		namedParameters.put(STATUS, orrPickupInput.getPickupStatus());
-		namedParameters.put(FROM_DATE, orrPickupInput.getFromDate());
-		namedParameters.put(TO_DATE, orrPickupInput.getToDate());
+		namedParameters.put(ORR_ID, orrId);
+		namedParameters.put(PICKUP_DATE, java.sql.Date.valueOf(pickupDate));
 		
 		return (List<Pickup>) namedParameterJdbcTemplate.query(SELECT_ORR_PICKUP_DETAILS, namedParameters, new ORRPickupRowMapper());
 	}

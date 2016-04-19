@@ -3,6 +3,7 @@ package com.rnei.controller;
 import static com.rnei.service.constants.RENIDataConstants.USER_ID;
 import static com.rnei.service.constants.RENIServiceConstant.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -39,6 +41,7 @@ public class ORRController extends CoreController {
 		return Response.ok(service.fetchORRDetails()).build();
 	}
 	
+
 	@GET
 	@Path(AVALIABLE)
 	public Response fetchActiveORRDetails() throws RENIServiceException{
@@ -121,10 +124,12 @@ public class ORRController extends CoreController {
 		return Response.ok(service.fetchOnHireORRReportDetails(orrId,reqDate)).build();
 	}
 	
-	@POST
-	@Path("pickupDetails")
-	public Response fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) throws RENIServiceException{
-		return Response.ok(service.fetchORRPickupDetails(orrPickupInput)).build();
+	@GET
+	@Path("/{" + "orrId" + "}" + "/{" + "date" + "}")
+	public Response fetchORRPickupDetails(@PathParam("orrId") String orrId,  @PathParam("date") String date) throws RENIServiceException{
+		LocalDate pickupDate = LocalDate.parse(date);
+
+		return Response.ok(service.fetchORRPickupDetails(orrId, pickupDate)).build();
 	}
 	
 }

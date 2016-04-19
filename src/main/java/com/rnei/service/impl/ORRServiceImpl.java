@@ -92,21 +92,15 @@ public class ORRServiceImpl implements ORRService {
 	}
 
 	@Override
-	public List<Pickup> fetchORRPickupDetails(OnRoadResourcePickup orrPickupInput) throws RENIValidationException {
-		if(orrPickupInput.getPickupStatus()==null){
-			throw new RENIValidationException("Assignment Type is mandatory");
-		}
-		if(orrPickupInput.getOrrId() ==null){
+	public List<Pickup> fetchORRPickupDetails(String orrId, LocalDate pickupDate) throws RENIValidationException {
+		if(orrId ==null){
 			throw new RENIValidationException("ORR ID is mandatory");
 		}
-		if(orrPickupInput.getFromDate()==null){
+		if(pickupDate==null){
 			throw new RENIValidationException("Date is mandatory");
 		}
-		if(orrPickupInput.getToDate() ==null){
-			orrPickupInput.setToDate(orrPickupInput.getFromDate());
-		}
 		
-		return orrDataService.fetchORRPickupDetails(orrPickupInput);
+		return orrDataService.fetchORRPickupDetails(orrId, pickupDate);
 	}
 
 }
