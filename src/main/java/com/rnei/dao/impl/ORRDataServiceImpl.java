@@ -49,7 +49,7 @@ public class ORRDataServiceImpl implements ORRDataService {
 
 	private static final String SELECT_ORR_PICKUP_DETAILS ="SELECT * FROM PICKUP WHERE ORR_ID=:ORR_ID "
 			+ " AND PICKUP_DATE =:PICKUP_DATE";
-	private static final String UPDATE_ONHIRE_ORR = "UPDATE reni.onhireorr SET ORR_NAME = :ORR_NAME, VEHICLE_NO = :VEHICLE_NO, DRIVING_LIC_NO = :DRIVING_LIC_NO, CONCAT_NO = :CONCAT_NO,   UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID";
+	private static final String UPDATE_ONHIRE_ORR = "UPDATE onhireorr SET ORR_NAME = :ORR_NAME, VEHICLE_NO = :VEHICLE_NO, DRIVING_LIC_NO = :DRIVING_LIC_NO, CONCAT_NO = :CONCAT_NO,   UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID";
 			
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -187,7 +187,7 @@ public class ORRDataServiceImpl implements ORRDataService {
 		return (List<Pickup>) namedParameterJdbcTemplate.query(SELECT_ORR_PICKUP_DETAILS, namedParameters, new ORRPickupRowMapper());
 	}
 
-	private Integer ORRSequence(){
+	public Integer ORRSequence(){
 		return namedParameterJdbcTemplate.query("select seq('orr')", new ResultSetExtractor<Integer>() {
 			@Override
 			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {

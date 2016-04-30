@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rnei.dao.MasterDataRepository;
+import com.rnei.dao.ORRDataService;
 import com.rnei.model.Area;
 import com.rnei.model.ExpenseType;
 import com.rnei.model.Item;
@@ -23,6 +24,9 @@ public class MasterDataSericeImpl implements MasterDataSerice {
 
 	@Autowired
 	MasterDataRepository repository;
+	
+	@Autowired
+	ORRDataService orrDataService;
 
 	@Override
 	public List<Vendor> fetchVendorDetails() throws RENIServiceException {
@@ -121,7 +125,7 @@ public class MasterDataSericeImpl implements MasterDataSerice {
 			throw new RENIValidationException("Vendor Address is mandatory");
 		}
 		
-		vendor.setVendorId("HYD"+vendor.getAreaCode()+vendor.getVndfirstName());
+		vendor.setVendorId("HYD"+vendor.getAreaCode().toUpperCase());
 		
 		repository.createVendor(vendor);		
 	}
