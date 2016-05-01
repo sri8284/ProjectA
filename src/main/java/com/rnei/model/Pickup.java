@@ -31,7 +31,28 @@ public class Pickup extends Basic {
 	private String comments;
 	private String areaCode;
 	private List<ItemTransaction> itemTransactions;
-	
+	private String orrName;
+	private String vndfirstName;
+	private String vndlastName;
+		
+	public String getOrrName() {
+		return orrName;
+	}
+	public void setOrrName(String orrName) {
+		this.orrName = orrName;
+	}
+	public String getVndfirstName() {
+		return vndfirstName;
+	}
+	public void setVndfirstName(String vndfirstName) {
+		this.vndfirstName = vndfirstName;
+	}
+	public String getVndlastName() {
+		return vndlastName;
+	}
+	public void setVndlastName(String vndlastName) {
+		this.vndlastName = vndlastName;
+	}
 	public String getPickupId() {
 		return pickupId;
 	}

@@ -20,8 +20,8 @@ public class PickupRowMapper implements ResultSetExtractor<Pickup> {
 	public Pickup extractData(ResultSet rs) throws SQLException, DataAccessException {
 		Pickup pickup = null;
 		List<ItemTransaction> items = new ArrayList<ItemTransaction>();
-		while(rs.next()){
-			if(pickup==null){
+		while (rs.next()) {
+			if (pickup == null) {
 				pickup = new Pickup();
 				pickup.setPickupId(rs.getString(PICKUP_ID));
 				pickup.setPickupStatus(rs.getString(STATUS));
@@ -40,8 +40,11 @@ public class PickupRowMapper implements ResultSetExtractor<Pickup> {
 				pickup.setUpdatedDt(rs.getDate(UPDATED_DATE));
 				pickup.setVendorId(rs.getString(VENDOR_ID));
 				pickup.setBalancePayment(rs.getFloat(BALANCE_PAYMENT));
+				pickup.setOrrName(rs.getString(ORR_NAME));
+				pickup.setVndfirstName(rs.getString(VND_FIRST_NAME));
+				pickup.setVndlastName(rs.getString(VND_LAST_NAME));
 			}
-			
+
 			ItemTransaction item = new ItemTransaction();
 			item.setItemCode(rs.getString(ITEM_CODE));
 			item.setItemExpectedVol(rs.getFloat(ITEM_EXPECTED_VOL));
@@ -50,10 +53,10 @@ public class PickupRowMapper implements ResultSetExtractor<Pickup> {
 			item.setItemActualVol(rs.getFloat(ITEM_ACTUAL_VOL));
 			items.add(item);
 		}
-		if(pickup!=null){
+		if (pickup != null) {
 			pickup.setItemTransactions(items);
 		}
-		
+
 		return pickup;
 	}
 }

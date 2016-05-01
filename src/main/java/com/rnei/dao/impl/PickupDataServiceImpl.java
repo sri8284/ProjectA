@@ -35,8 +35,11 @@ public class PickupDataServiceImpl implements PickupDataService {
 	private static final String SELECT_PICKUP_ASSIGNMENT_STATUS = "SELECT PICKUP_ID as pickupId, STATUS as pickupStatus, PICKUP_DATE AS pickupDate, PICKUP_TIME AS pickupTime,"
 			+ " P.AREA_CODE AS areaCode, A.AREA_NAME as areaName FROM PICKUP P JOIN AREA A ON A.AREA_CODE = P.AREA_CODE WHERE PICKUP_DATE= :PICKUP_DATE ";
 
-	private static final String SELECT_PICKUP_BY_ID = "SELECT * FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID  where P.PICKUP_ID=:PICKUP_ID";
+	private static final String SELECT_PICKUP_BY_ORR_ID = "SELECT concat(e.emp_first_name, ' ', e.emp_last_name) as ORR_NAME, v.VND_FIRST_NAME, v.VND_LAST_NAME, P.*, T.* FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID JOIN employee e ON e.EMP_ID = p.orr_id JOIN vendor v ON v.VENDOR_ID = p.vendor_id WHERE P.PICKUP_ID=:PICKUP_ID";
 
+	private static final String SELECT_PICKUP_BY_ONHIRE_ID = "SELECT e.ORR_NAME , v.VND_FIRST_NAME, v.VND_LAST_NAME, P.* , T.* FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID JOIN onhireorr e on e.orr_id = p.orr_id JOIN vendor v on v.VENDOR_ID = p.vendor_id where P.PICKUP_ID=:PICKUP_ID";
+
+	
 	private static final String INSERT_PICKUP = "INSERT INTO PICKUP (PICKUP_ID,CREATED_DATE,CREATED_BY,PICKUP_DATE,PICKUP_TIME,STATUS,ORR_ID,VENDOR_ID,COMMENTS,AREA_CODE, COMPLETE)"
 			+ "VALUES (:PICKUP_ID,:CREATED_DATE,:CREATED_BY,:PICKUP_DATE,:PICKUP_TIME,:STATUS,:ORR_ID,:VENDOR_ID,:COMMENTS,:AREA_CODE, :COMPLETE)";
 	private static final String INSERT_ITEM_TRANSACTION = "INSERT INTO ITEM_TRANSACTION (PICKUP_ID,ITEM_CODE,CREATED_DATE,CREATED_BY,ITEM_PAID_RATE,ITEM_EXPECTED_VOL)"
@@ -140,8 +143,14 @@ public class PickupDataServiceImpl implements PickupDataService {
 	@Override
 	public Pickup getPickup(String pckupId) throws RENIDataServiceException {
 		SqlParameterSource namedParameters = new MapSqlParameterSource(PICKUP_ID, pckupId);
-		return (Pickup) namedParameterJdbcTemplate.query(SELECT_PICKUP_BY_ID, namedParameters,
+		Pickup pickup =  (Pickup) namedParameterJdbcTemplate.query(SELECT_PICKUP_BY_ORR_ID, namedParameters,
 				new PickupRowMapper());
+		if(pickup==null){
+			return (Pickup) namedParameterJdbcTemplate.query(SELECT_PICKUP_BY_ONHIRE_ID, namedParameters,
+					new PickupRowMapper());
+		}
+		
+		return pickup;
 	}
 
 	@Override
