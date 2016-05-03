@@ -35,9 +35,9 @@ public class PickupDataServiceImpl implements PickupDataService {
 	private static final String SELECT_PICKUP_ASSIGNMENT_STATUS = "SELECT PICKUP_ID as pickupId, STATUS as pickupStatus, PICKUP_DATE AS pickupDate, PICKUP_TIME AS pickupTime,"
 			+ " P.AREA_CODE AS areaCode, A.AREA_NAME as areaName FROM PICKUP P JOIN AREA A ON A.AREA_CODE = P.AREA_CODE WHERE PICKUP_DATE= :PICKUP_DATE ";
 
-	private static final String SELECT_PICKUP_BY_ORR_ID = "SELECT concat(e.emp_first_name, ' ', e.emp_last_name) as ORR_NAME, v.VND_FIRST_NAME, v.VND_LAST_NAME, P.*, T.* FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID JOIN employee e ON e.EMP_ID = p.orr_id JOIN vendor v ON v.VENDOR_ID = p.vendor_id WHERE P.PICKUP_ID=:PICKUP_ID";
+	private static final String SELECT_PICKUP_BY_ORR_ID = "SELECT A.AREA_NAME, concat(e.emp_first_name, ' ', e.emp_last_name) as ORR_NAME, v.VND_FIRST_NAME, v.VND_LAST_NAME, P.*, T.* FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID JOIN employee e ON e.EMP_ID = p.orr_id JOIN vendor v ON v.VENDOR_ID = p.vendor_id JOIN AREA A ON A.AREA_CODE = P.AREA_CODE  WHERE P.PICKUP_ID=:PICKUP_ID";
 
-	private static final String SELECT_PICKUP_BY_ONHIRE_ID = "SELECT e.ORR_NAME , v.VND_FIRST_NAME, v.VND_LAST_NAME, P.* , T.* FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID JOIN onhireorr e on e.orr_id = p.orr_id JOIN vendor v on v.VENDOR_ID = p.vendor_id where P.PICKUP_ID=:PICKUP_ID";
+	private static final String SELECT_PICKUP_BY_ONHIRE_ID = "SELECT A.AREA_NAME, e.ORR_NAME , v.VND_FIRST_NAME, v.VND_LAST_NAME, P.* , T.* FROM PICKUP P JOIN ITEM_TRANSACTION T ON P.PICKUP_ID=T.PICKUP_ID JOIN onhireorr e on e.orr_id = p.orr_id JOIN vendor v on v.VENDOR_ID = p.vendor_id JOIN AREA A ON A.AREA_CODE = P.AREA_CODE  where P.PICKUP_ID=:PICKUP_ID";
 
 	
 	private static final String INSERT_PICKUP = "INSERT INTO PICKUP (PICKUP_ID,CREATED_DATE,CREATED_BY,PICKUP_DATE,PICKUP_TIME,STATUS,ORR_ID,VENDOR_ID,COMMENTS,AREA_CODE, COMPLETE)"

@@ -43,6 +43,8 @@ public class PickupRowMapper implements ResultSetExtractor<Pickup> {
 				pickup.setOrrName(rs.getString(ORR_NAME));
 				pickup.setVndfirstName(rs.getString(VND_FIRST_NAME));
 				pickup.setVndlastName(rs.getString(VND_LAST_NAME));
+				pickup.setAreaCode(rs.getString(AREA_CODE));
+				pickup.setAreaName(rs.getString(AREA_NAME));
 			}
 
 			ItemTransaction item = new ItemTransaction();

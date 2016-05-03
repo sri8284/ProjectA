@@ -69,7 +69,7 @@ public interface RENIServiceConstant {
 	String CLOSE_PICKUP="C";
 	
 	String NON_COMPLETE = "N";
-	String COMPLETED="C";
+	String COMPLETED="Y";
 	
 	String YES = "Y";
 	String NO = "N";

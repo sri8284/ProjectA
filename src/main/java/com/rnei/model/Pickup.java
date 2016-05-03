@@ -34,6 +34,7 @@ public class Pickup extends Basic {
 	private String orrName;
 	private String vndfirstName;
 	private String vndlastName;
+	private String areaName;
 		
 	public String getOrrName() {
 		return orrName;
@@ -154,6 +155,12 @@ public class Pickup extends Basic {
 	}
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;
+	}
+	public String getAreaName() {
+		return areaName;
+	}
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 	
 	
