@@ -29,5 +29,9 @@ public interface ORRDataService {
 	boolean isDuplicateOnHireORR(String drivingLicNo) throws RENIDataServiceException;
 
 	List<Pickup> fetchORRPickupDetails(String orrId, LocalDate pickupDate);
+	
+	OnRoadResource getOnhireOrrDetails(String orrId) throws RENIDataServiceException;
+	OnRoadResource getOrrDetails(String orrId) throws RENIDataServiceException;
+	
 
 }

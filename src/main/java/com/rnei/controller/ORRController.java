@@ -41,6 +41,18 @@ public class ORRController extends CoreController {
 		return Response.ok(service.fetchORRDetails()).build();
 	}
 	
+	@GET
+	@Path("/{" + "orrId" + "}")
+	public Response fetchORRDetailsByID(@PathParam("orrId") String orrId) throws RENIServiceException{
+		return Response.ok(service.fetchORRDetailsByID(orrId)).build();
+	}
+	
+	@GET
+	@Path(ONHIRE_PATH+"/{" + "orrId" + "}")
+	public Response fetchOnHireORRDetailsByID(@PathParam("orrId") String orrId) throws RENIServiceException{
+		return Response.ok(service.fetchOnHireORRDetailsByID(orrId)).build();
+	}
+	
 
 	@GET
 	@Path(AVALIABLE)

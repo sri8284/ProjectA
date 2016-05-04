@@ -6,6 +6,7 @@ import java.util.List;
 import com.rnei.model.OnRoadResource;
 import com.rnei.model.OnRoadResourcePickup;
 import com.rnei.model.Pickup;
+import com.rnei.service.exception.RENIDataServiceException;
 import com.rnei.service.exception.RENIServiceException;
 import com.rnei.service.exception.RENIValidationException;
 
@@ -32,5 +33,9 @@ public interface ORRService {
 	Object fetchOnHireORRReportDetails(String orrId, String reqDate);
 
 	List<Pickup> fetchORRPickupDetails(String orrId, LocalDate pickupDate) throws RENIValidationException;
+
+	OnRoadResource fetchORRDetailsByID(String orrId) throws RENIDataServiceException;
+
+	OnRoadResource fetchOnHireORRDetailsByID(String orrId) throws RENIDataServiceException;
 
 }

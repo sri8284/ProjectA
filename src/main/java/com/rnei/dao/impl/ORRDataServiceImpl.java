@@ -51,6 +51,10 @@ public class ORRDataServiceImpl implements ORRDataService {
 			+ " AND PICKUP_DATE =:PICKUP_DATE";
 	private static final String UPDATE_ONHIRE_ORR = "UPDATE onhireorr SET ORR_NAME = :ORR_NAME, VEHICLE_NO = :VEHICLE_NO, DRIVING_LIC_NO = :DRIVING_LIC_NO, CONCAT_NO = :CONCAT_NO,   UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID";
 			
+	private static final String SELECT_ONHIRE_ORR = "SELECT * FROM onhireorr where ORR_ID=:ORR_ID ";
+	private static final String SELECT_ORR = "SELECT concat(e.emp_first_name, ' ', e.emp_last_name) as ORR_NAME, r.* FROM orr r join employee e on e.emp_id = r.orr_id where ORR_ID=:ORR_ID ";
+
+	
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -196,5 +200,35 @@ public class ORRDataServiceImpl implements ORRDataService {
 				}
 				return null;
 		}});
+	}
+
+	@Override
+	public OnRoadResource getOnhireOrrDetails(String orrId) throws RENIDataServiceException {
+		Map<String, Object> namedParameters = new HashMap<String, Object>();
+		namedParameters.put(ORR_ID, orrId);
+		
+		List<OnRoadResource> onHireorrDetails = (List<OnRoadResource>) namedParameterJdbcTemplate.query(SELECT_ONHIRE_ORR,
+				namedParameters, new ORRRowMapper());
+		
+		if(onHireorrDetails!=null && onHireorrDetails.size()>0 ){
+			return onHireorrDetails.get(0);
+		}else{
+			return new OnRoadResource();
+		}
+	}
+
+	@Override
+	public OnRoadResource getOrrDetails(String orrId) throws RENIDataServiceException {
+		Map<String, Object> namedParameters = new HashMap<String, Object>();
+		namedParameters.put(ORR_ID, orrId);
+		
+		List<OnRoadResource> orrDetails = (List<OnRoadResource>) namedParameterJdbcTemplate.query(SELECT_ORR,
+				namedParameters, new ORRRowMapper());
+		
+		if(orrDetails!=null && orrDetails.size()>0 ){
+			return orrDetails.get(0);
+		}else{
+			return new OnRoadResource();
+		}
 	}
 }

@@ -18,6 +18,7 @@ import com.rnei.model.OnRoadResource;
 import com.rnei.model.OnRoadResourcePickup;
 import com.rnei.model.Pickup;
 import com.rnei.service.ORRService;
+import com.rnei.service.exception.RENIDataServiceException;
 import com.rnei.service.exception.RENIServiceException;
 import com.rnei.service.exception.RENIValidationException;
 
@@ -101,6 +102,16 @@ public class ORRServiceImpl implements ORRService {
 		}
 		
 		return orrDataService.fetchORRPickupDetails(orrId, pickupDate);
+	}
+
+	@Override
+	public OnRoadResource fetchORRDetailsByID(String orrId) throws RENIDataServiceException {
+		return orrDataService.getOrrDetails(orrId);
+	}
+
+	@Override
+	public OnRoadResource fetchOnHireORRDetailsByID(String orrId) throws RENIDataServiceException {
+		return orrDataService.getOnhireOrrDetails(orrId);
 	}
 
 }
