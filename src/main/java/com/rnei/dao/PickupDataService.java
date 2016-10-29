@@ -22,5 +22,6 @@ public interface PickupDataService {
 	List<Map<String, Object>> fetchPickupsAssignmentStatus(LocalDate pickupDate) throws RENIDataServiceException;
 
 	void closePickup(String userId, Pickup pickupInput) throws RENIDataServiceException;
+	String getORR(String avaliable) throws RENIDataServiceException;
 
 }

@@ -37,7 +37,7 @@ public class ORRDataServiceImpl implements ORRDataService {
 			+ "join employee emp on emp.EMP_ID = orr.ORR_ID ";
 	//available orr details will fetch TODO active falg should be added here.
 	private static final String SELECT_AVAILABLE_ORR_DETAILS = " SELECT CONCAT(emp.EMP_FIRST_NAME,' ',emp.EMP_LAST_NAME) as ORR_NAME, orr.* from orr orr "
-			+ "	join employee emp on emp.EMP_ID = orr.ORR_ID AND (AVAILABLE !='N' or AVAILABLE is null)  ";
+			+ "	join employee emp on emp.EMP_ID = orr.ORR_ID AND (AVAILABLE !='N' or AVAILABLE is null) and emp.DELETE_FLAG='N'";
 
 	private static final String SELECT_ONHIRE_ORR_DETAILS = "SELECT * FROM onhireorr where ACTIVE ='Y' ";
 	private static final String SELECT_AVAILABLE_ONHIRE_ORR_DETAILS = "SELECT * FROM onhireorr where ACTIVE ='Y' and (AVAILABLE !='N' or AVAILABLE is null)  ";

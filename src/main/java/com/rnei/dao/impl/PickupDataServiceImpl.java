@@ -53,6 +53,7 @@ public class PickupDataServiceImpl implements PickupDataService {
 	private static final String UPDATE_ONHIRE_ORR = "UPDATE ONHIREORR SET AVAILABLE = :AVAILABLE, CURRENT_PICKUP_ID = :CURRENT_PICKUP_ID, PREV_PICKUP_ID=:PREV_PICKUP_ID, UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID";
 
 	private static final String UPDATE_ORR = "UPDATE ORR SET AVAILABLE = :AVAILABLE, CURRENT_PICKUP_ID = :CURRENT_PICKUP_ID, PREV_PICKUP_ID=:PREV_PICKUP_ID, UPDATED_DATE = :UPDATED_DATE, UPDATED_BY = :UPDATED_BY WHERE ORR_ID = :ORR_ID;";
+	private static final String SELECT_ORR = "SELECT AVAILABLE FROM ORR WHERE ORR_ID = :ORR_ID;";
 	
 
 	@Autowired
@@ -221,4 +222,11 @@ public class PickupDataServiceImpl implements PickupDataService {
 	}
 
 
+	@Override
+	public String getORR(String orrID) throws RENIDataServiceException {
+		SqlParameterSource namedParameters = new MapSqlParameterSource(ORR_ID, orrID);
+		
+		return namedParameterJdbcTemplate.queryForObject(SELECT_ORR, namedParameters,
+				String.class);
+	}
 }

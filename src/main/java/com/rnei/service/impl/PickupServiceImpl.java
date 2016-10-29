@@ -5,6 +5,7 @@ import static com.rnei.service.constants.RENIServiceConstant.COMPLETED;
 import static com.rnei.service.constants.RENIServiceConstant.NEW_PICKUP;
 import static com.rnei.service.constants.RENIServiceConstant.NON_COMPLETE;
 import static com.rnei.service.constants.RENIServiceConstant.PENDING_FOR_SETTLEMENT;
+import static com.rnei.service.constants.RENIServiceConstant.NO;
 
 import java.awt.datatransfer.StringSelection;
 import java.time.LocalDate;
@@ -47,6 +48,12 @@ public class PickupServiceImpl implements PickupService {
 		// TODO vendor is existed or not 
 		
 		// TODO ORRID is existed or not.
+		if(!pickupDetails.getOrrId().startsWith("C")){
+			String avaliable = pickupDataServcie.getORR(pickupDetails.getOrrId());
+			if(NO.equals(avaliable)){
+				throw new RENIValidationException("ORR is not avaliable for pickup (Or) already allocated to other pickup.");
+			}	
+		}
 		
 		String pickupId = String.valueOf(System.currentTimeMillis());
 		pickupDetails.setPickupId(pickupId);

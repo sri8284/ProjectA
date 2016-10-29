@@ -30,11 +30,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		 String username = authentication.getName();
          String password = (String) authentication.getCredentials();
+         System.err.println("UserNAme :" + username  +" / password : " + password);
          if (username == null) {
              throw new BadCredentialsException("UserId is Mandatory.");
          }
          if (password == null) {
-             throw new BadCredentialsException("password is Mandatory.");
+        	 throw new BadCredentialsException("password is Mandatory.");
          }
          username = username.toUpperCase();
          User user = userService.loadUserByUsername(username);
