@@ -40,4 +40,6 @@ public interface MasterDataSerice {
 	void createVendor(Vendor vendor)throws RENIServiceException;
 
 	void createExpenseType(ExpenseType expenseType)throws RENIServiceException;
+
+	Item fetchItem(String itemCode);
 }

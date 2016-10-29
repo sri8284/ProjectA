@@ -134,4 +134,10 @@ public class MasterDataSericeImpl implements MasterDataSerice {
 	public void createExpenseType(ExpenseType expenseType) throws RENIServiceException {
 		repository.createExpenseType(expenseType);		
 	}
+
+	@Override
+	public Item fetchItem(String itemCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

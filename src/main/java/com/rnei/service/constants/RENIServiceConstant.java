@@ -2,7 +2,22 @@ package com.rnei.service.constants;
 
 public interface RENIServiceConstant {
 
-	
+	/* Path */
+	  // Common paths
+	  String ALL_PATH = "/all";
+	  String ITEM_RATES_PATH = "/itemRates";
+	  String ITEM_CODE_PARAM = "itemCode";
+	  // Vendor paths
+	  String UPLOAD_DOCUMENTS_PATH = "/uploadDocuments";
+	  String PICKUP_SCHEDULE_PATH = "/pickupSchedule";
+	  String PICKUP_SCHEDULED_ID_PARAM = "pickupScheduleId";
+
+	  /* Path Parameters */
+	  // Common path parameters
+	  String VENDOR_ID_PATH_PARAM = "vendorId";
+	  String PICKUP_ID_PATH_PARAM = "pickupId";
+	  String USER_ID = "userId";
+
 	//Master Service path
 	String MASTER_PATH="/master";
 	
@@ -73,5 +88,27 @@ public interface RENIServiceConstant {
 	
 	String YES = "Y";
 	String NO = "N";
+
+	  String VND_ITEM_RATE_VALIDATE = "The Item code, discount, discount start date and discount end date are mandatory fields";
+	  String VND_ITEM_RATE_START_END_DATE_VALIDATE = "Discount start date can't be greater than Discount end date.";
+	  String EXISTING_VND_ITEM_RATE_DATES_VALIDATE = "Item start date is already existed, kindly adjust or deactive the existing one.";
+	  String VND_ITEM_RATE_NOT_FOUND = "Vendor Item code is not found or existing item code is inactive .";
+	  String AREA_NOT_EXISTS = "Invalid Area";
+	  String SCHEDULE_PAST_DATE_VALIDATE = "Schedule Date shouldn't past dated.";
+	  String INVALID_ITEM_CODES = "Invalid item codes.";
+	  String SCHEDULE_ITEM_EXPECTED_ERROR = "Schedule Item expected Volume shouldn't minimum of.";
+	  String SCHEDULE_MAX_COUNT_ERROR = "Pickup schedule's reached max count for the same Area, kindly request to future date.";
+	  String PICKUP_SCHEDULE_MANDATORY_ERROR = "The below fields are mandatroy : Area code, VendorId, ScheduleDate, ScheduleTime.";
+	  String PICKUP_SCHEDULE_ITEMS_MANDATORY_ERROR = "Items information are needed for pickup schedule.";
+	  String PICKUP_SCHEDULE_ID_MANDATORY_ERROR = "Pickup scheduleId is mandatroy for update the pickup schedule.";
+	  int VENDOR_PICKUP_SCHEDULE_COUNT = 10;
+	  int ITEM_MIN_VOLUMN = 10;
+	  String UNKNOW_USER_ERROR = "Unknow / Invalid User Initiating the request";
+	  String VND_MANDTORY_VALIDATE = "Vendor Mandatory information required";
+	  String VND_BASIC_VALIDATE = "Vendor basic information required - First Name, Last Name, Contact No, Area Code, Vendory Type and Vendor address ";
+	  String VND_ADDRESS_VALIDATE = "Vendor address information required - State, City and Pincode";
+	  String VENDOR_ID_MANDATORY = "Vendor Id is mandatory.";
+	  String VENDOR_NOT_EXISTS = "Invalid Vendor";
+	  String NON_FOUND_ERROR = "Requested details are not found.";
 
 }
